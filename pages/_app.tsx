@@ -18,10 +18,6 @@ const AfterAuthComponent = ({ Component, pageProps, router }: AppProps) => {
   const [isMounted, setIsMounted] = React.useState(false);
   const currentPath = ((router as any)?.state?.pathname as string) || "";
   React.useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  React.useEffect(() => {
     if (isAuthenticated) {
       //allow rendering
       setIsMounted(true);
