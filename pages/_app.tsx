@@ -1,6 +1,6 @@
-import { globalStyles } from "../src/theme";
+import "../src/theme/styles.css";
+import { GlobalStyles } from "../src/theme";
 import type { AppProps } from "next/app";
-import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
 import Router from "next/router";
 import React from "react";
 import {
@@ -8,6 +8,7 @@ import {
   useUser,
   useIsAuthenticated,
 } from "../src/Auth/supabase";
+import DefaultTemplate from "../src/Components/PageTemplates/DefaultTemplate";
 
 const unauthedPaths = new Set(["/login", "/login/finish"]);
 const authedOnlyPaths = new Set(["/logout"]);
@@ -33,15 +34,20 @@ const AfterAuthComponent = ({ Component, pageProps, router }: AppProps) => {
   }, [currentPath, isAuthenticated, user]);
 
   if (!isMounted) {
+    // TODO: Set "Loading" UI here
     return null;
   }
-  return <Component {...pageProps} />;
+  return (
+    <DefaultTemplate>
+      <Component {...pageProps} />
+    </DefaultTemplate>
+  );
 };
 
 function MyApp(props: AppProps) {
   return (
     <>
-      {globalStyles}
+      <GlobalStyles />
       <AuthProvider>
         {typeof window === "undefined" ? null : (
           <AfterAuthComponent {...props} />

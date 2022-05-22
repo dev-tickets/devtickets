@@ -1,5 +1,6 @@
 import React from "react";
 import type { NextPage } from "next";
+import { Button, H1 } from "@blueprintjs/core";
 import {
   useIsAuthenticated,
   useLoginWithGithub,
@@ -18,14 +19,17 @@ const Login: NextPage = () => {
   }, [isTheUserAuthenticated]);
   return (
     <div>
-      <h1>LOGIN!</h1>
-      <button
+      <H1>LOGIN!</H1>
+      <Button
+        intent="primary"
+        icon="envelope"
         onClick={() => login({ email: "felipe.torressepulveda@gmail.com" })}
       >
-        click here to login
-      </button>
-      <br />
-      <button onClick={loginWithGithub}>LOGIN WITH GITHUB HERE</button>
+        With Magic email
+      </Button>
+      <Button intent="primary" onClick={loginWithGithub}>
+        Login with github
+      </Button>
     </div>
   );
 };
