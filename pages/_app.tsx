@@ -24,10 +24,12 @@ const AfterAuthComponent = ({ Component, pageProps, router }: AppProps) => {
   React.useEffect(() => {
     if (isAuthenticated) {
       //allow rendering
+      setIsMounted(true);
       return;
     } else {
       if (unauthedPaths.has(currentPath)) {
         //allow rendering
+        setIsMounted(true);
         return;
       }
     }
