@@ -1,4 +1,3 @@
-import "../styles/globals.css";
 import { globalStyles } from "../src/theme";
 import type { AppProps } from "next/app";
 import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";

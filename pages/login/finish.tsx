@@ -4,12 +4,12 @@ import { useIsAuthenticated } from "../../src/Auth/supabase";
 import Router from "next/router";
 
 const Finish: NextPage = () => {
-  const is = useIsAuthenticated();
+  const isTheUserAuthenticated = useIsAuthenticated();
   React.useEffect(() => {
-    if (is) {
+    if (isTheUserAuthenticated) {
       Router.replace("/");
     }
-  }, [is]);
+  }, [isTheUserAuthenticated]);
   return <div>👍</div>;
 };
 

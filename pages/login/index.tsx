@@ -1,10 +1,8 @@
 import React from "react";
 import type { NextPage } from "next";
 import {
-  supabase,
   useIsAuthenticated,
   useLoginWithGithub,
-  useUser,
 } from "../../src/Auth/supabase";
 import { useLoginWithEmail } from "../../src/Auth/supabase";
 import Router from "next/router";
@@ -12,12 +10,12 @@ import Router from "next/router";
 const Login: NextPage = () => {
   const login = useLoginWithEmail();
   const loginWithGithub = useLoginWithGithub();
-  const isit = useIsAuthenticated();
+  const isTheUserAuthenticated = useIsAuthenticated();
   React.useEffect(() => {
-    if (isit) {
+    if (isTheUserAuthenticated) {
       Router.push("/");
     }
-  }, [isit]);
+  }, [isTheUserAuthenticated]);
   return (
     <div>
       <h1>LOGIN!</h1>
