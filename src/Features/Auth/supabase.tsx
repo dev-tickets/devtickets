@@ -2,11 +2,11 @@ import { createClient, User } from "@supabase/supabase-js";
 import React from "react";
 import { useRouter } from "next/router";
 
-const dashboardMainURL = "http://localhost:3000";
+const dashboardMainURL = process.env.NEXT_PUBLIC_APP_HOST;
 const loginCallbackURL = dashboardMainURL + "/login/finish";
 export const supabase = createClient(
-  "https://vetbymkdqqpzhirmibar.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZldGJ5bWtkcXFwemhpcm1pYmFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTEzNDc1NDksImV4cCI6MTk2NjkyMzU0OX0.RUCLr3_QKg3WlIluhx_SB6NvIuJVQoBLE-izIHcD8l0"
+  process.env.NEXT_PUBLIC_SUPABASE_API_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_API_TOKEN!
 );
 
 export const useLoginWithEmail = () => {
@@ -19,9 +19,6 @@ export const useLoginWithEmail = () => {
         redirectTo: loginCallbackURL,
       }
     );
-
-    console.log({ user, error, session });
-    debugger;
   }, []);
 };
 
@@ -35,8 +32,6 @@ export const useLoginWithGithub = () => {
         redirectTo: loginCallbackURL,
       }
     );
-    console.log({ user, error, session });
-    debugger;
   }, []);
 };
 
