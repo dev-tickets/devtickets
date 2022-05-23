@@ -10,6 +10,8 @@ import {
 } from "../src/Features/Auth/supabase";
 import DefaultTemplate from "../src/Components/PageTemplates/DefaultTemplate";
 import "../src/Features/Sentry";
+import { Provider } from "urql";
+import { useURQLClient } from "../src/Features/URQL";
 
 const unauthedPaths = new Set(["/login", "/login/finish"]);
 const authedOnlyPaths = new Set(["/logout"]);
@@ -19,6 +21,7 @@ console.log("NEXT_PUBLIC_APP_ENV", process.env.NEXT_PUBLIC_APP_ENV);
 const AfterAuthComponent = ({ Component, pageProps, router }: AppProps) => {
   const user = useUser();
   const isAuthenticated = useIsAuthenticated();
+  const { urlqlClient } = useURQLClient();
   const [isMounted, setIsMounted] = React.useState(false);
   const currentPath = ((router as any)?.state?.pathname as string) || "";
   React.useEffect(() => {
@@ -42,7 +45,9 @@ const AfterAuthComponent = ({ Component, pageProps, router }: AppProps) => {
   }
   return (
     <DefaultTemplate>
-      <Component {...pageProps} />
+      <Provider value={urlqlClient}>
+        <Component {...pageProps} />
+      </Provider>
     </DefaultTemplate>
   );
 };

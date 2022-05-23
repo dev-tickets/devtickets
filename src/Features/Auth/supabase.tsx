@@ -43,20 +43,26 @@ const Context = React.createContext<{
   user: User | null;
   login: ({ email }: { email: string }) => void;
   logout: () => void;
+  accessToken?: string;
 }>({
   user: null,
   login: () => {},
   logout: () => {},
+  accessToken: undefined,
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const [user, setUser] = React.useState(supabase.auth.user());
+  const [accessToken, setAccessToken] = React.useState(
+    supabase.auth.session()?.access_token
+  );
 
   React.useEffect(() => {
     const getUserProfile = async () => {
       try {
         const sessionUser = await supabase.auth.user();
+        const sessionAccessToken = supabase.auth.session()?.access_token;
         if (sessionUser) {
           const { data: profile } = await supabase
             .from("profile")
@@ -68,6 +74,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             ...sessionUser,
             ...profile,
           });
+        }
+        if (sessionAccessToken) {
+          setAccessToken(sessionAccessToken);
         }
       } catch (e) {
         console.error(e);
@@ -104,8 +113,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       user,
       login,
       logout,
+      accessToken,
     }),
-    [login, logout, user]
+    [login, logout, user, accessToken]
   );
 
   return <Context.Provider value={exposed}>{children}</Context.Provider>;
@@ -115,7 +125,7 @@ export const useAuthContext = () => React.useContext(Context);
 
 export const useUser = () => {
   const { user } = React.useContext(Context);
-  return user!;
+  return user;
 };
 export const useIsAuthenticated = () => {
   const { user } = React.useContext(Context);
