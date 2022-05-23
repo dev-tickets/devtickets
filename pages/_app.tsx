@@ -7,8 +7,9 @@ import {
   AuthProvider,
   useUser,
   useIsAuthenticated,
-} from "../src/Auth/supabase";
+} from "../src/Features/Auth/supabase";
 import DefaultTemplate from "../src/Components/PageTemplates/DefaultTemplate";
+import "../src/Features/Sentry";
 
 const unauthedPaths = new Set(["/login", "/login/finish"]);
 const authedOnlyPaths = new Set(["/logout"]);

@@ -1,6 +1,6 @@
 import React from "react";
 import type { NextPage } from "next";
-import { useIsAuthenticated } from "../../src/Auth/supabase";
+import { useIsAuthenticated } from "../../src/Features/Auth/supabase";
 import Router from "next/router";
 
 const Finish: NextPage = () => {

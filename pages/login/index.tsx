@@ -4,8 +4,8 @@ import { Button, H1 } from "@blueprintjs/core";
 import {
   useIsAuthenticated,
   useLoginWithGithub,
-} from "../../src/Auth/supabase";
-import { useLoginWithEmail } from "../../src/Auth/supabase";
+} from "../../src/Features/Auth/supabase";
+import { useLoginWithEmail } from "../../src/Features/Auth/supabase";
 import Router from "next/router";
 
 const Login: NextPage = () => {
