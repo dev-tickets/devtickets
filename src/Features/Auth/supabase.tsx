@@ -2,7 +2,11 @@ import { createClient, User } from "@supabase/supabase-js";
 import React from "react";
 import { useRouter } from "next/router";
 
-const dashboardMainURL = process.env.NEXT_PUBLIC_APP_HOST;
+const dashboardMainURL =
+  process.env.NEXT_PUBLIC_APP_ENV === "staging"
+    ? // IF this is "staging" it means we are on a pages.dev env.
+      window.location.origin
+    : process.env.NEXT_PUBLIC_APP_HOST!;
 const loginCallbackURL = dashboardMainURL + "/login/finish";
 export const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_API_URL!,
