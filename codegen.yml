@@ -1,13 +1,28 @@
 overwrite: true
-schema: "https://vetbymkdqqpzhirmibar.supabase.co/graphql/v1"
-documents: "src/**/*.graphql"
+schema: 
+  - "${NEXT_PUBLIC_SUPABASE_API_URL}/graphql/v1":
+      headers:
+        apiKey: "${SUPABASE_API_TOKEN}"
+documents:
+  - "./src/**/*.graphql"
+  - "./src/**/*.gql"
+hooks:
+  afterOneFileWrite:
+    - prettier --write
 generates:
-  src/generated/graphql.tsx:
+  ./src/types.ts:
     plugins:
       - "typescript"
-      - "typescript-operations"
-      - "typescript-react-apollo"
-      - "urql-introspection"
+  ./src/:
+    preset: near-operation-file
+    presetConfig:
+      extension: .generated.tsx
+      baseTypesPath: types.ts
+    plugins:
+      - typescript-operations
+      - typescript-urql
+    config:
+      withHooks: true
   ./graphql.schema.json:
     plugins:
       - "introspection"

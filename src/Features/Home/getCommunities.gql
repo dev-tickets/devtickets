@@ -1,0 +1,11 @@
+query getCommunities {
+  communitiesCollection {
+    edges {
+      node {
+        id
+        name
+        description
+      }
+    }
+  }
+}

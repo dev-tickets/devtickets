@@ -1,7 +1,12 @@
 import type { NextPage } from "next";
+import Home from "../src/Features/Home";
 
-const Home: NextPage = () => {
-  return <div>HOME</div>;
+const Index: NextPage = () => {
+  return (
+    <div>
+      <Home />
+    </div>
+  );
 };
 
-export default Home;
+export default Index;

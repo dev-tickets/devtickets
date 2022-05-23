@@ -9,9 +9,11 @@ const nextConfig = {
     'NEXT_PUBLIC_SUPABASE_API_URL': process.env.SUPABASE_API_URL,
     'NEXT_PUBLIC_SUPABASE_API_TOKEN': process.env.SUPABASE_API_TOKEN,
   },
+  reactStrictMode: true,
   experimental: {
     emotion: true,
   },
+  optimizeFonts: true,
 }
 
 module.exports = nextConfig
