@@ -14,6 +14,8 @@ import "../src/Features/Sentry";
 const unauthedPaths = new Set(["/login", "/login/finish"]);
 const authedOnlyPaths = new Set(["/logout"]);
 
+console.log("APP_ENV", process.env.APP_ENV);
+
 const AfterAuthComponent = ({ Component, pageProps, router }: AppProps) => {
   const user = useUser();
   const isAuthenticated = useIsAuthenticated();
