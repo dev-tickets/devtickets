@@ -1,29 +1,46 @@
+import "@fontsource/work-sans/400.css"; // Weight 400.
+import "@fontsource/work-sans/700.css"; // Weight 700.
+
+import "@fontsource/work-sans/variable.css"; // Contains ONLY variable weights and no other axes.
+import "@fontsource/work-sans/variable-italic.css"; // Italic variant.
+
 import type { AppProps } from "next/app";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 import Router from "next/router";
-import React from "react";
+import { ReactElement, ReactNode, useEffect, useMemo, useState } from "react";
 import {
   AuthProvider,
   useUser,
   useIsAuthenticated,
 } from "../src/Features/Auth/supabase";
-import DefaultTemplate from "../src/Components/PageTemplates/DefaultTemplate";
 import "../src/Features/Sentry";
 import { Provider } from "urql";
 import { useURQLClient } from "../src/Features/URQL";
+import type { NextPage } from "next";
+import { theme } from "../src/Styling/theme";
 
 const unauthedPaths = new Set(["/login", "/login/finish"]);
 const authedOnlyPaths = new Set(["/logout"]);
 
-console.log("NEXT_PUBLIC_APP_ENV", process.env.NEXT_PUBLIC_APP_ENV);
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
 
-const AfterAuthComponent = ({ Component, pageProps, router }: AppProps) => {
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+const AfterAuthComponent = ({
+  Component,
+  pageProps,
+  router,
+}: AppPropsWithLayout) => {
   const user = useUser();
   const isAuthenticated = useIsAuthenticated();
   const { urlqlClient } = useURQLClient();
-  const [isMounted, setIsMounted] = React.useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const currentPath = ((router as any)?.state?.pathname as string) || "";
-  React.useEffect(() => {
+  useEffect(() => {
     if (isAuthenticated) {
       //allow rendering
       setIsMounted(true);
@@ -38,23 +55,28 @@ const AfterAuthComponent = ({ Component, pageProps, router }: AppProps) => {
     Router.push("/login");
   }, [currentPath, isAuthenticated, user]);
 
+  const getLayout = useMemo(
+    () => Component.getLayout ?? ((page: any) => page),
+    [Component.getLayout]
+  );
+
   if (!isMounted) {
     // TODO: Set "Loading" UI here
     return null;
   }
-  return (
-    <DefaultTemplate>
-      <Provider value={urlqlClient}>
-        <Component {...pageProps} />
-      </Provider>
-    </DefaultTemplate>
+
+  return getLayout(
+    <Provider value={urlqlClient}>
+      <Component {...pageProps} />
+    </Provider>
   );
 };
 
 function MyApp(props: AppProps) {
   return (
     <>
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
+        <CSSReset />
         <AuthProvider>
           {typeof window === "undefined" ? null : (
             <AfterAuthComponent {...props} />
