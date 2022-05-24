@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState } from "react";
 import {
   Button,
   Stack,
@@ -19,7 +19,13 @@ import Router from "next/router";
 import { MagicWandIcon, GithubIcon } from "../../src/Components/Icons";
 import FullScreenLayout from "../../src/Components/Layouts/FullScreenLayout";
 
-export default function Login() {
+type InternalRouteStates = "login" | "magic_email_response";
+
+const LoginFormElement = ({
+  setInternalRoute,
+}: {
+  setInternalRoute: React.Dispatch<React.SetStateAction<InternalRouteStates>>;
+}) => {
   const login = useLoginWithEmail();
   const loginWithGithub = useLoginWithGithub();
   const isTheUserAuthenticated = useIsAuthenticated();
@@ -28,26 +34,20 @@ export default function Login() {
     register,
     formState: { errors, isSubmitting, isSubmitted, isSubmitSuccessful },
   } = useForm<{ email: string }>();
-
-  console.log({ isSubmitSuccessful, isSubmitted });
-  // TODO: Handle UI for isSubmitSuccessful
   React.useEffect(() => {
     if (isTheUserAuthenticated) {
       Router.push("/");
     }
   }, [isTheUserAuthenticated]);
+
+  React.useEffect(() => {
+    if (isSubmitSuccessful) {
+      setInternalRoute("magic_email_response");
+    }
+  }, [isSubmitSuccessful, setInternalRoute]);
+
   return (
-    <Stack
-      spacing={0}
-      gap={10}
-      bg="gray.50"
-      width="100%"
-      maxWidth={520}
-      borderRadius="md"
-      padding={10}
-      alignItems="center"
-      justifyContent="center"
-    >
+    <>
       <Heading size="2xl" as="h1">
         Hello! 👋🏼
       </Heading>
@@ -126,6 +126,67 @@ export default function Login() {
       >
         Logeate con Github
       </Button>
+    </>
+  );
+};
+
+const MagicEmailFormElement = ({
+  setInternalRoute,
+}: {
+  setInternalRoute: React.Dispatch<React.SetStateAction<InternalRouteStates>>;
+}) => {
+  return (
+    <>
+      <Heading size="2xl" as="h1">
+        Enviado! 📨
+      </Heading>
+      <Text align="center" fontSize="xl">
+        Solo revisa tu bandeja de correo, haz click en el link, y listo!
+      </Text>
+      <Text align="center" fontSize="2xl" lineHeight={0} fontWeight="bold">
+        o
+      </Text>
+
+      <Button
+        borderRadius="lg"
+        h="fit-content"
+        p={18}
+        variant="outline"
+        borderStyle="solid"
+        borderWidth="thin"
+        borderColor="black"
+        w="100%"
+        leftIcon={<GithubIcon />}
+        onClick={() => setInternalRoute("login")}
+      >
+        Intenta con otro método
+      </Button>
+    </>
+  );
+};
+
+export default function Login() {
+  // TODO: Handle UI for isSubmitSuccessful
+  const [internalRoute, setInternalRoute] =
+    useState<InternalRouteStates>("login");
+  return (
+    <Stack
+      spacing={0}
+      gap={10}
+      bg="gray.50"
+      width="100%"
+      maxWidth={520}
+      borderRadius="md"
+      padding={10}
+      alignItems="center"
+      justifyContent="center"
+    >
+      {internalRoute === "login" && (
+        <LoginFormElement setInternalRoute={setInternalRoute} />
+      )}
+      {internalRoute === "magic_email_response" && (
+        <MagicEmailFormElement setInternalRoute={setInternalRoute} />
+      )}
     </Stack>
   );
 }

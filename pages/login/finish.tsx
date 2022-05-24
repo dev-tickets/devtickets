@@ -1,16 +1,40 @@
-import React from "react";
-import type { NextPage } from "next";
+import React, { ReactElement } from "react";
 import { useIsAuthenticated } from "../../src/Features/Auth/supabase";
 import Router from "next/router";
+import FullScreenLayout from "../../src/Components/Layouts/FullScreenLayout";
+import { Spinner, Stack } from "@chakra-ui/react";
 
-const Finish: NextPage = () => {
+export default function Finish() {
   const isTheUserAuthenticated = useIsAuthenticated();
   React.useEffect(() => {
     if (isTheUserAuthenticated) {
       Router.replace("/");
     }
   }, [isTheUserAuthenticated]);
-  return <div>👍</div>;
-};
+  return (
+    <Stack
+      spacing={0}
+      gap={10}
+      bg="gray.50"
+      width="100%"
+      maxWidth={520}
+      borderRadius="md"
+      padding={10}
+      minHeight={400}
+      alignItems="center"
+      justifyContent="center"
+    >
+      <Spinner
+        thickness="4px"
+        speed="0.45s"
+        emptyColor="gray.200"
+        color="red.500"
+        size="xl"
+      />
+    </Stack>
+  );
+}
 
-export default Finish;
+Finish.getLayout = function getLayout(page: ReactElement) {
+  return <FullScreenLayout>{page}</FullScreenLayout>;
+};

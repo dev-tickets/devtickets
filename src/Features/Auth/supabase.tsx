@@ -14,8 +14,8 @@ export const supabase = createClient(
 );
 
 export const useLoginWithEmail = () => {
-  return React.useCallback(async ({ email }: { email: string }) => {
-    const { user, error, session } = await supabase.auth.signIn(
+  return React.useCallback(({ email }: { email: string }) => {
+    return supabase.auth.signIn(
       {
         email: email.trim(),
       },
@@ -105,8 +105,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const logout = React.useCallback(async () => {
     await supabase.auth.signOut();
     setUser(null);
-    router.push("/login");
-  }, [router]);
+    setAccessToken(undefined);
+  }, []);
 
   const exposed = React.useMemo(
     () => ({
