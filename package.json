@@ -10,18 +10,18 @@
     "generate": "graphql-codegen --config codegen.yml -r dotenv/config"
   },
   "dependencies": {
-    "@blueprintjs/core": "^4.3.2",
-    "@emotion/css": "^11.9.0",
+    "@chakra-ui/react": "^2.1.0",
     "@emotion/react": "^11.9.0",
-    "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.8.1",
     "@sentry/react": "^6.19.7",
     "@sentry/tracing": "^6.19.7",
     "@supabase/supabase-js": "^1.35.2",
+    "framer-motion": "^6.3.3",
     "graphql": "^16.4.0",
     "next": "^12.1.6",
     "react": "18.0.0",
     "react-dom": "18.0.0",
+    "react-icons": "^4.3.1",
     "urql": "^2.2.0",
     "wrangler": "^0.0.27"
   },

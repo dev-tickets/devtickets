@@ -1,6 +1,5 @@
-import "../src/theme/styles.css";
-import { GlobalStyles } from "../src/theme";
 import type { AppProps } from "next/app";
+import { ChakraProvider } from "@chakra-ui/react";
 import Router from "next/router";
 import React from "react";
 import {
@@ -55,12 +54,13 @@ const AfterAuthComponent = ({ Component, pageProps, router }: AppProps) => {
 function MyApp(props: AppProps) {
   return (
     <>
-      <GlobalStyles />
-      <AuthProvider>
-        {typeof window === "undefined" ? null : (
-          <AfterAuthComponent {...props} />
-        )}
-      </AuthProvider>
+      <ChakraProvider>
+        <AuthProvider>
+          {typeof window === "undefined" ? null : (
+            <AfterAuthComponent {...props} />
+          )}
+        </AuthProvider>
+      </ChakraProvider>
     </>
   );
 }
