@@ -30,11 +30,26 @@ interface LinkItemProps {
   href: string;
   icon: IconType;
 }
-const LinkItems: Array<LinkItemProps> = [
-  { href: "/", name: "Home", icon: HomeIcon },
-  { href: "/communities", name: "Your Communities", icon: HomeHeartIcon },
-  { href: "/tickets", name: "Tickets", icon: TicketIcon },
-  { href: "/settings", name: "Settings", icon: SettingsIcon },
+
+const Links = {
+  home: { href: "/", name: "Home", icon: HomeIcon },
+  yourCommunities: {
+    href: "/communities",
+    name: "Tus Comunidades",
+    icon: HomeHeartIcon,
+  },
+  yourTickets: { href: "/tickets", name: "Tus Tickets", icon: TicketIcon },
+  settings: {
+    href: "/settings",
+    name: "Configuración",
+    icon: SettingsIcon,
+  },
+} as const;
+
+const LinkItems: Array<keyof typeof Links> = [
+  "home",
+  "yourCommunities",
+  "yourTickets",
 ];
 
 interface SidebarProps extends BoxProps {
@@ -54,7 +69,6 @@ const NavItem = ({ icon, href, children, ...rest }: NavItemProps) => {
     <Link href={href} passHref>
       <Flex
         as={"a"}
-        flex={1}
         paddingY={2}
         style={{ textDecoration: "none" }}
         width="100%"
@@ -109,7 +123,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       />
 
       <Text fontSize="2xl" ml="8" fontFamily="monospace" fontWeight="bold">
-        Welcome, username 👋
+        Welcome 👋
       </Text>
     </Flex>
   );
@@ -131,7 +145,7 @@ const DesktopTitle = ({ onClose }: { onClose: () => void }) => {
         fontFamily="monospace"
         fontWeight="bold"
       >
-        Welcome, username 👋🏼
+        Bienvenido 👋🏼
       </Text>
       <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
     </Flex>
@@ -163,17 +177,32 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         justifyContent="flex-start"
         flexDirection="column"
         width="100%"
+        flex={1}
       >
-        {LinkItems.map((link) => (
-          <NavItem key={link.name} href={link.href} icon={link.icon}>
-            {link.name}
+        {LinkItems.map((linkName) => (
+          <NavItem
+            key={Links[linkName].name}
+            href={Links[linkName].href}
+            icon={Links[linkName].icon}
+          >
+            {Links[linkName].name}
           </NavItem>
         ))}
+      </Flex>
+      <Flex paddingBottom={4} width="100%">
+        <NavItem
+          key={Links["settings"].name}
+          href={Links["settings"].href}
+          icon={Links["settings"].icon}
+        >
+          {Links["settings"].name}
+        </NavItem>
       </Flex>
     </VStack>
   );
 };
 
+/** This is only for authenticated users */
 export function AppLayout({ children }: { children: ReactNode }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
@@ -197,7 +226,12 @@ export function AppLayout({ children }: { children: ReactNode }) {
       </Drawer>
       {/* mobilenav */}
       <MobileNav display={{ base: "flex", md: "none" }} onOpen={onOpen} />
-      <Box ml={{ base: 0, md: 60 }} p="4">
+      {/* 
+          TODO: 
+          Consider a different component structure for this.
+          <m>aybe side-by-side flex containers instead of a margin?
+      */}
+      <Box ml={{ base: 0, md: 64 }} p="4">
         {children}
       </Box>
     </Box>

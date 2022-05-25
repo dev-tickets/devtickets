@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
-import { useIsAuthenticated } from "../../src/Features/Auth/supabase";
+import { useIsAuthenticated } from "@/features/Auth/supabase";
 import Router from "next/router";
-import FullScreenLayout from "../../src/Components/Layouts/FullScreenLayout";
+import FullScreenLayout from "@/components/PageLayouts/FullScreenLayout";
 import { Spinner, Stack } from "@chakra-ui/react";
 
 export default function Finish() {

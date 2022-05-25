@@ -13,11 +13,11 @@ import { useForm } from "react-hook-form";
 import {
   useIsAuthenticated,
   useLoginWithGithub,
-} from "../../src/Features/Auth/supabase";
-import { useLoginWithEmail } from "../../src/Features/Auth/supabase";
+} from "@/features/Auth/supabase";
+import { useLoginWithEmail } from "@/features/Auth/supabase";
 import Router from "next/router";
-import { MagicWandIcon, GithubIcon } from "../../src/Components/Icons";
-import FullScreenLayout from "../../src/Components/Layouts/FullScreenLayout";
+import { MagicWandIcon, GithubIcon } from "@/components/Icons";
+import FullScreenLayout from "@/components/PageLayouts/FullScreenLayout";
 
 type InternalRouteStates = "login" | "magic_email_response";
 
@@ -32,7 +32,7 @@ const LoginFormElement = ({
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting, isSubmitted, isSubmitSuccessful },
+    formState: { errors, isSubmitting, isSubmitSuccessful },
   } = useForm<{ email: string }>();
   React.useEffect(() => {
     if (isTheUserAuthenticated) {

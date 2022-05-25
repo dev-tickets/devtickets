@@ -12,10 +12,10 @@ import {
   AuthProvider,
   useUser,
   useIsAuthenticated,
-} from "../src/Features/Auth/supabase";
-import "../src/Features/Sentry";
+} from "@/features/Auth/supabase";
+import "@/features/Sentry";
 import { Provider } from "urql";
-import { useURQLClient } from "../src/Features/URQL";
+import { useURQLClient } from "@/features/URQL";
 import type { NextPage } from "next";
 import { theme } from "../src/Styling/theme";
 
@@ -35,35 +35,25 @@ const AfterAuthComponent = ({
   pageProps,
   router,
 }: AppPropsWithLayout) => {
-  const user = useUser();
-  const isAuthenticated = useIsAuthenticated();
   const { urlqlClient } = useURQLClient();
   const [isMounted, setIsMounted] = useState(false);
-  const currentPath = ((router as any)?.state?.pathname as string) || "";
   useEffect(() => {
-    if (isAuthenticated) {
-      //allow rendering
-      setIsMounted(true);
-      return;
-    } else {
-      if (unauthedPaths.has(currentPath)) {
-        //allow rendering
-        setIsMounted(true);
-        return;
-      }
-    }
-    Router.push("/login");
-  }, [currentPath, isAuthenticated, user]);
+    setIsMounted(true);
+  }, []);
 
   if (!isMounted) {
     // TODO: Set "Loading" UI here
-    return null;
+    return <></>;
   }
 
-  return Component.getLayout!(
-    <Provider value={urlqlClient}>
-      <Component {...pageProps} />
-    </Provider>
+  return (
+    <>
+      {Component.getLayout!(
+        <Provider value={urlqlClient}>
+          <Component {...pageProps} />
+        </Provider>
+      )}
+    </>
   );
 };
 

@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { AppLayout } from "../../src/Components/Layouts/AppLayout";
+import { AppLayout } from "@/components/PageLayouts/AppLayout";
 
 export default function Tickets() {
   return <div>Tickets</div>;
