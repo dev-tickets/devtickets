@@ -55,17 +55,12 @@ const AfterAuthComponent = ({
     Router.push("/login");
   }, [currentPath, isAuthenticated, user]);
 
-  const getLayout = useMemo(
-    () => Component.getLayout ?? ((page: any) => page),
-    [Component.getLayout]
-  );
-
   if (!isMounted) {
     // TODO: Set "Loading" UI here
     return null;
   }
 
-  return getLayout(
+  return Component.getLayout!(
     <Provider value={urlqlClient}>
       <Component {...pageProps} />
     </Provider>

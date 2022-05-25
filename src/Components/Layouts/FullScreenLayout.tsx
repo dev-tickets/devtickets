@@ -5,10 +5,10 @@ type Props = {
   children: React.ReactNode;
 };
 
-const FullScreenLayout = (props: Props) => {
+const FullScreenLayout = ({ children }: Props) => {
   return (
     <Center h="100vh" w="100vw">
-      {props.children}
+      {children}
     </Center>
   );
 };

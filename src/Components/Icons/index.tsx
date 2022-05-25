@@ -8,9 +8,19 @@ import {
   RiSearchLine,
   RiSettings3Line,
   RiTicket2Line,
+  RiHome2Fill,
+  RiHomeHeartLine,
 } from "react-icons/ri";
 
 // Extracted from https://react-icons.github.io/react-icons/icons?name=ri
+
+export const HomeHeartIcon = () => {
+  return <Icon as={RiHomeHeartLine} />;
+};
+
+export const HomeIcon = () => {
+  return <Icon as={RiHome2Fill} />;
+};
 
 export const GithubIcon = () => {
   return <Icon as={RiGithubFill} />;

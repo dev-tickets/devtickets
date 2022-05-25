@@ -1,12 +1,11 @@
-import type { NextPage } from "next";
+import { ReactElement } from "react";
+import { AppLayout } from "../src/Components/Layouts/AppLayout";
 import Home from "../src/Features/Home";
 
-const Index: NextPage = () => {
-  return (
-    <div>
-      <Home />
-    </div>
-  );
-};
+export default function Index() {
+  return <Home />;
+}
 
-export default Index;
+Index.getLayout = function getLayout(page: ReactElement) {
+  return <AppLayout>{page}</AppLayout>;
+};
