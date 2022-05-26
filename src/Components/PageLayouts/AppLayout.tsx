@@ -16,6 +16,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { IconType } from "react-icons";
 import {
   HomeHeartIcon,
@@ -65,37 +66,56 @@ interface NavItemProps extends FlexProps {
 const horizontalPadding = { paddingX: 4 };
 
 const NavItem = ({ icon, href, children, ...rest }: NavItemProps) => {
+  const { pathname } = useRouter();
+  const isActive = React.useMemo(() => {
+    if (href === "/") {
+      return pathname.trim() === href;
+    }
+    return pathname.trim().startsWith(href);
+  }, [href, pathname]);
   return (
-    <Link href={href} passHref>
-      <Flex
-        as={"a"}
-        paddingY={2}
-        style={{ textDecoration: "none" }}
-        width="100%"
-        {...horizontalPadding}
-        align="center"
-        role="group"
-        cursor="pointer"
-        gap={4}
-        _hover={{
-          bg: "cyan.400",
-          color: "white",
-        }}
-        {...rest}
-      >
-        {icon && (
-          <Icon
-            mr="4"
-            fontSize="16"
-            _groupHover={{
-              color: "white",
-            }}
-            as={icon}
-          />
-        )}
-        {children}
-      </Flex>
-    </Link>
+    <Flex
+      id={isActive.toString()}
+      background={isActive ? "pink.300" : "transparent"}
+      color={isActive ? "white" : "inherit"}
+      width="100%"
+      align="center"
+      role="group"
+      cursor="pointer"
+      gap={4}
+      transitionDuration="100ms"
+      transitionProperty="all"
+      transitionTimingFunction="ease-in-out"
+      _hover={{
+        background: "pink.400",
+        color: "white",
+      }}
+      {...rest}
+    >
+      <Link href={href} passHref>
+        <Flex
+          as={"a"}
+          alignItems="center"
+          width="100%"
+          paddingY={2}
+          {...horizontalPadding}
+          gap={4}
+          {...rest}
+        >
+          {icon && (
+            <Icon
+              mr="4"
+              fontSize="16"
+              _groupHover={{
+                color: "white",
+              }}
+              as={icon}
+            />
+          )}
+          {children}
+        </Flex>
+      </Link>
+    </Flex>
   );
 };
 
