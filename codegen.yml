@@ -6,9 +6,9 @@ schema:
 documents:
   - "./src/**/*.graphql"
   - "./src/**/*.gql"
-# hooks:
-#   afterOneFileWrite:
-#     - prettier --write
+hooks:
+  afterOneFileWrite:
+    - dprint fmt
 generates:
   ./src/types.ts:
     plugins:
