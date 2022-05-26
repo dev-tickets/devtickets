@@ -1,6 +1,6 @@
+import { AppLayout } from "@/components/PageLayouts/AppLayout";
 import { useRouter } from "next/router";
 import { ReactElement } from "react";
-import { AppLayout } from "@/components/PageLayouts/AppLayout";
 
 export default function Ticket() {
   const router = useRouter();

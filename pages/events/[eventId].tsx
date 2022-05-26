@@ -1,6 +1,6 @@
+import { ConditionalAppLayout } from "@/components/PageLayouts/ConditionalAppLayout";
 import { useRouter } from "next/router";
 import { ReactElement } from "react";
-import { ConditionalAppLayout } from "@/components/PageLayouts/ConditionalAppLayout";
 
 export default function EventPage() {
   const router = useRouter();

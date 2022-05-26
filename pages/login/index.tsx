@@ -1,23 +1,11 @@
-import React, { ReactElement, useState } from "react";
-import {
-  Button,
-  Stack,
-  Heading,
-  Text,
-  Input,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-} from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
-import {
-  useIsAuthenticated,
-  useLoginWithGithub,
-} from "@/features/Auth/supabase";
-import { useLoginWithEmail } from "@/features/Auth/supabase";
-import Router from "next/router";
-import { MagicWandIcon, GithubIcon } from "@/components/Icons";
+import { GithubIcon, MagicWandIcon } from "@/components/Icons";
 import FullScreenLayout from "@/components/PageLayouts/FullScreenLayout";
+import { useIsAuthenticated, useLoginWithGithub } from "@/features/Auth/supabase";
+import { useLoginWithEmail } from "@/features/Auth/supabase";
+import { Button, FormControl, FormErrorMessage, FormLabel, Heading, Input, Stack, Text } from "@chakra-ui/react";
+import Router from "next/router";
+import React, { ReactElement, useState } from "react";
+import { useForm } from "react-hook-form";
 
 type InternalRouteStates = "login" | "magic_email_response";
 
@@ -81,16 +69,12 @@ const LoginFormElement = ({
               transitionProperty="all"
               borderRadius="lg"
               transitionTimingFunction="ease-in-out"
-              background={
-                "linear-gradient(90.81deg, #F56565 0%, #ED64A6 100%);"
-              }
+              background={"linear-gradient(90.81deg, #F56565 0%, #ED64A6 100%);"}
               _hover={{
-                background:
-                  "linear-gradient(90.81deg, #F56565 0%, #ED64A6 100%)",
+                background: "linear-gradient(90.81deg, #F56565 0%, #ED64A6 100%)",
               }}
               _active={{
-                background:
-                  "linear-gradient(90.81deg, #F56565 0%, #ED64A6 100%)",
+                background: "linear-gradient(90.81deg, #F56565 0%, #ED64A6 100%)",
               }}
               color="white"
               leftIcon={<MagicWandIcon />}
@@ -167,8 +151,7 @@ const MagicEmailFormElement = ({
 
 export default function Login() {
   // TODO: Handle UI for isSubmitSuccessful
-  const [internalRoute, setInternalRoute] =
-    useState<InternalRouteStates>("login");
+  const [internalRoute, setInternalRoute] = useState<InternalRouteStates>("login");
   return (
     <Stack
       spacing={0}
@@ -181,12 +164,8 @@ export default function Login() {
       alignItems="center"
       justifyContent="center"
     >
-      {internalRoute === "login" && (
-        <LoginFormElement setInternalRoute={setInternalRoute} />
-      )}
-      {internalRoute === "magic_email_response" && (
-        <MagicEmailFormElement setInternalRoute={setInternalRoute} />
-      )}
+      {internalRoute === "login" && <LoginFormElement setInternalRoute={setInternalRoute} />}
+      {internalRoute === "magic_email_response" && <MagicEmailFormElement setInternalRoute={setInternalRoute} />}
     </Stack>
   );
 }

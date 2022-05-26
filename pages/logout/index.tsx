@@ -1,6 +1,6 @@
-import React from "react";
-import type { NextPage } from "next";
 import { useAuthContext } from "@/features/Auth/supabase";
+import type { NextPage } from "next";
+import React from "react";
 
 const Logout: NextPage = () => {
   const { logout } = useAuthContext();

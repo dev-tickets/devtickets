@@ -38,7 +38,7 @@ export const GetCommunitiesDocument = gql`
 `;
 
 export function useGetCommunitiesQuery(
-  options?: Omit<Urql.UseQueryArgs<GetCommunitiesQueryVariables>, "query">
+  options?: Omit<Urql.UseQueryArgs<GetCommunitiesQueryVariables>, "query">,
 ) {
   return Urql.useQuery<GetCommunitiesQuery>({
     query: GetCommunitiesDocument,

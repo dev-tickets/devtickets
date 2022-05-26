@@ -1,5 +1,5 @@
-import { createClient } from "urql";
 import { useAuthContext, useUser } from "@/features/Auth/supabase";
+import { createClient } from "urql";
 
 export const useURQLClient = () => {
   const { accessToken } = useAuthContext();

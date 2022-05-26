@@ -1,30 +1,24 @@
-import React, { ReactNode } from "react";
 import {
-  IconButton,
   Box,
+  BoxProps,
   CloseButton,
-  Flex,
-  Icon,
-  StackDivider,
-  useColorModeValue,
   Drawer,
   DrawerContent,
-  Text,
-  useDisclosure,
-  BoxProps,
+  Flex,
   FlexProps,
+  Icon,
+  IconButton,
+  StackDivider,
+  Text,
+  useColorModeValue,
+  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import React, { ReactNode } from "react";
 import { IconType } from "react-icons";
-import {
-  HomeHeartIcon,
-  HamburgerMenuIcon,
-  HomeIcon,
-  SettingsIcon,
-  TicketIcon,
-} from "../Icons";
+import { HamburgerMenuIcon, HomeHeartIcon, HomeIcon, SettingsIcon, TicketIcon } from "../Icons";
 
 interface LinkItemProps {
   name: string;
@@ -246,11 +240,13 @@ export function AppLayout({ children }: { children: ReactNode }) {
       </Drawer>
       {/* mobilenav */}
       <MobileNav display={{ base: "flex", md: "none" }} onOpen={onOpen} />
-      {/* 
-          TODO: 
+      {
+        /*
+          TODO:
           Consider a different component structure for this.
           <m>aybe side-by-side flex containers instead of a margin?
-      */}
+      */
+      }
       <Box ml={{ base: 0, md: 64 }} p="4">
         {children}
       </Box>

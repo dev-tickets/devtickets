@@ -1,16 +1,15 @@
 import { createClient, User } from "@supabase/supabase-js";
-import React from "react";
 import { useRouter } from "next/router";
+import React from "react";
 
-const dashboardMainURL =
-  process.env.NEXT_PUBLIC_APP_ENV === "staging" && typeof window !== "undefined"
-    ? // IF this is "staging" it means we are on a pages.dev env.
-      window.location.origin
-    : process.env.NEXT_PUBLIC_APP_HOST!;
+const dashboardMainURL = process.env.NEXT_PUBLIC_APP_ENV === "staging" && typeof window !== "undefined"
+  ? // IF this is "staging" it means we are on a pages.dev env.
+    window.location.origin
+  : process.env.NEXT_PUBLIC_APP_HOST!;
 const loginCallbackURL = dashboardMainURL + "/login/finish";
 export const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_API_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_API_TOKEN!
+  process.env.NEXT_PUBLIC_SUPABASE_API_TOKEN!,
 );
 
 export const useLoginWithEmail = () => {
@@ -21,7 +20,7 @@ export const useLoginWithEmail = () => {
       },
       {
         redirectTo: loginCallbackURL,
-      }
+      },
     );
   }, []);
 };
@@ -34,7 +33,7 @@ export const useLoginWithGithub = () => {
       },
       {
         redirectTo: loginCallbackURL,
-      }
+      },
     );
   }, []);
 };
@@ -55,7 +54,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const [user, setUser] = React.useState(supabase.auth.user());
   const [accessToken, setAccessToken] = React.useState(
-    supabase.auth.session()?.access_token
+    supabase.auth.session()?.access_token,
   );
 
   React.useEffect(() => {
@@ -98,7 +97,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       },
       {
         redirectTo: loginCallbackURL,
-      }
+      },
     );
   }, []);
 
@@ -115,7 +114,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       logout,
       accessToken,
     }),
-    [login, logout, user, accessToken]
+    [login, logout, user, accessToken],
   );
 
   return <Context.Provider value={exposed}>{children}</Context.Provider>;

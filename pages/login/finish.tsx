@@ -1,8 +1,8 @@
-import React, { ReactElement } from "react";
-import { useIsAuthenticated } from "@/features/Auth/supabase";
-import Router from "next/router";
 import FullScreenLayout from "@/components/PageLayouts/FullScreenLayout";
+import { useIsAuthenticated } from "@/features/Auth/supabase";
 import { Spinner, Stack } from "@chakra-ui/react";
+import Router from "next/router";
+import React, { ReactElement } from "react";
 
 export default function Finish() {
   const isTheUserAuthenticated = useIsAuthenticated();

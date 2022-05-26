@@ -1,15 +1,15 @@
 import { Icon } from "@chakra-ui/react";
 import {
   RiGithubFill,
+  RiHome2Fill,
+  RiHomeHeartLine,
   RiMagicFill,
   RiMagicLine,
-  RiUser2Fill,
   RiMenuLine,
   RiSearchLine,
   RiSettings3Line,
   RiTicket2Line,
-  RiHome2Fill,
-  RiHomeHeartLine,
+  RiUser2Fill,
 } from "react-icons/ri";
 
 // Extracted from https://react-icons.github.io/react-icons/icons?name=ri

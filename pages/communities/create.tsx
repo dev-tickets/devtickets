@@ -1,7 +1,7 @@
+import { AppLayout } from "@/components/PageLayouts/AppLayout";
 import { Heading } from "@chakra-ui/react";
 import { ReactElement } from "react";
 import { useForm } from "react-hook-form";
-import { AppLayout } from "@/components/PageLayouts/AppLayout";
 
 export default function Communities() {
   const {
