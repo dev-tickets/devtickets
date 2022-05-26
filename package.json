@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "fmt": "dprint check",
+    "fmt:check": "dprint check",
+    "fmt": "dprint fmt",
     "prebuild": "yarn fmt && yarn lint",
     "build": "next build",
     "start": "next start",

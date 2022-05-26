@@ -140,7 +140,9 @@ export type Mutation = {
   /** Adds one or more `ticket_templateInsertResponse` records to the collection */
   insertIntoticket_templateCollection?: Maybe<Ticket_TemplateInsertResponse>;
   /** Adds one or more `ticket_transactionsInsertResponse` records to the collection */
-  insertIntoticket_transactionsCollection?: Maybe<Ticket_TransactionsInsertResponse>;
+  insertIntoticket_transactionsCollection?: Maybe<
+    Ticket_TransactionsInsertResponse
+  >;
   /** Updates zero or more records in the collection */
   updatecommunitiesCollection: CommunitiesUpdateResponse;
   /** Updates zero or more records in the collection */

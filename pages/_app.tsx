@@ -4,7 +4,11 @@ import "@fontsource/work-sans/700.css"; // Weight 700.
 import "@fontsource/work-sans/variable-italic.css"; // Italic variant.
 import "@fontsource/work-sans/variable.css"; // Contains ONLY variable weights and no other axes.
 
-import { AuthProvider, useIsAuthenticated, useUser } from "@/features/Auth/supabase";
+import {
+  AuthProvider,
+  useIsAuthenticated,
+  useUser,
+} from "@/features/Auth/supabase";
 import "@/features/Sentry";
 import { useURQLClient } from "@/features/URQL";
 import { ChakraProvider, CSSReset } from "@chakra-ui/react";
@@ -59,7 +63,9 @@ function MyApp(props: AppProps) {
       <ChakraProvider theme={theme}>
         <CSSReset />
         <AuthProvider>
-          {typeof window === "undefined" ? null : <AfterAuthComponent {...props} />}
+          {typeof window === "undefined"
+            ? null
+            : <AfterAuthComponent {...props} />}
         </AuthProvider>
       </ChakraProvider>
     </>

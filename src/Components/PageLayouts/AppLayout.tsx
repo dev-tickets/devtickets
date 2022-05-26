@@ -18,7 +18,13 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { ReactNode } from "react";
 import { IconType } from "react-icons";
-import { HamburgerMenuIcon, HomeHeartIcon, HomeIcon, SettingsIcon, TicketIcon } from "../Icons";
+import {
+  HamburgerMenuIcon,
+  HomeHeartIcon,
+  HomeIcon,
+  SettingsIcon,
+  TicketIcon,
+} from "../Icons";
 
 interface LinkItemProps {
   name: string;
