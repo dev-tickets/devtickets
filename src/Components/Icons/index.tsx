@@ -3,7 +3,7 @@ import {
   RiGithubFill,
   RiHome2Fill,
   RiHomeHeartLine,
-  RiMagicFill,
+  RiInformationLine,
   RiMagicLine,
   RiMenuLine,
   RiSearchLine,
@@ -13,6 +13,10 @@ import {
 } from "react-icons/ri";
 
 // Extracted from https://react-icons.github.io/react-icons/icons?name=ri
+
+export const InformationIcon = () => {
+  return <Icon as={RiInformationLine} />;
+};
 
 export const HomeHeartIcon = () => {
   return <Icon as={RiHomeHeartLine} />;

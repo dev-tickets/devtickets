@@ -28,7 +28,9 @@
     "react-dom": "18.0.0",
     "react-hook-form": "^7.31.2",
     "react-icons": "^4.3.1",
+    "slugify": "^1.6.5",
     "urql": "^2.2.0",
+    "uuid": "^8.3.2",
     "wrangler": "^0.0.27"
   },
   "devDependencies": {
@@ -45,8 +47,9 @@
     "@types/node": "17.0.25",
     "@types/react": "18.0.6",
     "@types/react-dom": "18.0.2",
-    "dprint": "^0.29.1",
+    "@types/uuid": "^8.3.4",
     "dotenv": "^16.0.0",
+    "dprint": "^0.29.1",
     "eslint": "8.14.0",
     "eslint-config-next": "12.1.5",
     "husky": "^8.0.1",

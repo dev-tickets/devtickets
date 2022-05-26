@@ -1,21 +1,15 @@
 import { AppLayout } from "@/components/PageLayouts/AppLayout";
-import { Heading } from "@chakra-ui/react";
+import { FormPageSectionLayout } from "@/components/PageSectionLayout/form";
+import CreateCommunity from "@/features/CreateCommunities";
 import { ReactElement } from "react";
-import { useForm } from "react-hook-form";
 
 export default function Communities() {
-  const {
-    handleSubmit,
-    register,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
-  } = useForm<{ name: string; description: string }>();
   return (
-    <div>
-      <Heading size={"2xl"}>Create Community</Heading>
-    </div>
+    <FormPageSectionLayout title="Nueva Comunidad">
+      <CreateCommunity />
+    </FormPageSectionLayout>
   );
 }
-
 Communities.getLayout = function getLayout(page: ReactElement) {
   return <AppLayout>{page}</AppLayout>;
 };
