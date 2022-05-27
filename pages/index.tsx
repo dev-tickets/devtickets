@@ -1,5 +1,5 @@
-import { AppLayout } from "@/components/PageLayouts/AppLayout";
-import Home from "@/features/Home";
+import { AppLayout } from "@/components/ApplicationLayouts/AppLayout";
+import { Home } from "@/features/Home";
 import { ReactElement } from "react";
 
 export default function Index() {

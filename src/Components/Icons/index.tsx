@@ -12,6 +12,8 @@ import {
   RiUser2Fill,
 } from "react-icons/ri";
 
+import { AiFillPlusCircle } from "react-icons/ai";
+
 // Extracted from https://react-icons.github.io/react-icons/icons?name=ri
 
 export const InformationIcon = () => {
@@ -36,6 +38,10 @@ export const MagicWandIcon = () => {
 
 export const UserIcon = () => {
   return <Icon as={RiUser2Fill} />;
+};
+
+export const PlusIcon = () => {
+  return <Icon as={AiFillPlusCircle} />;
 };
 
 export const HamburgerMenuIcon = () => {

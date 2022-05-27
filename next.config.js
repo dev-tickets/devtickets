@@ -13,6 +13,9 @@ const nextConfig = {
   experimental: {
     emotion: true,
   },
+  images: {
+    domains: ["images.unsplash.com"],
+  },
   optimizeFonts: true,
 };
 

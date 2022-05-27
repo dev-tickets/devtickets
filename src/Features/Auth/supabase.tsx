@@ -106,7 +106,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     await supabase.auth.signOut();
     setUser(null);
     setAccessToken(undefined);
-  }, []);
+    router.replace("/login");
+  }, [router]);
 
   const exposed = React.useMemo(
     () => ({

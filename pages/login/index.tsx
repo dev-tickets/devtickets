@@ -1,5 +1,5 @@
+import FullScreenLayout from "@/components/ApplicationLayouts/FullScreenLayout";
 import { GithubIcon, MagicWandIcon } from "@/components/Icons";
-import FullScreenLayout from "@/components/PageLayouts/FullScreenLayout";
 import {
   useIsAuthenticated,
   useLoginWithGithub,

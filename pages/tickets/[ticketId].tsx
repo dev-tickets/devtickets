@@ -1,4 +1,4 @@
-import { AppLayout } from "@/components/PageLayouts/AppLayout";
+import { AppLayout } from "@/components/ApplicationLayouts/AppLayout";
 import { useRouter } from "next/router";
 import { ReactElement } from "react";
 

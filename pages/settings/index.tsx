@@ -1,4 +1,4 @@
-import { AppLayout } from "@/components/PageLayouts/AppLayout";
+import { AppLayout } from "@/components/ApplicationLayouts/AppLayout";
 import { ReactElement } from "react";
 
 export default function Settings() {

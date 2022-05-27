@@ -1,4 +1,4 @@
-import { ConditionalAppLayout } from "@/components/PageLayouts/ConditionalAppLayout";
+import { ConditionalAppLayout } from "@/components/ApplicationLayouts/ConditionalAppLayout";
 import { useRouter } from "next/router";
 import { ReactElement } from "react";
 

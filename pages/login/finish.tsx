@@ -1,4 +1,4 @@
-import FullScreenLayout from "@/components/PageLayouts/FullScreenLayout";
+import FullScreenLayout from "@/components/ApplicationLayouts/FullScreenLayout";
 import { useIsAuthenticated } from "@/features/Auth/supabase";
 import { Spinner, Stack } from "@chakra-ui/react";
 import Router from "next/router";

@@ -1,4 +1,13 @@
 import {
+  HamburgerMenuIcon,
+  HomeHeartIcon,
+  HomeIcon,
+  PlusIcon,
+  SettingsIcon,
+  TicketIcon,
+} from "@/components/Icons";
+import { useIsAuthenticated } from "@/features/Auth/supabase";
+import {
   Box,
   BoxProps,
   CloseButton,
@@ -19,12 +28,9 @@ import { useRouter } from "next/router";
 import React, { ReactNode } from "react";
 import { IconType } from "react-icons";
 import {
-  HamburgerMenuIcon,
-  HomeHeartIcon,
-  HomeIcon,
-  SettingsIcon,
-  TicketIcon,
-} from "../Icons";
+  GetUserInformationQuery,
+  useGetUserInformationQuery,
+} from "./getUserInformation.generated";
 
 interface LinkItemProps {
   name: string;
@@ -38,6 +44,11 @@ const Links = {
     href: "/communities",
     name: "Tus Comunidades",
     icon: HomeHeartIcon,
+  },
+  newCommunities: {
+    href: "/communities/create",
+    name: "Create Community",
+    icon: PlusIcon,
   },
   yourTickets: { href: "/tickets", name: "Tus Tickets", icon: TicketIcon },
   settings: {
@@ -55,24 +66,25 @@ const LinkItems: Array<keyof typeof Links> = [
 
 interface SidebarProps extends BoxProps {
   onClose: () => void;
-}
-
-interface NavItemProps extends FlexProps {
-  icon: IconType;
-  href: string;
-  children: string;
+  userInformationQueryData?: GetUserInformationQuery;
 }
 
 const horizontalPadding = { paddingX: 4 };
 
-const NavItem = ({ icon, href, children, ...rest }: NavItemProps) => {
+const NavItem = ({ id }: { id: keyof typeof Links }) => {
+  const linkData = Links[id];
   const { pathname } = useRouter();
+  const { icon, name, href } = linkData;
   const isActive = React.useMemo(() => {
     if (href === "/") {
       return pathname.trim() === href;
     }
     return pathname.trim().startsWith(href);
   }, [href, pathname]);
+  if (!linkData) {
+    return null;
+  }
+
   return (
     <Flex
       id={isActive.toString()}
@@ -90,7 +102,6 @@ const NavItem = ({ icon, href, children, ...rest }: NavItemProps) => {
         background: "pink.400",
         color: "white",
       }}
-      {...rest}
     >
       <Link href={href} passHref>
         <Flex
@@ -100,7 +111,6 @@ const NavItem = ({ icon, href, children, ...rest }: NavItemProps) => {
           paddingY={2}
           {...horizontalPadding}
           gap={4}
-          {...rest}
         >
           {icon && (
             <Icon
@@ -112,7 +122,7 @@ const NavItem = ({ icon, href, children, ...rest }: NavItemProps) => {
               as={icon}
             />
           )}
-          {children}
+          {name}
         </Flex>
       </Link>
     </Flex>
@@ -172,14 +182,18 @@ const DesktopTitle = ({ onClose }: { onClose: () => void }) => {
   );
 };
 
-const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+const SidebarContent = (
+  { onClose, userInformationQueryData, ...rest }: SidebarProps,
+) => {
   return (
     <VStack
       gap={2}
       h="full"
       id="qqqq"
+      overflow="scroll"
       pos="fixed"
       borderRight="1px"
+      paddingY={2}
       alignItems="center"
       flexDirection="column"
       justifyContent="flex-start"
@@ -191,7 +205,6 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
     >
       <DesktopTitle onClose={onClose} />
       <Flex
-        paddingTop={2}
         gap={2}
         alignItems="center"
         justifyContent="flex-start"
@@ -202,33 +215,30 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         {LinkItems.map((linkName) => (
           <NavItem
             key={Links[linkName].name}
-            href={Links[linkName].href}
-            icon={Links[linkName].icon}
-          >
-            {Links[linkName].name}
-          </NavItem>
+            id={linkName}
+          />
         ))}
       </Flex>
-      <Flex paddingBottom={4} width="100%">
-        <NavItem
-          key={Links["settings"].name}
-          href={Links["settings"].href}
-          icon={Links["settings"].icon}
-        >
-          {Links["settings"].name}
-        </NavItem>
+      {userInformationQueryData?.super_adminsCollection?.edges.length && (
+        <Flex width="100%">
+          <NavItem id="newCommunities" />
+        </Flex>
+      )}
+      <Flex width="100%">
+        <NavItem id="settings" />
       </Flex>
     </VStack>
   );
 };
 
-/** This is only for authenticated users */
-export function AppLayout({ children }: { children: ReactNode }) {
+const ActualLayout = ({ children }: { children: ReactNode }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [results] = useGetUserInformationQuery();
   return (
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
       <SidebarContent
-        onClose={() => onClose}
+        userInformationQueryData={results.data}
+        onClose={onClose}
         display={{ base: "none", md: "flex" }}
       />
       <Drawer
@@ -241,7 +251,10 @@ export function AppLayout({ children }: { children: ReactNode }) {
         size="full"
       >
         <DrawerContent>
-          <SidebarContent onClose={onClose} />
+          <SidebarContent
+            userInformationQueryData={results.data}
+            onClose={onClose}
+          />
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}
@@ -258,4 +271,17 @@ export function AppLayout({ children }: { children: ReactNode }) {
       </Box>
     </Box>
   );
+};
+
+/** This is only for authenticated users */
+export function AppLayout({ children }: { children: ReactNode }) {
+  // This is an authenticated-only layout, so first we check if the user is
+  // authenticated If they are not, we send them to login
+  const isAuthenticated = useIsAuthenticated();
+  const router = useRouter();
+  if (!isAuthenticated) {
+    router.push("/login");
+    return <p></p>;
+  }
+  return <ActualLayout>{children}</ActualLayout>;
 }

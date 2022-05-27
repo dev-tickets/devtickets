@@ -6,7 +6,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const FormPageSectionLayout = (props: Props) => {
+export const Page = (props: Props) => {
   return (
     <Flex
       direction={"column"}

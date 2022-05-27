@@ -1,13 +1,15 @@
+import FullScreenLayout from "@/components/ApplicationLayouts/FullScreenLayout";
 import { useAuthContext } from "@/features/Auth/supabase";
-import type { NextPage } from "next";
-import React from "react";
+import React, { ReactElement } from "react";
 
-const Logout: NextPage = () => {
+export default function Logout() {
   const { logout } = useAuthContext();
   React.useEffect(() => {
     logout();
   }, [logout]);
   return <div></div>;
-};
+}
 
-export default Logout;
+Logout.getLayout = function getLayout(page: ReactElement) {
+  return <FullScreenLayout>{page}</FullScreenLayout>;
+};
