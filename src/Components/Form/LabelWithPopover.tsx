@@ -1,5 +1,6 @@
 import {
   Flex,
+  FormLabel,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -19,7 +20,7 @@ type PopoverType = {
 };
 
 export type LabelWithPopoverProps = {
-  label?: React.ReactNode;
+  label?: string;
   popover?: PopoverType;
   elementName?: string;
 };
@@ -56,13 +57,15 @@ export const LabelWithPopover = ({
   elementName,
 }: LabelWithPopoverProps) => {
   return (
-    <Flex direction={"row"} gap={2} alignItems="center">
-      <>
-        <label htmlFor={elementName}>
-          <Text fontSize="large">{label}</Text>
-        </label>
-        {popover && <LabelPopover {...popover} />}
-      </>
-    </Flex>
+    <FormLabel
+      display={"flex"}
+      gap={2}
+      alignItems="center"
+      flexDirection="row"
+      htmlFor={elementName}
+    >
+      {label}
+      {popover && <LabelPopover {...popover} />}
+    </FormLabel>
   );
 };

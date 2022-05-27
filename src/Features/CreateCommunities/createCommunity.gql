@@ -1,0 +1,12 @@
+mutation CreateCommunity($communitiesInsertInput: communitiesInsertInput!) {
+	insertIntocommunitiesCollection(objects: [$communitiesInsertInput]) {
+		records {
+			id
+			created_at
+			name
+			slug
+			description
+			status
+		}
+	}
+}

@@ -5,14 +5,10 @@ export type Exact<T extends { [key: string]: unknown }> = {
 };
 export type MakeOptional<T, K extends keyof T> =
   & Omit<T, K>
-  & {
-    [SubKey in K]?: Maybe<T[SubKey]>;
-  };
+  & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> =
   & Omit<T, K>
-  & {
-    [SubKey in K]: Maybe<T[SubKey]>;
-  };
+  & { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -126,6 +122,8 @@ export type Mutation = {
   /** Deletes zero or more records from the collection */
   deleteFromeventsCollection: EventsDeleteResponse;
   /** Deletes zero or more records from the collection */
+  deleteFromsuper_adminsCollection: Super_AdminsDeleteResponse;
+  /** Deletes zero or more records from the collection */
   deleteFromticket_templateCollection: Ticket_TemplateDeleteResponse;
   /** Deletes zero or more records from the collection */
   deleteFromticket_transactionsCollection: Ticket_TransactionsDeleteResponse;
@@ -137,6 +135,8 @@ export type Mutation = {
   insertIntocountriesCollection?: Maybe<CountriesInsertResponse>;
   /** Adds one or more `eventsInsertResponse` records to the collection */
   insertIntoeventsCollection?: Maybe<EventsInsertResponse>;
+  /** Adds one or more `super_adminsInsertResponse` records to the collection */
+  insertIntosuper_adminsCollection?: Maybe<Super_AdminsInsertResponse>;
   /** Adds one or more `ticket_templateInsertResponse` records to the collection */
   insertIntoticket_templateCollection?: Maybe<Ticket_TemplateInsertResponse>;
   /** Adds one or more `ticket_transactionsInsertResponse` records to the collection */
@@ -151,6 +151,8 @@ export type Mutation = {
   updatecountriesCollection: CountriesUpdateResponse;
   /** Updates zero or more records in the collection */
   updateeventsCollection: EventsUpdateResponse;
+  /** Updates zero or more records in the collection */
+  updatesuper_adminsCollection: Super_AdminsUpdateResponse;
   /** Updates zero or more records in the collection */
   updateticket_templateCollection: Ticket_TemplateUpdateResponse;
   /** Updates zero or more records in the collection */
@@ -179,6 +181,12 @@ export type MutationDeleteFromcountriesCollectionArgs = {
 export type MutationDeleteFromeventsCollectionArgs = {
   atMost?: Scalars["Int"];
   filter?: InputMaybe<EventsFilter>;
+};
+
+/** The root type for creating and mutating data */
+export type MutationDeleteFromsuper_AdminsCollectionArgs = {
+  atMost?: Scalars["Int"];
+  filter?: InputMaybe<Super_AdminsFilter>;
 };
 
 /** The root type for creating and mutating data */
@@ -211,6 +219,11 @@ export type MutationInsertIntocountriesCollectionArgs = {
 /** The root type for creating and mutating data */
 export type MutationInsertIntoeventsCollectionArgs = {
   objects: Array<EventsInsertInput>;
+};
+
+/** The root type for creating and mutating data */
+export type MutationInsertIntosuper_AdminsCollectionArgs = {
+  objects: Array<Super_AdminsInsertInput>;
 };
 
 /** The root type for creating and mutating data */
@@ -249,6 +262,13 @@ export type MutationUpdateeventsCollectionArgs = {
   atMost?: Scalars["Int"];
   filter?: InputMaybe<EventsFilter>;
   set: EventsUpdateInput;
+};
+
+/** The root type for creating and mutating data */
+export type MutationUpdatesuper_AdminsCollectionArgs = {
+  atMost?: Scalars["Int"];
+  filter?: InputMaybe<Super_AdminsFilter>;
+  set: Super_AdminsUpdateInput;
 };
 
 /** The root type for creating and mutating data */
@@ -292,6 +312,8 @@ export type Query = {
   countriesCollection?: Maybe<CountriesConnection>;
   /** A pagable collection of type `events` */
   eventsCollection?: Maybe<EventsConnection>;
+  /** A pagable collection of type `super_admins` */
+  super_adminsCollection?: Maybe<Super_AdminsConnection>;
   /** A pagable collection of type `ticket_template` */
   ticket_templateCollection?: Maybe<Ticket_TemplateConnection>;
   /** A pagable collection of type `ticket_transactions` */
@@ -336,6 +358,16 @@ export type QueryEventsCollectionArgs = {
   first?: InputMaybe<Scalars["Int"]>;
   last?: InputMaybe<Scalars["Int"]>;
   orderBy?: InputMaybe<Array<EventsOrderBy>>;
+};
+
+/** The root type for querying data */
+export type QuerySuper_AdminsCollectionArgs = {
+  after?: InputMaybe<Scalars["Cursor"]>;
+  before?: InputMaybe<Scalars["Cursor"]>;
+  filter?: InputMaybe<Super_AdminsFilter>;
+  first?: InputMaybe<Scalars["Int"]>;
+  last?: InputMaybe<Scalars["Int"]>;
+  orderBy?: InputMaybe<Array<Super_AdminsOrderBy>>;
 };
 
 /** The root type for querying data */
@@ -783,6 +815,73 @@ export type EventsUpdateResponse = {
   affectedCount: Scalars["Int"];
   /** Array of records impacted by the mutation */
   records: Array<Events>;
+};
+
+export type Super_Admins = {
+  __typename?: "super_admins";
+  created_at?: Maybe<Scalars["Datetime"]>;
+  id: Scalars["UUID"];
+  user_id: Scalars["UUID"];
+};
+
+export type Super_AdminsConnection = {
+  __typename?: "super_adminsConnection";
+  edges: Array<Super_AdminsEdge>;
+  pageInfo: PageInfo;
+};
+
+export type Super_AdminsDeleteResponse = {
+  __typename?: "super_adminsDeleteResponse";
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars["Int"];
+  /** Array of records impacted by the mutation */
+  records: Array<Super_Admins>;
+};
+
+export type Super_AdminsEdge = {
+  __typename?: "super_adminsEdge";
+  cursor: Scalars["String"];
+  node?: Maybe<Super_Admins>;
+};
+
+export type Super_AdminsFilter = {
+  created_at?: InputMaybe<DatetimeFilter>;
+  id?: InputMaybe<UuidFilter>;
+  user_id?: InputMaybe<UuidFilter>;
+};
+
+export type Super_AdminsInsertInput = {
+  created_at?: InputMaybe<Scalars["Datetime"]>;
+  id?: InputMaybe<Scalars["UUID"]>;
+  user_id?: InputMaybe<Scalars["UUID"]>;
+};
+
+export type Super_AdminsInsertResponse = {
+  __typename?: "super_adminsInsertResponse";
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars["Int"];
+  /** Array of records impacted by the mutation */
+  records: Array<Super_Admins>;
+};
+
+export type Super_AdminsOrderBy = {
+  created_at?: InputMaybe<OrderByDirection>;
+  id?: InputMaybe<OrderByDirection>;
+  user_id?: InputMaybe<OrderByDirection>;
+};
+
+export type Super_AdminsUpdateInput = {
+  created_at?: InputMaybe<Scalars["Datetime"]>;
+  id?: InputMaybe<Scalars["UUID"]>;
+  user_id?: InputMaybe<Scalars["UUID"]>;
+};
+
+export type Super_AdminsUpdateResponse = {
+  __typename?: "super_adminsUpdateResponse";
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars["Int"];
+  /** Array of records impacted by the mutation */
+  records: Array<Super_Admins>;
 };
 
 export type Ticket_Template = {
