@@ -1,27 +1,22 @@
 import {
   CalendarIcons,
-  GithubIcon,
   HamburgerMenuIcon,
   HomeHeartIcon,
   HomeIcon,
-  MailIcon,
   PlusIcon,
   SettingsIcon,
   TicketIcon,
-  TwitterIcon,
 } from "@/components/Icons";
 import { useIsAuthenticated, useUser } from "@/features/Auth/supabase";
 import {
   Avatar,
   Box,
   BoxProps,
-  chakra,
   CloseButton,
   Divider,
   Drawer,
   DrawerContent,
   Flex,
-  Icon,
   IconButton,
   Text,
   useColorModeValue,
@@ -54,10 +49,15 @@ interface LinkItemProps {
 
 const Links = {
   home: { href: "/", name: "Home", icon: HomeIcon },
-  yourCommunities: {
+  communities: {
     href: "/communities",
     name: "Comunidades",
     icon: HomeHeartIcon,
+  },
+  events: {
+    href: "/events",
+    name: "Eventos",
+    icon: CalendarIcons,
   },
   upcomingEvents: {
     href: "/events/upcoming",
@@ -84,9 +84,10 @@ const Links = {
 
 const LinkItems: Array<keyof typeof Links> = [
   "home",
+  "events",
   "createEvent",
   "upcomingEvents",
-  "yourCommunities",
+  "communities",
   "yourTickets",
 ];
 

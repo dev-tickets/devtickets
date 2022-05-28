@@ -8,10 +8,21 @@ import slugify from "slugify";
 import React from "react";
 import { useCreateEventMutation } from "./createCommunity.generated";
 
-type FormInputs = { name: string; description: string; slug: string };
+type FormInputs = {
+  address: string;
+  city: string;
+  community_id: string;
+  description: string;
+  map_link: string;
+  name: string;
+  status: string;
+  end_date: Date;
+  start_date: Date;
+  country: number;
+};
 
-const CreateCommunity = () => {
-  const [, createCommunityMutation] = useCreateEventMutation();
+const CreateEvent = () => {
+  const [, createEventMutation] = useCreateEventMutation();
   const {
     handleSubmit,
     register,
@@ -29,33 +40,33 @@ const CreateCommunity = () => {
     <FormControl isInvalid={hasErrors}>
       <Flex
         onSubmit={handleSubmit(React.useCallback(async (data) => {
-          const response = await createCommunityMutation({
-            eventInsertInput: {
-              description: data.description,
-              name: data.name,
-            },
-          });
-          if (response.error) {
-            if (
-              response.error?.name === "CombinedError"
-              && response.error.graphQLErrors
-            ) {
-              response.error.graphQLErrors.forEach(graphqlError => {
-                if (
-                  graphqlError.message
-                    === "duplicate key value violates unique constraint \"unique_slug_names\""
-                ) {
-                  setError("slug", {
-                    type: "custom",
-                    message: "Slug is already used!",
-                  }, { shouldFocus: true });
-                }
-              });
-            }
-          } else {
-            reset();
-          }
-        }, [createCommunityMutation, reset, setError]))}
+          // const response = await createEventMutation({
+          //   eventInsertInput: {
+          //     description: data.description,
+          //     name: data.name,
+          //   },
+          // });
+          // if (response.error) {
+          //   if (
+          //     response.error?.name === "CombinedError"
+          //     && response.error.graphQLErrors
+          //   ) {
+          //     response.error.graphQLErrors.forEach(graphqlError => {
+          //       if (
+          //         graphqlError.message
+          //           === "duplicate key value violates unique constraint \"unique_slug_names\""
+          //       ) {
+          //         setError("slug", {
+          //           type: "custom",
+          //           message: "Slug is already used!",
+          //         }, { shouldFocus: true });
+          //       }
+          //     });
+          //   }
+          // } else {
+          //   reset();
+          // }
+        }, [createEventMutation, reset, setError]))}
         as="form"
         bg="white"
         w="100%"
@@ -74,40 +85,34 @@ const CreateCommunity = () => {
         <TextInput
           autoFocus
           placeholder="Por ej: JSConf Chile"
-          label="Nombre de la comunidad"
+          label="Nombre del evento"
           errors={errors}
-          register={register("name", {
-            required: "Ingresa un Nombre para la Comunidad",
+          register={register("country", {
+            required: "Ingresa un Nombre paral evento",
           })}
         />
         <TextInput
-          register={register("slug", {
-            required: "Ingresa un slug para la comunidad",
+          register={register("address", {
+            required: "Ingresa un slug paral evento",
           })}
-          label="Slug de la Comunidad"
+          label="Slug del evento"
           errors={errors}
           popover={{
             popoverHeader: "Id url-friendly",
             popoverBody:
-              `El id para la URL de tu comunidad.\n Así aparecerá en el sitio: \n https://nuestra_url.com/comunidad/${
-                slugify(watch("slug", "") || "")
-              }`,
+              `El id para la URL de tu comunidad.\n Así aparecerá en el sitio: \n https://nuestra_url.com/comunidad/`,
             popoverIcon: InformationIcon,
           }}
-          helperText={`
-          El id para la URL de tu comunidad, \n Por Ejemplo: https://nuestra_url.com/comunidad/${
-            slugify(watch("slug", "") || "")
-          }
-          `}
+          helperText={`El id para la URL de tu comunidad, \n Por Ejemplo: https://nuestra_url.com/comunidad/`}
         />
 
         <TextArea
-          label="Nombre de la comunidad"
+          label="Descripción del evento"
           minHeight={200}
           resize="none"
           errors={errors}
           register={register("description", {
-            required: "Ingresa una descripción para la comunidad",
+            required: "Ingresa una descripción paral evento",
           })}
         />
         <Flex justifyContent="flex-end">
@@ -125,4 +130,4 @@ const CreateCommunity = () => {
   );
 };
 
-export default CreateCommunity;
+export default CreateEvent;

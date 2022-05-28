@@ -6,7 +6,7 @@ import {
   Textarea as ChakraTextArea,
 } from "@chakra-ui/react";
 import React from "react";
-import { UseFormRegisterReturn } from "react-hook-form";
+import { FieldError, UseFormRegisterReturn } from "react-hook-form";
 import { LabelWithPopover, LabelWithPopoverProps } from "./LabelWithPopover";
 
 type TextAreaProps =
@@ -14,6 +14,7 @@ type TextAreaProps =
   & Pick<LabelWithPopoverProps, "label" | "popover">
   & {
     register: UseFormRegisterReturn;
+    errors: Record<string, FieldError | undefined>;
     helperText?: string;
   };
 

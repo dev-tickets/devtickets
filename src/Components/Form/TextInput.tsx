@@ -14,7 +14,7 @@ type TextInputProps =
   & Pick<LabelWithPopoverProps, "label" | "popover">
   & {
     register: UseFormRegisterReturn;
-    errors: Record<string, FieldError>;
+    errors: Record<string, FieldError | undefined>;
     helperText?: string;
   };
 
