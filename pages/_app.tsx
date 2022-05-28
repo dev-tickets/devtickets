@@ -11,6 +11,7 @@ import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
 import { ReactElement, ReactNode, useEffect, useState } from "react";
+import React from "react";
 import { Provider } from "urql";
 import { theme } from "../src/Styling/theme";
 
@@ -32,6 +33,10 @@ const AfterAuthComponent = ({
     setIsMounted(true);
   }, []);
 
+  const getLayout = React.useMemo(() => {
+    return Component.getLayout!;
+  }, [Component.getLayout]);
+
   if (!isMounted) {
     // TODO: Set "Loading" UI here
     return <></>;
@@ -39,9 +44,7 @@ const AfterAuthComponent = ({
 
   return (
     <Provider value={urlqlClient}>
-      {Component.getLayout!(
-        <Component {...pageProps} />,
-      )}
+      {getLayout(<Component {...pageProps} />)}
     </Provider>
   );
 };

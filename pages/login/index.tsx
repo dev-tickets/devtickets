@@ -1,20 +1,20 @@
 import FullScreenLayout from "@/components/ApplicationLayouts/FullScreenLayout";
-import { GithubIcon, MagicWandIcon } from "@/components/Icons";
+import { TextInput } from "@/components/Form/TextInput";
+import { ArrowLeftIcon, GithubIcon, MagicWandIcon } from "@/components/Icons";
 import {
   useIsAuthenticated,
+  useLoginWithEmail,
   useLoginWithGithub,
 } from "@/features/Auth/supabase";
-import { useLoginWithEmail } from "@/features/Auth/supabase";
 import {
   Button,
   FormControl,
-  FormErrorMessage,
-  FormLabel,
   Heading,
-  Input,
+  IconButton,
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { LayoutGroup, motion } from "framer-motion";
 import Router from "next/router";
 import React, { ReactElement, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -51,30 +51,29 @@ const LoginFormElement = ({
       <Heading size="2xl" as="h1">
         Hello! 👋🏼
       </Heading>
-      <Stack
-        as="form"
-        width="100%"
-        onSubmit={handleSubmit(async (values) => {
-          await login({ email: values.email });
-        })}
-      >
-        <FormControl isInvalid={Boolean(errors.email)}>
+      <FormControl isInvalid={Boolean(errors.email)}>
+        <Stack
+          as="form"
+          width="100%"
+          onSubmit={handleSubmit(async (values) => {
+            await login({ email: values.email });
+          })}
+        >
           <Stack gap={3}>
             <Stack gap={0}>
-              <Input
-                borderRadius="lg"
-                placeholder="hi@devtickets.cl"
-                w="100%"
-                size="lg"
-                type="email"
-                bg="white"
-                {...register("email", {
-                  required: "Ingresa tu correo",
+              <TextInput
+                name="email"
+                autoFocus
+                placeholder="Ingresa tu correo"
+                errors={errors}
+                register={register("email", {
+                  required: "Ingresa un correo válido",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "Ingresa un correo válido",
+                  },
                 })}
               />
-              <FormErrorMessage pl={1}>
-                {errors?.email?.message}
-              </FormErrorMessage>
             </Stack>
             <Button
               transitionDuration="250ms"
@@ -103,11 +102,11 @@ const LoginFormElement = ({
               Enviar Magic Link
             </Button>
           </Stack>
-        </FormControl>
-      </Stack>
+        </Stack>
+      </FormControl>
 
-      <Text fontSize="2xl" lineHeight={0} fontWeight="bold">
-        or
+      <Text fontSize="large" lineHeight={0}>
+        o
       </Text>
       <Button
         isDisabled={isSubmitting}
@@ -122,7 +121,7 @@ const LoginFormElement = ({
         leftIcon={<GithubIcon />}
         onClick={loginWithGithub}
       >
-        Logeate con Github
+        Ingresa con Github
       </Button>
     </>
   );
@@ -135,58 +134,57 @@ const MagicEmailFormElement = ({
 }) => {
   return (
     <>
+      <IconButton
+        position="absolute"
+        variant="ghost"
+        aria-label="Call Sage"
+        fontSize="20px"
+        icon={<ArrowLeftIcon />}
+        top={4}
+        left={4}
+        onClick={() => setInternalRoute("login")}
+      />
       <Heading size="2xl" as="h1">
         Enviado! 📨
       </Heading>
       <Text align="center" fontSize="xl">
         Solo revisa tu bandeja de correo, haz click en el link, y listo!
       </Text>
-      <Text align="center" fontSize="2xl" lineHeight={0} fontWeight="bold">
-        o
-      </Text>
-
-      <Button
-        borderRadius="lg"
-        h="fit-content"
-        p={18}
-        variant="outline"
-        borderStyle="solid"
-        borderWidth="thin"
-        borderColor="black"
-        w="100%"
-        leftIcon={<GithubIcon />}
-        onClick={() => setInternalRoute("login")}
-      >
-        Intenta con otro método
-      </Button>
     </>
   );
 };
 
+const AnimatedStack = motion(Stack);
 export default function Login() {
   // TODO: Handle UI for isSubmitSuccessful
   const [internalRoute, setInternalRoute] = useState<InternalRouteStates>(
     "login",
   );
   return (
-    <Stack
-      spacing={0}
-      gap={10}
-      bg="gray.50"
-      width="100%"
-      maxWidth={520}
-      borderRadius="md"
-      padding={10}
-      alignItems="center"
-      justifyContent="center"
-    >
-      {internalRoute === "login" && (
-        <LoginFormElement setInternalRoute={setInternalRoute} />
-      )}
-      {internalRoute === "magic_email_response" && (
-        <MagicEmailFormElement setInternalRoute={setInternalRoute} />
-      )}
-    </Stack>
+    <LayoutGroup id="login">
+      <AnimatedStack
+        layout="position"
+        spacing={0}
+        gap={10}
+        bg="gray.50"
+        width="100%"
+        maxWidth={520}
+        borderRadius="md"
+        padding={16}
+        shadow="2xl"
+        margin={2}
+        alignItems="center"
+        justifyContent="center"
+        position="relative"
+      >
+        {internalRoute === "login" && (
+          <LoginFormElement setInternalRoute={setInternalRoute} />
+        )}
+        {internalRoute === "magic_email_response" && (
+          <MagicEmailFormElement setInternalRoute={setInternalRoute} />
+        )}
+      </AnimatedStack>
+    </LayoutGroup>
   );
 }
 

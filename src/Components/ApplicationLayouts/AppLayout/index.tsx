@@ -6,31 +6,38 @@ import {
   SettingsIcon,
   TicketIcon,
 } from "@/components/Icons";
-import { useIsAuthenticated } from "@/features/Auth/supabase";
+import { useIsAuthenticated, useUser } from "@/features/Auth/supabase";
 import {
+  Avatar,
   Box,
   BoxProps,
   CloseButton,
+  Divider,
   Drawer,
   DrawerContent,
   Flex,
-  FlexProps,
-  Icon,
   IconButton,
-  StackDivider,
   Text,
   useColorModeValue,
   useDisclosure,
-  VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { ReactNode } from "react";
 import { IconType } from "react-icons";
-import {
-  GetUserInformationQuery,
-  useGetUserInformationQuery,
-} from "./getUserInformation.generated";
+import { useGetUserInformationQuery } from "./getUserInformation.generated";
+
+const useGetUserProfile = () => {
+  const user = useUser();
+  const { user_name, preferred_username, avatar_url } =
+    (user?.user_metadata ?? {});
+  return React.useMemo(() => (
+    {
+      avatarURL: avatar_url as string | undefined,
+      username: (preferred_username || user_name) as string | undefined,
+    }
+  ), [avatar_url, preferred_username, user_name]);
+};
 
 interface LinkItemProps {
   name: string;
@@ -42,7 +49,7 @@ const Links = {
   home: { href: "/", name: "Home", icon: HomeIcon },
   yourCommunities: {
     href: "/communities",
-    name: "Tus Comunidades",
+    name: "Comunidades",
     icon: HomeHeartIcon,
   },
   newCommunities: {
@@ -50,7 +57,7 @@ const Links = {
     name: "Create Community",
     icon: PlusIcon,
   },
-  yourTickets: { href: "/tickets", name: "Tus Tickets", icon: TicketIcon },
+  yourTickets: { href: "/tickets", name: "Mis Tickets", icon: TicketIcon },
   settings: {
     href: "/settings",
     name: "Configuración",
@@ -66,15 +73,19 @@ const LinkItems: Array<keyof typeof Links> = [
 
 interface SidebarProps extends BoxProps {
   onClose: () => void;
-  userInformationQueryData?: GetUserInformationQuery;
 }
 
 const horizontalPadding = { paddingX: 4 };
 
-const NavItem = ({ id }: { id: keyof typeof Links }) => {
+const NavItem = React.memo(function NavItem(
+  { id, overrideIcon: OverrideIcon }: {
+    id: keyof typeof Links;
+    overrideIcon?: () => JSX.Element;
+  },
+) {
   const linkData = Links[id];
   const { pathname } = useRouter();
-  const { icon, name, href } = linkData;
+  const { icon: Icon, name, href } = linkData;
   const isActive = React.useMemo(() => {
     if (href === "/") {
       return pathname.trim() === href;
@@ -88,8 +99,8 @@ const NavItem = ({ id }: { id: keyof typeof Links }) => {
   return (
     <Flex
       id={isActive.toString()}
-      background={isActive ? "pink.300" : "transparent"}
-      color={isActive ? "white" : "inherit"}
+      color={isActive ? "blackAlpha.900" : "blackAlpha.700"}
+      textShadow={isActive ? "1px 1px rgba(0,0,0,0.2)" : "inherit"}
       width="100%"
       align="center"
       role="group"
@@ -99,8 +110,7 @@ const NavItem = ({ id }: { id: keyof typeof Links }) => {
       transitionProperty="all"
       transitionTimingFunction="ease-in-out"
       _hover={{
-        background: "pink.400",
-        color: "white",
+        color: "black",
       }}
     >
       <Link href={href} passHref>
@@ -112,27 +122,18 @@ const NavItem = ({ id }: { id: keyof typeof Links }) => {
           {...horizontalPadding}
           gap={4}
         >
-          {icon && (
-            <Icon
-              mr="4"
-              fontSize="16"
-              _groupHover={{
-                color: "white",
-              }}
-              as={icon}
-            />
-          )}
+          {OverrideIcon && <OverrideIcon />}
+          {!OverrideIcon && Icon && <Icon />}
           {name}
         </Flex>
       </Link>
     </Flex>
   );
-};
+});
 
-interface MobileProps extends FlexProps {
+const MobileNav = React.memo(function MobileNav({ onOpen }: {
   onOpen: () => void;
-}
-const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
+}) {
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -143,7 +144,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       borderBottomWidth="1px"
       borderBottomColor={useColorModeValue("gray.200", "gray.700")}
       justifyContent="flex-start"
-      {...rest}
+      display={{ base: "flex", md: "none" }}
     >
       <IconButton
         variant="outline"
@@ -157,36 +158,52 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       </Text>
     </Flex>
   );
-};
+});
 
-const DesktopTitle = ({ onClose }: { onClose: () => void }) => {
+const DesktopTitle = React.memo(
+  function DesktopTitle({ onClose }: { onClose: () => void }) {
+    return (
+      <Flex
+        // This margin here is to visually counter the combination of
+        // StackDivider's default margin (2) and "gap" (1) of the parent
+        marginTop={4}
+        alignItems="center"
+        h={8}
+        justifyContent="center"
+      >
+        <Text
+          fontSize={16}
+          lineHeight={0}
+          fontFamily="monospace"
+          fontWeight="bold"
+        >
+          Bienvenido 👋🏼
+        </Text>
+        <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
+      </Flex>
+    );
+  },
+);
+
+const SidebarContent = React.memo(function SidebarContent(
+  { onClose, display }: SidebarProps,
+) {
+  const executed = React.useRef<boolean>(false);
+  const { avatarURL } = useGetUserProfile();
+  const [results, executeQuery] = useGetUserInformationQuery({
+    requestPolicy: "cache-first",
+    pause: true,
+  });
+
+  React.useEffect(() => {
+    if (executed.current) {
+      return;
+    }
+    executeQuery();
+    executed.current = true;
+  }, [executeQuery]);
   return (
     <Flex
-      // This margin here is to visually counter the combination of
-      // StackDivider's default margin (2) and "gap" (1) of the parent
-      marginTop={4}
-      alignItems="center"
-      h={8}
-      justifyContent="center"
-    >
-      <Text
-        fontSize={16}
-        lineHeight={0}
-        fontFamily="monospace"
-        fontWeight="bold"
-      >
-        Bienvenido 👋🏼
-      </Text>
-      <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
-    </Flex>
-  );
-};
-
-const SidebarContent = (
-  { onClose, userInformationQueryData, ...rest }: SidebarProps,
-) => {
-  return (
-    <VStack
       gap={2}
       h="full"
       id="qqqq"
@@ -199,11 +216,11 @@ const SidebarContent = (
       justifyContent="flex-start"
       w={{ base: "full", md: 64 }}
       bg={useColorModeValue("white", "gray.900")}
-      divider={<StackDivider borderColor="red.200" />}
       borderRightColor={useColorModeValue("gray.200", "gray.700")}
-      {...rest}
+      display={display}
     >
       <DesktopTitle onClose={onClose} />
+      <Divider borderColor="gray.400" />
       <Flex
         gap={2}
         alignItems="center"
@@ -211,6 +228,7 @@ const SidebarContent = (
         flexDirection="column"
         width="100%"
         flex={1}
+        onClick={onClose}
       >
         {LinkItems.map((linkName) => (
           <NavItem
@@ -219,69 +237,68 @@ const SidebarContent = (
           />
         ))}
       </Flex>
-      {userInformationQueryData?.super_adminsCollection?.edges.length && (
-        <Flex width="100%">
+      <Divider borderColor="gray.400" />
+      {results.data?.super_adminsCollection?.edges.length && (
+        <Flex width="100%" onClick={onClose}>
           <NavItem id="newCommunities" />
         </Flex>
       )}
-      <Flex width="100%">
-        <NavItem id="settings" />
+      <Flex width="100%" onClick={onClose}>
+        <NavItem
+          id="settings"
+          overrideIcon={() => <Avatar size="xs" src={avatarURL} />}
+        />
       </Flex>
-    </VStack>
+    </Flex>
   );
-};
+});
 
-const ActualLayout = ({ children }: { children: ReactNode }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [results] = useGetUserInformationQuery();
-  return (
-    <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
-      <SidebarContent
-        userInformationQueryData={results.data}
-        onClose={onClose}
-        display={{ base: "none", md: "flex" }}
-      />
-      <Drawer
-        autoFocus={false}
-        isOpen={isOpen}
-        placement="left"
-        onClose={onClose}
-        returnFocusOnClose={false}
-        onOverlayClick={onClose}
-        size="full"
+const ActualLayout = React.memo(
+  function ActualLayout({ children }: { children: ReactNode }) {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const display = React.useMemo(() => ({ base: "none", md: "flex" }), []);
+    return (
+      <Box minH="100vh" bg={"gray.100"} // bg={useColorModeValue("gray.100", "gray.900")}
       >
-        <DrawerContent>
-          <SidebarContent
-            userInformationQueryData={results.data}
-            onClose={onClose}
-          />
-        </DrawerContent>
-      </Drawer>
-      {/* mobilenav */}
-      <MobileNav display={{ base: "flex", md: "none" }} onOpen={onOpen} />
-      {
-        /*
-          TODO:
-          Consider a different component structure for this.
-          <m>aybe side-by-side flex containers instead of a margin?
-      */
-      }
-      <Box ml={{ base: 0, md: 64 }} p="4">
-        {children}
+        <SidebarContent
+          onClose={onClose}
+          display={display}
+        />
+        <Drawer
+          autoFocus={false}
+          isOpen={isOpen}
+          placement="left"
+          onClose={onClose}
+          returnFocusOnClose={false}
+          onOverlayClick={onClose}
+          size="full"
+        >
+          <DrawerContent>
+            <SidebarContent
+              onClose={onClose}
+            />
+          </DrawerContent>
+        </Drawer>
+        <MobileNav onOpen={onOpen} />
+        <Box ml={React.useMemo(() => ({ base: 0, md: 64 }), [])} p="4">
+          {children}
+        </Box>
       </Box>
-    </Box>
-  );
-};
+    );
+  },
+);
 
 /** This is only for authenticated users */
-export function AppLayout({ children }: { children: ReactNode }) {
-  // This is an authenticated-only layout, so first we check if the user is
-  // authenticated If they are not, we send them to login
-  const isAuthenticated = useIsAuthenticated();
-  const router = useRouter();
-  if (!isAuthenticated) {
-    router.push("/login");
-    return <p></p>;
-  }
-  return <ActualLayout>{children}</ActualLayout>;
-}
+export const AppLayout = React.memo(
+  function AppLayout({ children }: { children: ReactNode }) {
+    // This is an authenticated-only layout, so first we check if the user is
+    // authenticated If they are not, we send them to login
+    const isAuthenticated = useIsAuthenticated();
+    const router = useRouter();
+    if (!isAuthenticated) {
+      router.push("/login");
+      return <p></p>;
+    }
+    return <ActualLayout>{children}</ActualLayout>;
+  },
+);

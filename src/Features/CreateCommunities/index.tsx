@@ -13,8 +13,7 @@ type FormInputs = { name: string; description: string; slug: string };
 type Props = {};
 
 const CreateCommunity = (props: Props) => {
-  const [createCommunity, createCommunityMutation] =
-    useCreateCommunityMutation();
+  const [, createCommunityMutation] = useCreateCommunityMutation();
   const {
     handleSubmit,
     register,
@@ -31,7 +30,7 @@ const CreateCommunity = (props: Props) => {
   return (
     <FormControl isInvalid={hasErrors}>
       <Flex
-        onSubmit={handleSubmit(async (data) => {
+        onSubmit={handleSubmit(React.useCallback(async (data) => {
           const response = await createCommunityMutation({
             communitiesInsertInput: {
               description: data.description,
@@ -59,7 +58,7 @@ const CreateCommunity = (props: Props) => {
           } else {
             reset();
           }
-        })}
+        }, [createCommunityMutation, reset, setError]))}
         as="form"
         bg="white"
         w="100%"

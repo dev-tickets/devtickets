@@ -1,5 +1,6 @@
 import { Icon } from "@chakra-ui/react";
 import {
+  RiArrowLeftLine,
   RiGithubFill,
   RiHome2Fill,
   RiHomeHeartLine,
@@ -15,6 +16,10 @@ import {
 import { AiFillPlusCircle } from "react-icons/ai";
 
 // Extracted from https://react-icons.github.io/react-icons/icons?name=ri
+
+export const ArrowLeftIcon = () => {
+  return <Icon as={RiArrowLeftLine} />;
+};
 
 export const InformationIcon = () => {
   return <Icon as={RiInformationLine} />;

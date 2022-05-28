@@ -1,5 +1,4 @@
 import { useIsAuthenticated } from "@/features/Auth/supabase";
-import Router from "next/router";
 import { ReactNode } from "react";
 import { AppLayout } from "../AppLayout";
 
