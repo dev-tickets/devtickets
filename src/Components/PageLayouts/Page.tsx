@@ -11,8 +11,8 @@ export const Page = (props: Props) => {
     <Flex
       direction={"column"}
       padding={{
-        base: 4,
-        md: 10,
+        base: 10,
+        md: 16,
       }}
       gap={10}
     >

@@ -1,0 +1,11 @@
+mutation CreateEvent($eventInsertInput: eventsInsertInput!) {
+	insertIntoeventsCollection(objects: [$eventInsertInput]) {
+		records {
+			id
+			created_at
+			name
+			description
+			status
+		}
+	}
+}

@@ -1,6 +1,6 @@
 import { AppLayout } from "@/components/ApplicationLayouts/AppLayout";
 import { Page } from "@/components/PageLayouts/Page";
-import CreateCommunity from "@/features/CreateCommunities";
+import CreateCommunity from "@/features/CreateEvent";
 import { ReactElement } from "react";
 
 export default function Communities() {

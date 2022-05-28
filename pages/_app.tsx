@@ -51,16 +51,14 @@ const AfterAuthComponent = ({
 
 function MyApp(props: AppProps) {
   return (
-    <>
-      <ChakraProvider theme={theme}>
-        <CSSReset />
-        <AuthProvider>
-          {typeof window === "undefined"
-            ? null
-            : <AfterAuthComponent {...props} />}
-        </AuthProvider>
-      </ChakraProvider>
-    </>
+    <ChakraProvider theme={theme}>
+      <CSSReset />
+      <AuthProvider>
+        {typeof window === "undefined"
+          ? null
+          : <AfterAuthComponent {...props} />}
+      </AuthProvider>
+    </ChakraProvider>
   );
 }
 

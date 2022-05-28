@@ -1,21 +1,27 @@
 import {
+  CalendarIcons,
+  GithubIcon,
   HamburgerMenuIcon,
   HomeHeartIcon,
   HomeIcon,
+  MailIcon,
   PlusIcon,
   SettingsIcon,
   TicketIcon,
+  TwitterIcon,
 } from "@/components/Icons";
 import { useIsAuthenticated, useUser } from "@/features/Auth/supabase";
 import {
   Avatar,
   Box,
   BoxProps,
+  chakra,
   CloseButton,
   Divider,
   Drawer,
   DrawerContent,
   Flex,
+  Icon,
   IconButton,
   Text,
   useColorModeValue,
@@ -25,6 +31,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { ReactNode } from "react";
 import { IconType } from "react-icons";
+import { Footer } from "./Footer";
 import { useGetUserInformationQuery } from "./getUserInformation.generated";
 
 const useGetUserProfile = () => {
@@ -52,6 +59,16 @@ const Links = {
     name: "Comunidades",
     icon: HomeHeartIcon,
   },
+  upcomingEvents: {
+    href: "/events/upcoming",
+    name: "Próximos Eventos",
+    icon: CalendarIcons,
+  },
+  createEvent: {
+    href: "/events/create",
+    name: "Crear Evento",
+    icon: PlusIcon,
+  },
   newCommunities: {
     href: "/communities/create",
     name: "Create Community",
@@ -67,6 +84,8 @@ const Links = {
 
 const LinkItems: Array<keyof typeof Links> = [
   "home",
+  "createEvent",
+  "upcomingEvents",
   "yourCommunities",
   "yourTickets",
 ];
@@ -138,6 +157,7 @@ const MobileNav = React.memo(function MobileNav({ onOpen }: {
     <Flex
       ml={{ base: 0, md: 60 }}
       px={{ base: 4, md: 24 }}
+      py={8}
       height="20"
       alignItems="center"
       bg={useColorModeValue("white", "gray.900")}
@@ -164,15 +184,13 @@ const DesktopTitle = React.memo(
   function DesktopTitle({ onClose }: { onClose: () => void }) {
     return (
       <Flex
-        // This margin here is to visually counter the combination of
-        // StackDivider's default margin (2) and "gap" (1) of the parent
-        marginTop={4}
-        alignItems="center"
-        h={8}
         justifyContent="center"
+        alignItems="center"
+        py={5}
+        h={8}
       >
         <Text
-          fontSize={16}
+          fontSize="larger"
           lineHeight={0}
           fontFamily="monospace"
           fontWeight="bold"
@@ -258,7 +276,9 @@ const ActualLayout = React.memo(
     const { isOpen, onOpen, onClose } = useDisclosure();
     const display = React.useMemo(() => ({ base: "none", md: "flex" }), []);
     return (
-      <Box minH="100vh" bg={"gray.100"} // bg={useColorModeValue("gray.100", "gray.900")}
+      <Flex
+        h="100vh"
+        flexDirection={"column"}
       >
         <SidebarContent
           onClose={onClose}
@@ -280,10 +300,18 @@ const ActualLayout = React.memo(
           </DrawerContent>
         </Drawer>
         <MobileNav onOpen={onOpen} />
-        <Box ml={React.useMemo(() => ({ base: 0, md: 64 }), [])} p="4">
-          {children}
-        </Box>
-      </Box>
+        <Flex
+          bg={"gray.100"}
+          flex={1}
+          flexDir="column"
+          ml={React.useMemo(() => ({ base: 0, md: 64 }), [])}
+        >
+          <Box flex={1}>
+            {children}
+          </Box>
+          <Footer />
+        </Flex>
+      </Flex>
     );
   },
 );

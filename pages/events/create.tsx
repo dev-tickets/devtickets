@@ -3,7 +3,7 @@ import { Page } from "@/components/PageLayouts/Page";
 import { ReactElement } from "react";
 
 export default function Events() {
-  return <Page title="Eventos">Show all events here 👇</Page>;
+  return <Page title="Crear Evento">Show all events here 👇</Page>;
 }
 
 Events.getLayout = function getLayout(page: ReactElement) {

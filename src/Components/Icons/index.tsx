@@ -1,15 +1,19 @@
 import { Icon } from "@chakra-ui/react";
 import {
   RiArrowLeftLine,
+  RiCalendarEventFill,
+  RiFacebookBoxLine,
   RiGithubFill,
   RiHome2Fill,
   RiHomeHeartLine,
   RiInformationLine,
   RiMagicLine,
+  RiMailAddLine,
   RiMenuLine,
   RiSearchLine,
   RiSettings3Line,
   RiTicket2Line,
+  RiTwitterLine,
   RiUser2Fill,
 } from "react-icons/ri";
 
@@ -17,12 +21,27 @@ import { AiFillPlusCircle } from "react-icons/ai";
 
 // Extracted from https://react-icons.github.io/react-icons/icons?name=ri
 
+export const MailIcon = () => {
+  return <Icon as={RiMailAddLine} />;
+};
+export const TwitterIcon = () => {
+  return <Icon as={RiTwitterLine} />;
+};
+
+export const FacebookIcon = () => {
+  return <Icon as={RiFacebookBoxLine} />;
+};
+
 export const ArrowLeftIcon = () => {
   return <Icon as={RiArrowLeftLine} />;
 };
 
 export const InformationIcon = () => {
   return <Icon as={RiInformationLine} />;
+};
+
+export const CalendarIcons = () => {
+  return <Icon as={RiCalendarEventFill} />;
 };
 
 export const HomeHeartIcon = () => {

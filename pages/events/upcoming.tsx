@@ -1,15 +1,16 @@
 import { AppLayout } from "@/components/ApplicationLayouts/AppLayout";
 import { Page } from "@/components/PageLayouts/Page";
+import { UpcomingEvents } from "@/features/UpcomingEvents";
 import { ReactElement } from "react";
 
-export default function Tickets() {
+export default function NextEvents() {
   return (
-    <Page title="Mis Tickets">
-      Listado de mis tickets
+    <Page title="Próximos Eventos">
+      <UpcomingEvents />
     </Page>
   );
 }
 
-Tickets.getLayout = function getLayout(page: ReactElement) {
+NextEvents.getLayout = function getLayout(page: ReactElement) {
   return <AppLayout>{page}</AppLayout>;
 };

@@ -64,16 +64,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         const sessionUser = await supabase.auth.user();
         const sessionAccessToken = supabase.auth.session()?.access_token;
         if (sessionUser) {
-          const { data: profile } = await supabase
-            .from("profile")
-            .select("*")
-            .eq("id", sessionUser.id)
-            .single();
-
-          setUser({
-            ...sessionUser,
-            ...profile,
-          });
+          setUser(sessionUser);
         }
         if (sessionAccessToken) {
           setAccessToken(sessionAccessToken);
