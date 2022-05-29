@@ -1,5 +1,49 @@
+import {
+  AdminIcon,
+  CalendarIcons,
+  ExploreIcon,
+  GenericIconComponentType,
+  HomeHeartIcon,
+  HomeIcon,
+  PlusIcon,
+  SettingsIcon,
+  TicketIcon,
+} from "@/components/Icons";
 import { GithubIcon, MailIcon, TwitterIcon } from "@/components/Icons";
-import { chakra, Flex, useColorModeValue } from "@chakra-ui/react";
+import { useIsAuthenticated, useUser } from "@/features/Auth/supabase";
+import {
+  Avatar,
+  Box,
+  Button,
+  chakra,
+  CloseButton,
+  Flex,
+  HStack,
+  Icon,
+  IconButton,
+  Link,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
+  SimpleGrid,
+  Stack,
+  useColorMode,
+  useColorModeValue,
+  useDisclosure,
+  VStack,
+} from "@chakra-ui/react";
+import { Logo } from "@choc-ui/logo";
+import { useViewportScroll } from "framer-motion";
+import { useRouter } from "next/router";
+import React, { ReactNode } from "react";
+import { IconType } from "react-icons";
+import { AiFillHome, AiOutlineInbox, AiOutlineMenu } from "react-icons/ai";
+import { BsFillCameraVideoFill } from "react-icons/bs";
+import { FaMoon, FaSun } from "react-icons/fa";
+import { IoIosArrowDown } from "react-icons/io";
+import { useGetUserInformationQuery } from "./getUserInformation.generated";
 
 export function Footer() {
   return (
