@@ -13,4 +13,10 @@ export const theme = extendTheme({
   ...foundations,
   direction,
   config,
+  stypes: {
+    global: {
+      ".js-focus-visible :focus:not(.focus-visible), .js-focus-visible :focus:not(.focus-visible) + [data-focus]":
+        { outline: "none", shadow: "none" },
+    },
+  },
 });

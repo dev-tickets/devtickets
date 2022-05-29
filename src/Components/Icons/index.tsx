@@ -1,7 +1,10 @@
 import { Icon } from "@chakra-ui/react";
+import { AiOutlinePlusCircle } from "react-icons/ai";
 import {
+  RiAdminLine,
   RiArrowLeftLine,
   RiCalendarEventFill,
+  RiCompass3Line,
   RiFacebookBoxLine,
   RiGithubFill,
   RiHome2Fill,
@@ -17,69 +20,76 @@ import {
   RiUser2Fill,
 } from "react-icons/ri";
 
-import { AiFillPlusCircle } from "react-icons/ai";
+type CustomIconsProps = Omit<React.ComponentProps<typeof Icon>, "as">;
 
+export type GenericIconComponentType = React.VFC<CustomIconsProps>;
 // Extracted from https://react-icons.github.io/react-icons/icons?name=ri
 
-export const MailIcon = () => {
-  return <Icon as={RiMailAddLine} />;
+export const AdminIcon = (props: CustomIconsProps) => {
+  return <Icon as={RiAdminLine} {...props} />;
 };
-export const TwitterIcon = () => {
-  return <Icon as={RiTwitterLine} />;
+export const ExploreIcon = (props: CustomIconsProps) => {
+  return <Icon as={RiCompass3Line} {...props} />;
 };
-
-export const FacebookIcon = () => {
-  return <Icon as={RiFacebookBoxLine} />;
+export const MailIcon = (props: CustomIconsProps) => {
+  return <Icon as={RiMailAddLine} {...props} />;
 };
-
-export const ArrowLeftIcon = () => {
-  return <Icon as={RiArrowLeftLine} />;
+export const TwitterIcon = (props: CustomIconsProps) => {
+  return <Icon as={RiTwitterLine} {...props} />;
 };
 
-export const InformationIcon = () => {
-  return <Icon as={RiInformationLine} />;
+export const FacebookIcon = (props: CustomIconsProps) => {
+  return <Icon as={RiFacebookBoxLine} {...props} />;
 };
 
-export const CalendarIcons = () => {
-  return <Icon as={RiCalendarEventFill} />;
+export const ArrowLeftIcon = (props: CustomIconsProps) => {
+  return <Icon as={RiArrowLeftLine} {...props} />;
 };
 
-export const HomeHeartIcon = () => {
-  return <Icon as={RiHomeHeartLine} />;
+export const InformationIcon = (props: CustomIconsProps) => {
+  return <Icon as={RiInformationLine} {...props} />;
 };
 
-export const HomeIcon = () => {
-  return <Icon as={RiHome2Fill} />;
+export const CalendarIcons = (props: CustomIconsProps) => {
+  return <Icon as={RiCalendarEventFill} {...props} />;
 };
 
-export const GithubIcon = () => {
-  return <Icon as={RiGithubFill} />;
+export const HomeHeartIcon = (props: CustomIconsProps) => {
+  return <Icon as={RiHomeHeartLine} {...props} />;
 };
 
-export const MagicWandIcon = () => {
-  return <Icon as={RiMagicLine} />;
+export const HomeIcon = (props: CustomIconsProps) => {
+  return <Icon as={RiHome2Fill} {...props} />;
 };
 
-export const UserIcon = () => {
-  return <Icon as={RiUser2Fill} />;
+export const GithubIcon = (props: CustomIconsProps) => {
+  return <Icon as={RiGithubFill} {...props} />;
 };
 
-export const PlusIcon = () => {
-  return <Icon as={AiFillPlusCircle} />;
+export const MagicWandIcon = (props: CustomIconsProps) => {
+  return <Icon as={RiMagicLine} {...props} />;
 };
 
-export const HamburgerMenuIcon = () => {
-  return <Icon as={RiMenuLine} />;
+export const UserIcon = (props: CustomIconsProps) => {
+  return <Icon as={RiUser2Fill} {...props} />;
 };
 
-export const SearchIcon = () => {
-  return <Icon as={RiSearchLine} />;
+export const PlusIcon = (props: CustomIconsProps) => {
+  return <Icon as={AiOutlinePlusCircle} {...props} />;
 };
 
-export const SettingsIcon = () => {
-  return <Icon as={RiSettings3Line} />;
+export const HamburgerMenuIcon = (props: CustomIconsProps) => {
+  return <Icon as={RiMenuLine} {...props} />;
 };
 
-export const TicketIcon = () => {
-  return <Icon as={RiTicket2Line} />;
+export const SearchIcon = (props: CustomIconsProps) => {
+  return <Icon as={RiSearchLine} {...props} />;
+};
+
+export const SettingsIcon = (props: CustomIconsProps) => {
+  return <Icon as={RiSettings3Line} {...props} />;
+};
+
+export const TicketIcon = (props: CustomIconsProps) => {
+  return <Icon as={RiTicket2Line} {...props} />;
 };
