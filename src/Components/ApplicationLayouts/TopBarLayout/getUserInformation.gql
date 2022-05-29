@@ -1,0 +1,9 @@
+query getUserInformation {
+	super_adminsCollection {
+		edges {
+			node {
+				id
+			}
+		}
+	}
+}

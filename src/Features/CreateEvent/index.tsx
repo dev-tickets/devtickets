@@ -3,7 +3,6 @@ import { TextInput } from "@/components/Form/TextInput";
 import { InformationIcon } from "@/components/Icons";
 import { Alert, AlertIcon, Button, Flex, FormControl } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import slugify from "slugify";
 
 import React from "react";
 import { useCreateEventMutation } from "./createCommunity.generated";
