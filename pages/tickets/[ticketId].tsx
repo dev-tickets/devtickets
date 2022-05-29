@@ -1,4 +1,4 @@
-import { AppLayout } from "@/components/ApplicationLayouts/AppLayout";
+import { TopBarLayout } from "@/components/ApplicationLayouts/TopBarLayout";
 import { useRouter } from "next/router";
 import { ReactElement } from "react";
 
@@ -9,5 +9,5 @@ export default function Ticket() {
 }
 
 Ticket.getLayout = function getLayout(page: ReactElement) {
-  return <AppLayout>{page}</AppLayout>;
+  return <TopBarLayout>{page}</TopBarLayout>;
 };

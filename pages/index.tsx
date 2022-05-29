@@ -1,4 +1,4 @@
-import { AppLayout } from "@/components/ApplicationLayouts/AppLayout";
+import { TopBarLayout } from "@/components/ApplicationLayouts/TopBarLayout";
 import { Home } from "@/features/Home";
 import { ReactElement } from "react";
 
@@ -7,5 +7,5 @@ export default function Index() {
 }
 
 Index.getLayout = function getLayout(page: ReactElement) {
-  return <AppLayout>{page}</AppLayout>;
+  return <TopBarLayout>{page}</TopBarLayout>;
 };

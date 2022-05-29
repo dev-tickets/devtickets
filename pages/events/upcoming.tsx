@@ -1,4 +1,4 @@
-import { AppLayout } from "@/components/ApplicationLayouts/AppLayout";
+import { TopBarLayout } from "@/components/ApplicationLayouts/TopBarLayout";
 import { Page } from "@/components/PageLayouts/Page";
 import { UpcomingEvents } from "@/features/UpcomingEvents";
 import { ReactElement } from "react";
@@ -12,5 +12,5 @@ export default function NextEvents() {
 }
 
 NextEvents.getLayout = function getLayout(page: ReactElement) {
-  return <AppLayout>{page}</AppLayout>;
+  return <TopBarLayout>{page}</TopBarLayout>;
 };

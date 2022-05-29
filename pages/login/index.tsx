@@ -148,7 +148,7 @@ const MagicEmailFormElement = ({
         Enviado! 📨
       </Heading>
       <Text align="center" fontSize="xl">
-        Solo revisa tu bandeja de correo, haz click en el link, y listo!
+        Revisa tu bandeja de correo, haz click en el link, y listo!
       </Text>
     </>
   );

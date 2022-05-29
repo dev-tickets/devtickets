@@ -14,7 +14,7 @@ import {
 import React from "react";
 
 type PopoverType = {
-  popoverIcon: () => JSX.Element;
+  popoverIcon: React.FC;
   popoverHeader?: React.ReactNode;
   popoverBody: React.ReactNode;
 };

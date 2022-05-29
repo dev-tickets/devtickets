@@ -1,15 +1,18 @@
 import { useIsAuthenticated } from "@/features/Auth/supabase";
 import {
   Avatar,
+  Box,
   Button,
   chakra,
   CloseButton,
+  Collapse,
   Flex,
   HStack,
   Link,
   Popover,
   PopoverContent,
   PopoverTrigger,
+  Portal,
   useColorModeValue,
   useDisclosure,
   VStack,
@@ -20,55 +23,123 @@ import { useRouter } from "next/router";
 import React, { ReactNode } from "react";
 import { AiFillHome, AiOutlineInbox } from "react-icons/ai";
 import { BsFillCameraVideoFill } from "react-icons/bs";
-import { IoIosArrowDown } from "react-icons/io";
+import { TopLevelButtonOrLink } from "./Components";
 import { useGetUserInformationQuery } from "./getUserInformation.generated";
 import { useGetUserProfile } from "./hooks";
-import { adminMenulinks, communitiesMenuLinks } from "./routes";
-import { SettingsMenu } from "./settingsMenu";
-import { SubMenuTrigger, TopLevelButtonOrLink } from "./subMenu";
+import {
+  adminMenulinks,
+  communitiesMenuLinks,
+  settingsMenuLinks,
+  superAdminMenulinks,
+} from "./routes";
+import { SubMenuItemType } from "./sharedTypes";
+import { SubMenuTrigger } from "./subMenu";
 
+const MobileLinkSection = (
+  { text, listOfLinks }: {
+    text: React.ReactNode;
+    listOfLinks: Array<SubMenuItemType>;
+  },
+) => {
+  const { isOpen, onToggle } = useDisclosure();
+
+  return (
+    <>
+      <Button
+        variant="ghost"
+        width="full"
+        justifyContent="flex-start"
+        onClick={onToggle}
+        // ADD ICON
+      >
+        {text}
+      </Button>
+
+      <Collapse in={isOpen} animateOpacity>
+        <Flex
+          flexDir="column"
+          gap={4}
+          pl={8}
+          rounded="md"
+          shadow="md"
+        >
+          {listOfLinks.map((link, index) => {
+            return (
+              <Flex
+                shadow="md"
+                p={6}
+                bg="gray.100"
+                rounded="md"
+                key={index}
+              >
+                {JSON.stringify(link)}
+              </Flex>
+            );
+          })}
+        </Flex>
+      </Collapse>
+    </>
+  );
+};
 const MobileNavContent = (
   { mobileNavDisclosure }: {
     mobileNavDisclosure: ReturnType<typeof useDisclosure>;
   },
 ) => {
   const bg = useColorModeValue("white", "gray.800");
+  const [currentText, setCurrentText] = React.useState("aaaa");
   return (
-    <VStack
-      pos="absolute"
-      top={0}
-      left={0}
-      right={0}
-      display={mobileNavDisclosure.isOpen ? "flex" : "none"}
-      flexDirection="column"
-      p={2}
-      pb={4}
-      m={2}
-      bg={bg}
-      spacing={3}
-      rounded="sm"
-      shadow="sm"
-    >
-      <CloseButton
-        aria-label="Close menu"
-        justifySelf="self-start"
-        onClick={mobileNavDisclosure.onClose}
-      />
-      <Button w="full" variant="ghost" leftIcon={<AiFillHome />}>
-        Dashboard
+    <>
+      <Button {...mobileNavDisclosure.getButtonProps()} variant="ghost">
+        {currentText}
       </Button>
-      <Button
-        w="full"
-        variant="solid"
-        colorScheme="brand"
-        leftIcon={<AiOutlineInbox />}
-      >
-        Inbox
-      </Button>
-      <Button w="full" variant="ghost" leftIcon={<BsFillCameraVideoFill />}>
-        Videos
-      </Button>
-    </VStack>
+
+      {mobileNavDisclosure.isOpen && (
+        <Portal>
+          <Flex
+            pos="absolute"
+            top={0}
+            alignItems="center"
+            left={0}
+            height="100vh"
+            width="100vw"
+            overflow="scroll"
+            display={mobileNavDisclosure.isOpen ? "flex" : "none"}
+            flexDirection="column"
+            p={4}
+            bg={bg}
+            gap={3}
+            rounded="sm"
+            shadow="sm"
+          >
+            <CloseButton
+              aria-label="Close menu"
+              justifySelf="self-start"
+              onClick={mobileNavDisclosure.onClose}
+            />
+            <MobileLinkSection
+              text="Communities"
+              listOfLinks={communitiesMenuLinks}
+            />
+
+            <TopLevelButtonOrLink
+              href="/tickets"
+              title={"Mis Tickets"}
+            />
+            <TopLevelButtonOrLink
+              href="/events"
+              title={"Eventos"}
+            />
+            <MobileLinkSection text="Admin" listOfLinks={adminMenulinks} />
+
+            <MobileLinkSection
+              text="Super Admin"
+              listOfLinks={superAdminMenulinks}
+            />
+          </Flex>
+        </Portal>
+      )}
+    </>
   );
 };
 
@@ -84,13 +155,11 @@ const ActualLayout = ({ children }: { children: ReactNode }) => {
   React.useEffect(() => {
     return scrollY.onChange(() => setY(scrollY.get()));
   }, [scrollY]);
-  const cl = useColorModeValue("gray.800", "white");
   const mobileNav = useDisclosure();
-
   const executed = React.useRef<boolean>(false);
   const { avatarURL } = useGetUserProfile();
   const [results, executeQuery] = useGetUserInformationQuery({
-    requestPolicy: "cache-first",
+    requestPolicy: "cache-and-network",
     pause: true,
   });
 
@@ -102,86 +171,82 @@ const ActualLayout = ({ children }: { children: ReactNode }) => {
     executed.current = true;
   }, [executeQuery]);
 
+  const length = results.data?.super_adminsCollection?.edges.length;
+  const canSeeSuperAdminSection = React.useMemo(() => {
+    return length !== undefined && length > 0;
+  }, [length]);
+
+  const canSeeAdminSection = React.useMemo(() => {
+    return false;
+  }, []);
+
   return (
-    <chakra.header
-      // ref={ref}
-      shadow={y > height ? "sm" : undefined}
-      transition="box-shadow 0.2s"
-      bg={bg}
-      borderTop="6px solid"
-      borderTopColor="transparent"
-      // borderTopColor="brand.400"
-      w="full"
-      overflowY="hidden"
-      borderBottomWidth={2}
-      borderBottomColor={useColorModeValue("gray.200", "gray.900")}
-    >
-      <chakra.div h="4.5rem" mx="auto" maxW="1200px">
-        <Flex
-          w="full"
-          h="full"
-          px="6"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Flex align="flex-start">
-            <Link href="/">
-              <HStack>
-                <Logo />
+    <>
+      <chakra.header
+        shadow={y > height ? "sm" : undefined}
+        transition="box-shadow 0.2s"
+        bg={bg}
+        borderTop="6px solid"
+        borderTopColor="transparent"
+        w="full"
+        overflowY="hidden"
+        borderBottomWidth={2}
+        borderBottomColor={useColorModeValue("gray.200", "gray.900")}
+      >
+        <chakra.div h="4.5rem" mx="auto" maxW="1200px">
+          <Flex
+            w="full"
+            h="full"
+            px="6"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Flex align="flex-start">
+              <Link href="/">
+                asd
+              </Link>
+            </Flex>
+            <Flex>
+              <MobileNavContent mobileNavDisclosure={mobileNav} />
+
+              <HStack spacing="5" display={{ base: "none", md: "flex" }}>
+                <SubMenuTrigger
+                  buttonContent={"Explora"}
+                  subMenuItems={communitiesMenuLinks}
+                />
+
+                <TopLevelButtonOrLink
+                  href="/tickets"
+                  title={"Mis Tickets"}
+                />
+                <TopLevelButtonOrLink
+                  href="/events"
+                  title={"Eventos"}
+                />
+
+                {canSeeAdminSection && (
+                  <SubMenuTrigger
+                    buttonContent={"Admin"}
+                    subMenuItems={adminMenulinks}
+                  />
+                )}
+                {canSeeSuperAdminSection && (
+                  <SubMenuTrigger
+                    buttonContent={"Super Admin"}
+                    subMenuItems={superAdminMenulinks}
+                  />
+                )}
               </HStack>
-            </Link>
+            </Flex>
+            <SubMenuTrigger
+              buttonContent={<Avatar size="xs" src={avatarURL} />}
+              subMenuItems={settingsMenuLinks}
+            />
           </Flex>
-          <Flex>
-            <HStack spacing="5" display={{ base: "none", md: "flex" }}>
-              <SubMenuTrigger
-                buttonText={"Communities"}
-                subMenuItems={communitiesMenuLinks}
-              />
-
-              <TopLevelButtonOrLink
-                href="/tickets"
-                title={"Mis Tickets"}
-              />
-              <TopLevelButtonOrLink
-                href="/events"
-                title={"Eventos"}
-              />
-
-              <SubMenuTrigger
-                buttonText={"Admin"}
-                subMenuItems={adminMenulinks}
-              />
-            </HStack>
-          </Flex>
-          <Flex justify="flex-end" align="center" color="gray.400">
-            <Popover>
-              <PopoverTrigger>
-                <Button
-                  bg={bg}
-                  color="gray.500"
-                  display="inline-flex"
-                  alignItems="center"
-                  fontSize="md"
-                  _hover={{ color: cl }}
-                  _focus={{ boxShadow: "none" }}
-                  rightIcon={<IoIosArrowDown />}
-                >
-                  <Avatar size="xs" src={avatarURL} />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent
-                w="100vw"
-                maxW="md"
-                _focus={{ boxShadow: "md" }}
-              >
-                <SettingsMenu mobileNavDisclosure={mobileNav} />
-              </PopoverContent>
-            </Popover>
-          </Flex>
-        </Flex>
-        <MobileNavContent mobileNavDisclosure={mobileNav} />
-      </chakra.div>
-    </chakra.header>
+        </chakra.div>
+      </chakra.header>
+      {children}
+    </>
   );
 };
 /** This is only for authenticated users */

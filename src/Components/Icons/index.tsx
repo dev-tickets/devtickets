@@ -10,6 +10,7 @@ import {
   RiHome2Fill,
   RiHomeHeartLine,
   RiInformationLine,
+  RiLogoutBoxLine,
   RiMagicLine,
   RiMailAddLine,
   RiMenuLine,
@@ -22,7 +23,7 @@ import {
 
 type CustomIconsProps = Omit<React.ComponentProps<typeof Icon>, "as">;
 
-export type GenericIconComponentType = React.VFC<CustomIconsProps>;
+export type GenericIconComponentType = (props: CustomIconsProps) => JSX.Element;
 // Extracted from https://react-icons.github.io/react-icons/icons?name=ri
 
 export const AdminIcon = (props: CustomIconsProps) => {
@@ -88,6 +89,10 @@ export const SearchIcon = (props: CustomIconsProps) => {
 
 export const SettingsIcon = (props: CustomIconsProps) => {
   return <Icon as={RiSettings3Line} {...props} />;
+};
+
+export const LogoutIcon = (props: CustomIconsProps) => {
+  return <Icon as={RiLogoutBoxLine} {...props} />;
 };
 
 export const TicketIcon = (props: CustomIconsProps) => {

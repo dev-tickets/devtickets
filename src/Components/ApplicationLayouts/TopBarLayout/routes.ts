@@ -1,55 +1,67 @@
 import {
   AdminIcon,
   ExploreIcon,
-  HomeHeartIcon,
+  LogoutIcon,
   PlusIcon,
+  SettingsIcon,
 } from "@/components/Icons";
-import { SubMenuItem } from "./subMenu";
+import { SubMenuItemType } from "./sharedTypes";
 
 export const communitiesMenuLinks: Array<
-  SubMenuItem
+  SubMenuItemType
 > = [
   {
-    title: "Explora comunidades",
+    title: "Comunidades",
     icon: ExploreIcon,
-    description:
-      "Get a better understanding of where your traffic is coming from.",
+    description: "Conoce nuevas comunidades!",
     href: "/communities",
   },
   {
-    title: "Mis comunidades",
-    icon: HomeHeartIcon,
-    description: "Speak directly to your customers in a more meaningful way.",
-    href: "/my-communities",
-  },
-  {
-    title: "Crea una comunidad!",
-    icon: PlusIcon,
-    description: "Your customers&#039; data will be safe and secure",
-    href: "/my-communities",
+    title: "Eventos",
+    icon: ExploreIcon,
+    description: "Busca eventos, mantente al día en el mundo tech.",
+    href: "/events",
   },
 ];
 
 export const adminMenulinks: Array<
-  SubMenuItem
+  SubMenuItemType
 > = [
-  {
-    title: "Crear comunidad",
-    icon: PlusIcon,
-    description:
-      "Get a better understanding of where your traffic is coming from.",
-    href: "/communities/create",
-  },
   {
     title: "Crear Evento",
     icon: PlusIcon,
-    description: "Speak directly to your customers in a more meaningful way.",
+    description: "Tu comunidad te está esperando. Crea un evento!",
     href: "/events/create",
   },
   {
     title: "Administrar comunidades",
     icon: AdminIcon,
-    description: "Agrega usuarios,",
+    description:
+      "Agrega tickets, actualiza los datos de tus comunidades y más.",
     href: "/communities/admin",
+  },
+];
+
+export const superAdminMenulinks: Array<
+  SubMenuItemType
+> = [
+  {
+    title: "Crear comunidad",
+    icon: PlusIcon,
+    href: "/communities/create",
+  },
+];
+
+export const settingsMenuLinks: Array<SubMenuItemType> = [
+  {
+    title: "Configuración",
+    icon: SettingsIcon,
+    href: "/settings",
+  },
+  "divider",
+  {
+    title: "Cerrar sesión",
+    icon: LogoutIcon,
+    href: "/logout",
   },
 ];

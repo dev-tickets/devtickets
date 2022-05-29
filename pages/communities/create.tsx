@@ -1,6 +1,6 @@
-import { AppLayout } from "@/components/ApplicationLayouts/AppLayout";
+import { TopBarLayout } from "@/components/ApplicationLayouts/TopBarLayout";
 import { Page } from "@/components/PageLayouts/Page";
-import CreateCommunity from "@/features/CreateEvent";
+import CreateCommunity from "@/features/CreateCommunities";
 import { ReactElement } from "react";
 
 export default function Communities() {
@@ -11,5 +11,5 @@ export default function Communities() {
   );
 }
 Communities.getLayout = function getLayout(page: ReactElement) {
-  return <AppLayout>{page}</AppLayout>;
+  return <TopBarLayout>{page}</TopBarLayout>;
 };

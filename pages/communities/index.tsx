@@ -1,4 +1,4 @@
-import { AppLayout } from "@/components/ApplicationLayouts/AppLayout";
+import { TopBarLayout } from "@/components/ApplicationLayouts/TopBarLayout";
 import { MyCommunities } from "@/features/MyCommunities";
 import { ReactElement } from "react";
 
@@ -7,5 +7,5 @@ export default function Communities() {
 }
 
 Communities.getLayout = function getLayout(page: ReactElement) {
-  return <AppLayout>{page}</AppLayout>;
+  return <TopBarLayout>{page}</TopBarLayout>;
 };
