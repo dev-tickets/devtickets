@@ -1,147 +1,22 @@
+import { HamburgerMenuIcon } from "@/components/Icons";
 import { useIsAuthenticated } from "@/features/Auth/supabase";
 import {
   Avatar,
-  Box,
   Button,
   chakra,
-  CloseButton,
-  Collapse,
   Flex,
-  HStack,
-  Link,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  Portal,
   useColorModeValue,
   useDisclosure,
-  VStack,
 } from "@chakra-ui/react";
-import { Logo } from "@choc-ui/logo";
 import { useViewportScroll } from "framer-motion";
 import { useRouter } from "next/router";
 import React, { ReactNode } from "react";
-import { AiFillHome, AiOutlineInbox } from "react-icons/ai";
-import { BsFillCameraVideoFill } from "react-icons/bs";
-import { TopLevelButtonOrLink } from "./Components";
+import { DesktopNavContent } from "./DesktopNavigation";
 import { useGetUserInformationQuery } from "./getUserInformation.generated";
 import { useGetUserProfile } from "./hooks";
-import {
-  adminMenulinks,
-  communitiesMenuLinks,
-  settingsMenuLinks,
-  superAdminMenulinks,
-} from "./routes";
-import { SubMenuItemType } from "./sharedTypes";
+import { MobileNavContent } from "./MobileNav";
+import { settingsMenuLinks } from "./routes";
 import { SubMenuTrigger } from "./subMenu";
-
-const MobileLinkSection = (
-  { text, listOfLinks }: {
-    text: React.ReactNode;
-    listOfLinks: Array<SubMenuItemType>;
-  },
-) => {
-  const { isOpen, onToggle } = useDisclosure();
-
-  return (
-    <>
-      <Button
-        variant="ghost"
-        width="full"
-        justifyContent="flex-start"
-        onClick={onToggle}
-        // ADD ICON
-      >
-        {text}
-      </Button>
-
-      <Collapse in={isOpen} animateOpacity>
-        <Flex
-          flexDir="column"
-          gap={4}
-          pl={8}
-          rounded="md"
-          shadow="md"
-        >
-          {listOfLinks.map((link, index) => {
-            return (
-              <Flex
-                shadow="md"
-                p={6}
-                bg="gray.100"
-                rounded="md"
-                key={index}
-              >
-                {JSON.stringify(link)}
-              </Flex>
-            );
-          })}
-        </Flex>
-      </Collapse>
-    </>
-  );
-};
-const MobileNavContent = (
-  { mobileNavDisclosure }: {
-    mobileNavDisclosure: ReturnType<typeof useDisclosure>;
-  },
-) => {
-  const bg = useColorModeValue("white", "gray.800");
-  const [currentText, setCurrentText] = React.useState("aaaa");
-  return (
-    <>
-      <Button {...mobileNavDisclosure.getButtonProps()} variant="ghost">
-        {currentText}
-      </Button>
-
-      {mobileNavDisclosure.isOpen && (
-        <Portal>
-          <Flex
-            pos="absolute"
-            top={0}
-            alignItems="center"
-            left={0}
-            height="100vh"
-            width="100vw"
-            overflow="scroll"
-            display={mobileNavDisclosure.isOpen ? "flex" : "none"}
-            flexDirection="column"
-            p={4}
-            bg={bg}
-            gap={3}
-            rounded="sm"
-            shadow="sm"
-          >
-            <CloseButton
-              aria-label="Close menu"
-              justifySelf="self-start"
-              onClick={mobileNavDisclosure.onClose}
-            />
-            <MobileLinkSection
-              text="Communities"
-              listOfLinks={communitiesMenuLinks}
-            />
-
-            <TopLevelButtonOrLink
-              href="/tickets"
-              title={"Mis Tickets"}
-            />
-            <TopLevelButtonOrLink
-              href="/events"
-              title={"Eventos"}
-            />
-            <MobileLinkSection text="Admin" listOfLinks={adminMenulinks} />
-
-            <MobileLinkSection
-              text="Super Admin"
-              listOfLinks={superAdminMenulinks}
-            />
-          </Flex>
-        </Portal>
-      )}
-    </>
-  );
-};
 
 const ActualLayout = ({ children }: { children: ReactNode }) => {
   const bg = useColorModeValue("white", "gray.800");
@@ -155,7 +30,7 @@ const ActualLayout = ({ children }: { children: ReactNode }) => {
   React.useEffect(() => {
     return scrollY.onChange(() => setY(scrollY.get()));
   }, [scrollY]);
-  const mobileNav = useDisclosure();
+  const mobileNavDisclosure = useDisclosure();
   const executed = React.useRef<boolean>(false);
   const { avatarURL } = useGetUserProfile();
   const [results, executeQuery] = useGetUserInformationQuery({
@@ -202,41 +77,25 @@ const ActualLayout = ({ children }: { children: ReactNode }) => {
             justifyContent="space-between"
           >
             <Flex align="flex-start">
-              <Link href="/">
-                asd
-              </Link>
+              <Button
+                variant="ghost"
+                display={{ base: "initial", md: "none" }}
+                onClick={mobileNavDisclosure.onOpen}
+              >
+                <HamburgerMenuIcon />
+              </Button>
             </Flex>
             <Flex>
-              <MobileNavContent mobileNavDisclosure={mobileNav} />
+              <MobileNavContent
+                canSeeSuperAdminSection={canSeeSuperAdminSection}
+                canSeeAdminSection={canSeeAdminSection}
+                mobileNavDisclosure={mobileNavDisclosure}
+              />
 
-              <HStack spacing="5" display={{ base: "none", md: "flex" }}>
-                <SubMenuTrigger
-                  buttonContent={"Explora"}
-                  subMenuItems={communitiesMenuLinks}
-                />
-
-                <TopLevelButtonOrLink
-                  href="/tickets"
-                  title={"Mis Tickets"}
-                />
-                <TopLevelButtonOrLink
-                  href="/events"
-                  title={"Eventos"}
-                />
-
-                {canSeeAdminSection && (
-                  <SubMenuTrigger
-                    buttonContent={"Admin"}
-                    subMenuItems={adminMenulinks}
-                  />
-                )}
-                {canSeeSuperAdminSection && (
-                  <SubMenuTrigger
-                    buttonContent={"Super Admin"}
-                    subMenuItems={superAdminMenulinks}
-                  />
-                )}
-              </HStack>
+              <DesktopNavContent
+                canSeeSuperAdminSection={canSeeSuperAdminSection}
+                canSeeAdminSection={canSeeAdminSection}
+              />
             </Flex>
             <SubMenuTrigger
               buttonContent={<Avatar size="xs" src={avatarURL} />}

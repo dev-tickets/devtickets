@@ -19,6 +19,7 @@ export const SubMenu = (props: {
   subMenuItems: Array<
     SubMenuItemType
   >;
+  onSubMenuItemClicked: () => void;
   footer?: React.ReactNode;
 }) => {
   return (
@@ -33,20 +34,20 @@ export const SubMenu = (props: {
             gap={{ base: 6, sm: 2 }}
             p={{ sm: 4 }}
           >
-            {props.subMenuItems.map((sectionItem, sid) => {
-              if (sectionItem === "divider") {
+            {props.subMenuItems.map((subMenuItem, sid) => {
+              if (subMenuItem === "divider") {
                 return <Divider key={sid} />;
               }
-              if (typeof sectionItem === "function") {
+              if (typeof subMenuItem === "function") {
                 return (
-                  <React.Fragment key={sid}>{sectionItem()}</React.Fragment>
+                  <React.Fragment key={sid}>{subMenuItem()}</React.Fragment>
                 );
               }
-
               return (
                 <SubMenuButtonOrLink
                   key={sid}
-                  {...sectionItem}
+                  onEveryClick={props.onSubMenuItemClicked}
+                  {...subMenuItem}
                 />
               );
             })}
@@ -64,15 +65,18 @@ export const SubMenuTrigger = (
     subMenuItems: Array<SubMenuItemType>;
   },
 ) => {
-  const { isOpen, onToggle, onClose } = useDisclosure();
+  const { isOpen, onClose, onOpen } = useDisclosure();
   return (
     <Popover
+      isOpen={isOpen}
+      onOpen={onOpen}
+      onClose={onClose}
       computePositionOnMount
       closeDelay={1000}
       closeOnBlur={true}
       closeOnEsc={true}
-      returnFocusOnClose={false}
       isLazy
+      returnFocusOnClose
       lazyBehavior="unmount"
     >
       <PopoverTrigger>
@@ -91,7 +95,10 @@ export const SubMenuTrigger = (
           }}
         >
           <PopoverArrow />
-          <SubMenu subMenuItems={props.subMenuItems} />
+          <SubMenu
+            onSubMenuItemClicked={onClose}
+            subMenuItems={props.subMenuItems}
+          />
         </PopoverContent>
       </Portal>
     </Popover>

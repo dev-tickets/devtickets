@@ -6,6 +6,7 @@ export type SubMenuItemsLinksType =
     icon: GenericIconComponentType;
     description?: string;
     href: string;
+    onEveryClick?: () => void;
     onClick?: never;
   }
   | {
@@ -13,6 +14,7 @@ export type SubMenuItemsLinksType =
     icon: GenericIconComponentType;
     description?: string;
     href?: never;
+    onEveryClick?: () => void;
     onClick: () => void;
   };
 

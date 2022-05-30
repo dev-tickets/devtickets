@@ -12,10 +12,27 @@ import { IoIosArrowDown } from "react-icons/io";
 import { SubMenuItemsLinksType } from "./sharedTypes";
 
 const NextJSLinkWrapper = (
-  { children, href }: { children: React.ReactNode; href?: string },
+  { children, href, extraStyles = {}, onClick }: {
+    children: React.ReactNode;
+    href?: string;
+    extraStyles?: any;
+    onClick?: () => void;
+  },
 ) => {
   return (Boolean(href) && typeof href === "string")
-    ? <NextJSLink passHref href={href}>{children}</NextJSLink>
+    ? (
+      <NextJSLink
+        legacyBehavior={false}
+        onClick={() => {
+          onClick?.();
+        }}
+        passHref
+        href={href}
+        style={extraStyles}
+      >
+        {children}
+      </NextJSLink>
+    )
     : <React.Fragment>{children}</React.Fragment>;
 };
 
@@ -25,6 +42,8 @@ export const TopLevelButtonOrLink = forwardRef((
     href?: string;
     onClick?: () => void;
     hasSubMenu?: boolean;
+    extrastyles?: any;
+    onEveryClick?: () => void;
   },
   ref,
 ) => {
@@ -43,7 +62,11 @@ export const TopLevelButtonOrLink = forwardRef((
     return someProps;
   }, [props.href, props.onClick]);
   return (
-    <NextJSLinkWrapper href={props.href}>
+    <NextJSLinkWrapper
+      extraStyles={props.extrastyles}
+      href={props.href}
+      onClick={props?.onEveryClick}
+    >
       <Button
         bg={bg}
         color="gray.500"
@@ -53,6 +76,7 @@ export const TopLevelButtonOrLink = forwardRef((
         _hover={{ color: cl }}
         rightIcon={props.hasSubMenu ? <IoIosArrowDown /> : undefined}
         ref={ref}
+        {...(props.extrastyles ?? {})}
         {...buttonOrLinksProps}
       >
         {props.title}
@@ -80,12 +104,13 @@ export const SubMenuButtonOrLink = (
     return someProps;
   }, [props.href, props.onClick]);
   return (
-    <NextJSLinkWrapper href={props.href}>
+    <NextJSLinkWrapper onClick={props?.onEveryClick} href={props.href}>
       <Link
-        p={4}
+        p={2}
         display="flex"
         alignItems="flex-start"
         gap={4}
+        width={{ base: "100%", md: "initial" }}
         rounded="lg"
         tabIndex={1}
         _hover={{ bg: hbg }}
