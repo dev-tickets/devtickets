@@ -1,8 +1,8 @@
 overwrite: true
-schema: 
+schema:
   - "${NEXT_PUBLIC_SUPABASE_API_URL}/graphql/v1":
       headers:
-        apiKey: "${SUPABASE_API_TOKEN}"
+        apiKey: "${SUPABASE_SERVICE_ROLE_API_TOKEN}"
 documents:
   - "./src/**/*.graphql"
   - "./src/**/*.gql"

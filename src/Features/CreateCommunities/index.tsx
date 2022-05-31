@@ -1,23 +1,31 @@
+import { ImageSelectionField } from "@/components/Form/ImageSelectionField";
 import { TextArea } from "@/components/Form/TextArea";
 import { TextInput } from "@/components/Form/TextInput";
 import { InformationIcon } from "@/components/Icons";
 import { Alert, AlertIcon, Button, Flex, FormControl } from "@chakra-ui/react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import slugify from "slugify";
-
-import React from "react";
 import { useCreateCommunityMutation } from "./createCommunity.generated";
 
-type FormInputs = { name: string; description: string; slug: string };
+type FormInputs = {
+  name: string;
+  description: string;
+  slug: string;
+  image_url: string;
+};
 
-type Props = {};
+const handleCommunitySlug = (unParsed: string) => {
+  return slugify(unParsed.toLowerCase());
+};
 
-const CreateCommunity = (props: Props) => {
+const CreateCommunity = () => {
   const [, createCommunityMutation] = useCreateCommunityMutation();
   const {
     handleSubmit,
     register,
     setError,
+    setValue,
     watch,
     reset,
     formState: {
@@ -34,8 +42,9 @@ const CreateCommunity = (props: Props) => {
           const response = await createCommunityMutation({
             communitiesInsertInput: {
               description: data.description,
-              slug: slugify(data.slug),
+              slug: handleCommunitySlug(data.slug),
               name: data.name,
+              image: data.image_url,
             },
           });
           if (response.error) {
@@ -83,6 +92,18 @@ const CreateCommunity = (props: Props) => {
             required: "Ingresa un Nombre para la Comunidad",
           })}
         />
+
+        <ImageSelectionField
+          autoFocus
+          label="Cover para la página de tu comunidad"
+          errors={errors}
+          previewImageURL={watch("image_url", "")}
+          onImageSelected={(imageUrl) => setValue("image_url", imageUrl)}
+          register={register("image_url", {
+            required: "Ingresa un Nombre para la Comunidad",
+          })}
+        />
+
         <TextInput
           register={register("slug", {
             required: "Ingresa un slug para la comunidad",
@@ -93,7 +114,7 @@ const CreateCommunity = (props: Props) => {
             popoverHeader: "Id url-friendly",
             popoverBody:
               `El id para la URL de tu comunidad.\n Así aparecerá en el sitio: \n https://nuestra_url.com/comunidad/${
-                slugify(watch("slug", "") || "")
+                handleCommunitySlug(watch("slug", "") || "")
               }`,
             popoverIcon: InformationIcon,
           }}
