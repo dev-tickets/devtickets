@@ -98,9 +98,14 @@ const CreateCommunity = () => {
           label="Cover para la página de tu comunidad"
           errors={errors}
           previewImageURL={watch("image_url", "")}
-          onImageSelected={(imageUrl) => setValue("image_url", imageUrl)}
+          onImageSelected={(imageUrl) =>
+            setValue("image_url", imageUrl, {
+              shouldValidate: true,
+              shouldDirty: true,
+              shouldTouch: true,
+            })}
           register={register("image_url", {
-            required: "Ingresa un Nombre para la Comunidad",
+            required: "Selecciona una imágen para la Comunidad",
           })}
         />
 
@@ -126,7 +131,7 @@ const CreateCommunity = () => {
         />
 
         <TextArea
-          label="Nombre de la comunidad"
+          label="Descripción"
           minHeight={200}
           resize="none"
           errors={errors}

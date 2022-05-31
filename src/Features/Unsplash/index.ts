@@ -43,7 +43,7 @@ export const useUnsplashSearch = (query: string) => {
     } finally {
       setFetching(false);
     }
-  }, 500);
+  }, 250);
 
   const fetchMore = useDebouncedCallback(
     async () => {
@@ -53,7 +53,6 @@ export const useUnsplashSearch = (query: string) => {
       const newPage = page + 1;
       setFetching(true);
       setError([""]);
-      console.log("newPage", newPage);
       try {
         const response = await unsplashAPI.search.getPhotos({
           query,
@@ -67,9 +66,6 @@ export const useUnsplashSearch = (query: string) => {
         } else {
           setResults(
             initialResults => {
-              console.log(initialResults);
-              console.log(response.response.results);
-
               return [...initialResults, ...response.response.results];
             },
           );
@@ -82,7 +78,7 @@ export const useUnsplashSearch = (query: string) => {
         setFetching(false);
       }
     },
-    500,
+    100,
   );
 
   React.useEffect(() => {

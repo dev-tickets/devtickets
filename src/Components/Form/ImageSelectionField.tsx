@@ -22,6 +22,7 @@ import {
   ModalBody,
   ModalContent,
   ModalOverlay,
+  Spinner,
   Text,
   useDisclosure,
   VisuallyHiddenInput,
@@ -65,7 +66,9 @@ const UnsplashSearch = (
         >
           <InputGroup>
             <InputLeftElement pt={2} fontSize="xl" pointerEvents="none">
-              <SearchIcon color="gray.300" />
+              {results.fetching
+                ? <Spinner color="purple" />
+                : <SearchIcon color="gray.300" />}
             </InputLeftElement>
             <InputRightElement pt={2} mr={4} fontSize="xl" pointerEvents="none">
               <Kbd>esc</Kbd>
@@ -263,7 +266,12 @@ export const ImageSelectionField = (
           <ModalContent width={"90vw"} maxW="1000px">
             {/*  */}
             {uploadModal === "unsplash" && (
-              <UnsplashSearch onImageSelected={onImageSelected} />
+              <UnsplashSearch
+                onImageSelected={(text) => {
+                  onImageSelected(text);
+                  onClose();
+                }}
+              />
             )}
           </ModalContent>
         </Modal>
