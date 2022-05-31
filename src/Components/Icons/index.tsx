@@ -1,5 +1,6 @@
 import { Icon } from "@chakra-ui/react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
+import { BiDotsVerticalRounded } from "react-icons/bi";
 import {
   RiAdminLine,
   RiArrowLeftLine,
@@ -24,8 +25,12 @@ import {
 type CustomIconsProps = Omit<React.ComponentProps<typeof Icon>, "as">;
 
 export type GenericIconComponentType = (props: CustomIconsProps) => JSX.Element;
+
 // Extracted from https://react-icons.github.io/react-icons/icons?name=ri
 
+export const VerticalThreeDotsIcon = (props: CustomIconsProps) => {
+  return <Icon as={BiDotsVerticalRounded} {...props} />;
+};
 export const AdminIcon = (props: CustomIconsProps) => {
   return <Icon as={RiAdminLine} {...props} />;
 };

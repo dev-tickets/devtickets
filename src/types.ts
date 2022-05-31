@@ -435,6 +435,7 @@ export type Communities = {
   description: Scalars["String"];
   eventsCollection?: Maybe<EventsConnection>;
   id: Scalars["UUID"];
+  image?: Maybe<Scalars["String"]>;
   name: Scalars["String"];
   slug: Scalars["String"];
   status: Scalars["String"];
@@ -482,6 +483,7 @@ export type CommunitiesFilter = {
   created_at?: InputMaybe<DatetimeFilter>;
   description?: InputMaybe<StringFilter>;
   id?: InputMaybe<UuidFilter>;
+  image?: InputMaybe<StringFilter>;
   name?: InputMaybe<StringFilter>;
   slug?: InputMaybe<StringFilter>;
   status?: InputMaybe<StringFilter>;
@@ -491,6 +493,7 @@ export type CommunitiesInsertInput = {
   created_at?: InputMaybe<Scalars["Datetime"]>;
   description?: InputMaybe<Scalars["String"]>;
   id?: InputMaybe<Scalars["UUID"]>;
+  image?: InputMaybe<Scalars["String"]>;
   name?: InputMaybe<Scalars["String"]>;
   slug?: InputMaybe<Scalars["String"]>;
   status?: InputMaybe<Scalars["String"]>;
@@ -508,6 +511,7 @@ export type CommunitiesOrderBy = {
   created_at?: InputMaybe<OrderByDirection>;
   description?: InputMaybe<OrderByDirection>;
   id?: InputMaybe<OrderByDirection>;
+  image?: InputMaybe<OrderByDirection>;
   name?: InputMaybe<OrderByDirection>;
   slug?: InputMaybe<OrderByDirection>;
   status?: InputMaybe<OrderByDirection>;
@@ -517,6 +521,7 @@ export type CommunitiesUpdateInput = {
   created_at?: InputMaybe<Scalars["Datetime"]>;
   description?: InputMaybe<Scalars["String"]>;
   id?: InputMaybe<Scalars["UUID"]>;
+  image?: InputMaybe<Scalars["String"]>;
   name?: InputMaybe<Scalars["String"]>;
   slug?: InputMaybe<Scalars["String"]>;
   status?: InputMaybe<Scalars["String"]>;
