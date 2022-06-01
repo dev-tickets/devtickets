@@ -226,11 +226,14 @@ export const ImageSelectionField = (
               as={IconButton}
               aria-label="Image upload options"
               icon={<VerticalThreeDotsIcon />}
-              variant="outline"
+              variant="solid"
             >
             </MenuButton>
-            <MenuList>
+            <MenuList
+              padding={2}
+            >
               <MenuItem
+                borderRadius={"base"}
                 onClick={() => {
                   setUploadModal("unsplash");
                   onOpen();
