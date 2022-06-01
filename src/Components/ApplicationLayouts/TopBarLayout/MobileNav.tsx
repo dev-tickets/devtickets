@@ -135,17 +135,21 @@ const MobileNavBody = (
           }}
           onEveryClick={mobileNavDisclosure.onClose}
         />
-        <MobileLinkSection
-          text="Admin"
-          listOfLinks={adminMenulinks}
-          onNavigationLinksClicked={mobileNavDisclosure.onClose}
-        />
+        {canSeeAdminSection && (
+          <MobileLinkSection
+            text="Admin"
+            listOfLinks={adminMenulinks}
+            onNavigationLinksClicked={mobileNavDisclosure.onClose}
+          />
+        )}
 
-        <MobileLinkSection
-          text="Super Admin"
-          listOfLinks={superAdminMenulinks}
-          onNavigationLinksClicked={mobileNavDisclosure.onClose}
-        />
+        {canSeeSuperAdminSection && (
+          <MobileLinkSection
+            text="Super Admin"
+            listOfLinks={superAdminMenulinks}
+            onNavigationLinksClicked={mobileNavDisclosure.onClose}
+          />
+        )}
       </Flex>
     </Flex>
   );

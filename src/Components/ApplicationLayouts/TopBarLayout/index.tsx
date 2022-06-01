@@ -52,7 +52,7 @@ const ActualLayout = ({ children }: { children: ReactNode }) => {
   }, [length]);
 
   const canSeeAdminSection = React.useMemo(() => {
-    return false;
+    return true;
   }, []);
 
   return (
