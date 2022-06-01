@@ -22,6 +22,7 @@ import {
   ModalBody,
   ModalContent,
   ModalOverlay,
+  Skeleton,
   Spinner,
   Text,
   useDisclosure,
@@ -29,6 +30,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { FieldError, UseFormRegisterReturn } from "react-hook-form";
+import { Basic } from "unsplash-js/dist/methods/photos/types";
 import { SearchIcon, VerticalThreeDotsIcon } from "../Icons";
 import { LoadImagesIllustration } from "../Ilustrations";
 import { LabelWithPopover, LabelWithPopoverProps } from "./LabelWithPopover";
@@ -45,6 +47,63 @@ type UnsplashButtonProps =
     previewImageURL: string;
     onImageSelected: OnImageSelected;
   };
+
+const LoaderAndImage = (
+  { photo, onImageSelected }: {
+    photo: Basic;
+    onImageSelected: (arg: string) => void;
+  },
+) => {
+  const [isLoaded, setIsLoaded] = React.useState(false);
+  return (
+    <Skeleton isLoaded={isLoaded}>
+      <Box
+        height={150}
+        width={200}
+        key={photo.id}
+        borderRadius="base"
+        position="relative"
+        cursor={"pointer"}
+        overflow={"hidden"}
+        onClick={() => {
+          onImageSelected("");
+          onImageSelected(photo.urls.regular);
+        }}
+        boxShadow="xl"
+        background={"gray.400"}
+      >
+        <Image
+          _hover={{
+            transform: "scale(1.2)",
+          }}
+          transitionProperty={"transform"}
+          transitionDuration={"5000ms"}
+          transitionTimingFunction={"ease-out"}
+          height={"full"}
+          onLoad={() => setIsLoaded(true)}
+          width="full"
+          src={photo.urls.thumb}
+          alt={photo.alt_description || "no description"}
+        />
+        <Box
+          background="blackAlpha.600"
+          p={1}
+          px={2}
+          opacity={0.8}
+          borderRadius="base"
+          position={"absolute"}
+          bottom={0}
+          color="white"
+          right={0}
+        >
+          <Text fontSize="smaller" fontWeight="bold">
+            by: {photo.user.first_name}
+          </Text>
+        </Box>
+      </Box>
+    </Skeleton>
+  );
+};
 
 const UnsplashSearch = (
   { onImageSelected }: { onImageSelected: OnImageSelected },
@@ -92,74 +151,37 @@ const UnsplashSearch = (
               <Flex
                 width={"50%"}
                 opacity={0.8}
+                height={"100%"}
                 gap={10}
                 flexDir="column"
                 justifyContent={"center"}
                 alignItems="center"
               >
                 <LoadImagesIllustration />
-                <Heading display={"inline-flex"} fontSize="lg">
+                <Heading display={"inline-flex"} fontSize="xl">
                   No Images Found
                 </Heading>
               </Flex>
             )}
             {results.results.map(photo => {
               return (
-                <Box
-                  height={150}
-                  width={200}
+                <LoaderAndImage
                   key={photo.id}
-                  borderRadius="base"
-                  position="relative"
-                  cursor={"pointer"}
-                  overflow={"hidden"}
-                  onClick={() => {
-                    onImageSelected("");
-                    onImageSelected(photo.urls.regular);
-                  }}
-                  boxShadow="xl"
-                >
-                  <Image
-                    _hover={{
-                      transform: "scale(1.2)",
-                    }}
-                    transitionProperty={"transform"}
-                    transitionDuration={"5000ms"}
-                    transitionTimingFunction={"ease-out"}
-                    height={"full"}
-                    width="full"
-                    src={photo.urls.thumb}
-                    alt={photo.alt_description || "no description"}
-                  />
-                  <Box
-                    background="blackAlpha.600"
-                    p={1}
-                    px={2}
-                    opacity={0.8}
-                    borderRadius="base"
-                    position={"absolute"}
-                    bottom={0}
-                    color="white"
-                    right={0}
-                  >
-                    <Text fontSize="smaller" fontWeight="bold">
-                      by: {photo.user.first_name}
-                    </Text>
-                  </Box>
-                </Box>
+                  photo={photo}
+                  onImageSelected={onImageSelected}
+                />
               );
             })}
           </Flex>
-
-          <Flex justifyContent={"center"}>
-            {hasResults && (
+          {hasResults && (
+            <Flex height={"fit-content"} justifyContent={"center"}>
               <Button isLoading={results.fetching} onClick={nextPage}>
                 Cargar Más
               </Button>
-            )}
-          </Flex>
+            </Flex>
+          )}
         </Flex>
-      </ModalBody>;
+      </ModalBody>
     </>
   );
 };
