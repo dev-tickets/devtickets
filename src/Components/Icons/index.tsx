@@ -17,6 +17,7 @@ import {
   RiMenuLine,
   RiSearchLine,
   RiSettings3Line,
+  RiTeamFill,
   RiTicket2Line,
   RiTwitterLine,
   RiUser2Fill,
@@ -102,4 +103,7 @@ export const LogoutIcon = (props: CustomIconsProps) => {
 
 export const TicketIcon = (props: CustomIconsProps) => {
   return <Icon as={RiTicket2Line} {...props} />;
+};
+export const CommunityIcon = (props: CustomIconsProps) => {
+  return <Icon as={RiTeamFill} {...props} />;
 };
