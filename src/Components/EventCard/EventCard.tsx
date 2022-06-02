@@ -2,6 +2,7 @@ import {
   Avatar,
   Box,
   Center,
+  Flex,
   Heading,
   Stack,
   Text,
@@ -32,7 +33,7 @@ export default function EventCard(
 ) {
   return (
     <Center py={6}>
-      <Box
+      <Flex
         w={"333px"}
         h={"450px"}
         bg={useColorModeValue("white", "gray.900")}
@@ -40,6 +41,7 @@ export default function EventCard(
         rounded={"md"}
         p={6}
         overflow={"hidden"}
+        flexDir={"column"}
       >
         <Box
           h={"210px"}
@@ -55,67 +57,70 @@ export default function EventCard(
             layout={"fill"}
           />
         </Box>
-        <Stack>
-          <Text
-            color={"green.500"}
-            textTransform={"uppercase"}
-            fontWeight={800}
-            fontSize={"sm"}
-            letterSpacing={1.1}
-          >
-            Evento
-          </Text>
-          <Heading
-            color={useColorModeValue("gray.700", "white")}
-            fontSize={"2xl"}
-            fontFamily={"body"}
-          >
-            {name}
-          </Heading>
-          <Box paddingBottom={9}>
-            {description
+        <Flex flexDir={"column"} flex={1}>
+          <Stack flex={1}>
+            <Text
+              color={"green.500"}
+              textTransform={"uppercase"}
+              fontWeight={800}
+              fontSize={"sm"}
+              letterSpacing={1.1}
+            >
+              Evento
+            </Text>
+            <Heading
+              color={useColorModeValue("gray.700", "white")}
+              fontSize={"2xl"}
+              fontFamily={"body"}
+            >
+              {name}
+            </Heading>
+            <Box>
+              {description
+                ? (
+                  <Text
+                    noOfLines={2}
+                    color={"gray.500"}
+                  >
+                    {description}
+                  </Text>
+                )
+                : (
+                  <Text
+                    noOfLines={2}
+                    color={"gray.400"}
+                    fontStyle={"italic"}
+                  >
+                    Esta comunidad aún no ha agregado una descripción<Text
+                      as={"span"}
+                      fontStyle={"normal"}
+                    >
+                      😞
+                    </Text>
+                  </Text>
+                )}
+            </Box>
+          </Stack>
+          <VStack spacing={2} align="stretch">
+            <Text fontStyle={"italic"}>
+              Creado por{" "}
+              <Text fontWeight={600} as={"span"}>{communityName}</Text>
+            </Text>
+            {start_date && end_date
               ? (
-                <Text
-                  noOfLines={2}
-                  color={"gray.500"}
-                >
-                  {description}
+                <Text color={"gray.500"}>
+                  {format(parseISO(start_date.toString()), "dd/MM/yyyy")} -{" "}
+                  {format(parseISO(end_date.toString()), "dd/MM/yyyy")}
                 </Text>
               )
               : (
-                <Text
-                  noOfLines={2}
-                  color={"gray.400"}
-                  fontStyle={"italic"}
-                >
-                  Esta comunidad aún no ha agregado una descripción<Text
-                    as={"span"}
-                    fontStyle={"normal"}
-                  >
-                    😞
-                  </Text>
+                <Text color={"gray.500"} fontStyle={"italic"}>
+                  no hay fechas
                 </Text>
               )}
-          </Box>
-        </Stack>
-        <VStack spacing={2} align="stretch">
-          <Text fontStyle={"italic"}>
-            Creado por <Text fontWeight={600} as={"span"}>{communityName}</Text>
-          </Text>
-          {start_date
-            ? (
-              <Text color={"gray.500"}>
-                {format(parseISO(start_date), "dd/MM/yyyy")} -{" "}
-                {format(parseISO(end_date), "dd/MM/yyyy")}
-              </Text>
-            )
-            : (
-              <Text color={"gray.500"} fontStyle={"italic"}>
-                no hay fechas
-              </Text>
-            )}
-        </VStack>
-      </Box>
+          </VStack>
+        </Flex>
+      </Flex>
     </Center>
   );
 }
