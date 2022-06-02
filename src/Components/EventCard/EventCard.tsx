@@ -6,22 +6,35 @@ import {
   Stack,
   Text,
   useColorModeValue,
+  VStack,
 } from "@chakra-ui/react";
+import { format, parseISO } from "date-fns";
 import Image from "next/image";
 
 export default function EventCard(
-  { logo, backgroundImage }: {
+  {
+    logo,
+    backgroundImage,
+    name,
+    description,
+    communityName,
+    start_date,
+    end_date,
+  }: {
     logo: string;
     backgroundImage: string;
     name: string;
-    description: string;
+    description?: string | null;
+    communityName?: string;
+    start_date?: Date;
+    end_date?: Date;
   },
 ) {
   return (
     <Center py={6}>
       <Box
-        maxW={"445px"}
-        w={"full"}
+        w={"333px"}
+        h={"450px"}
         bg={useColorModeValue("white", "gray.900")}
         boxShadow={"2xl"}
         rounded={"md"}
@@ -50,32 +63,58 @@ export default function EventCard(
             fontSize={"sm"}
             letterSpacing={1.1}
           >
-            Blog
+            Evento
           </Text>
           <Heading
             color={useColorModeValue("gray.700", "white")}
             fontSize={"2xl"}
             fontFamily={"body"}
           >
-            Boost your conversion rate
+            {name}
           </Heading>
-          <Text color={"gray.500"}>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-            et ea rebum.
+          <Box paddingBottom={9}>
+            {description
+              ? (
+                <Text
+                  noOfLines={2}
+                  color={"gray.500"}
+                >
+                  {description}
+                </Text>
+              )
+              : (
+                <Text
+                  noOfLines={2}
+                  color={"gray.400"}
+                  fontStyle={"italic"}
+                >
+                  Esta comunidad aún no ha agregado una descripción<Text
+                    as={"span"}
+                    fontStyle={"normal"}
+                  >
+                    😞
+                  </Text>
+                </Text>
+              )}
+          </Box>
+        </Stack>
+        <VStack spacing={2} align="stretch">
+          <Text fontStyle={"italic"}>
+            Creado por <Text fontWeight={600} as={"span"}>{communityName}</Text>
           </Text>
-        </Stack>
-        <Stack mt={6} direction={"row"} spacing={4} align={"center"}>
-          <Avatar
-            src={"https://avatars0.githubusercontent.com/u/1164541?v=4"}
-            // alt={"Author"}
-          />
-          <Stack direction={"column"} spacing={0} fontSize={"sm"}>
-            <Text fontWeight={600}>Achim Rolle</Text>
-            <Text color={"gray.500"}>Feb 08, 2021 · 6min read</Text>
-          </Stack>
-        </Stack>
+          {start_date
+            ? (
+              <Text color={"gray.500"}>
+                {format(parseISO(start_date), "dd/MM/yyyy")} -{" "}
+                {format(parseISO(end_date), "dd/MM/yyyy")}
+              </Text>
+            )
+            : (
+              <Text color={"gray.500"} fontStyle={"italic"}>
+                no hay fechas
+              </Text>
+            )}
+        </VStack>
       </Box>
     </Center>
   );

@@ -3,10 +3,7 @@ import { Flex, Skeleton } from "@chakra-ui/react";
 import React from "react";
 import { CombinedError } from "urql";
 import EventCard from "../../Components/EventCard/EventCard";
-import {
-  GetMyEventsQuery,
-  useGetMyEventsQuery,
-} from "./getMyEvents.generated";
+import { GetMyEventsQuery, useGetMyEventsQuery } from "./getMyEvents.generated";
 
 type Props = {};
 
@@ -19,7 +16,7 @@ const EventsSkeleton = () => {
           <Skeleton
             key={i}
           >
-            < EventCard
+            <EventCard
               backgroundImage="https://source.unsplash.com/random/?conference"
               logo=""
               description=""
@@ -43,7 +40,7 @@ const EventContent = (
       {data?.eventsCollection?.edges?.map((event) => {
         if (event?.node) {
           return (
-            < EventCard
+            <EventCard
               key={event.node?.id}
               backgroundImage={"https://source.unsplash.com/random/?conference"}
               logo={"https://source.unsplash.com/random/150x150/?face"}
