@@ -1,9 +1,9 @@
 import { TopBarLayout } from "@/components/ApplicationLayouts/TopBarLayout";
-import { Page } from "@/components/PageLayouts/Page";
+import { MyEvents } from "@/features/MyEvents";
 import { ReactElement } from "react";
 
 export default function Events() {
-  return <Page title="Eventos">Show all events here 👇</Page>;
+  return <MyEvents />;
 }
 
 Events.getLayout = function getLayout(page: ReactElement) {

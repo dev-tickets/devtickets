@@ -1,0 +1,16 @@
+query getMyEvents {
+	eventsCollection {
+    edges {
+      node {
+        id
+        name
+        description
+        start_date
+        end_date
+				communities {
+					name
+				}
+      }
+    }
+  }
+}

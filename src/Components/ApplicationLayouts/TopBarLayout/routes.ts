@@ -1,6 +1,7 @@
 import {
   AdminIcon,
-  ExploreIcon,
+  CalendarIcons,
+  CommunityIcon,
   LogoutIcon,
   PlusIcon,
   SettingsIcon,
@@ -12,13 +13,13 @@ export const communitiesMenuLinks: Array<
 > = [
   {
     title: "Comunidades",
-    icon: ExploreIcon,
+    icon: CommunityIcon,
     description: "Conoce nuevas comunidades!",
     href: "/communities",
   },
   {
     title: "Eventos",
-    icon: ExploreIcon,
+    icon: CalendarIcons,
     description: "Busca eventos, mantente al día en el mundo tech.",
     href: "/events",
   },

@@ -19,7 +19,8 @@
     "paths": {
       "@/components/*": ["src/Components/*"],
       "@/features/*": ["src/Features/*"],
-      "@/styling/*": ["src/Styling/*"]
+      "@/styling/*": ["src/Styling/*"],
+      "@/hooks/*": ["src/Hooks/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
