@@ -1,16 +1,15 @@
 import {
-  Avatar,
   Box,
   Center,
   Flex,
   Heading,
+  Image,
   Stack,
   Text,
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
 import { format, parseISO } from "date-fns";
-import Image from "next/image";
 
 export default function EventCard(
   {
@@ -39,25 +38,17 @@ export default function EventCard(
         bg={useColorModeValue("white", "gray.900")}
         boxShadow={"2xl"}
         rounded={"md"}
-        p={6}
         overflow={"hidden"}
         flexDir={"column"}
       >
-        <Box
-          h={"210px"}
-          bg={"gray.100"}
-          mt={-6}
-          mx={-6}
-          mb={6}
-          pos={"relative"}
-        >
-          <Image
-            alt=""
-            src={"https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"}
-            layout={"fill"}
-          />
-        </Box>
-        <Flex flexDir={"column"} flex={1}>
+        <Image
+          alt=""
+          src={"https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"}
+          boxSize={"100%"}
+          fit={"cover"}
+          flex={1}
+        />
+        <Flex flexDir={"column"} flex={1} p={6}>
           <Stack flex={1}>
             <Text
               color={"green.500"}
