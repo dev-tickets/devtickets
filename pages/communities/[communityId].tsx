@@ -7,7 +7,7 @@ export default function CommunityPage() {
   const router = useRouter();
   const { communityId } = router.query;
 
-  return <Community slug={communityId} />;
+  return <Community slug={communityId as string} />;
 }
 
 CommunityPage.getLayout = function getLayout(page: ReactElement) {

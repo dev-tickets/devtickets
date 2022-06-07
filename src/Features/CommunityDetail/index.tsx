@@ -12,11 +12,6 @@ import React from "react";
 import { Get } from "type-fest";
 import { CombinedError } from "urql";
 import { CommunityQuery, useCommunityQuery } from "./getCommunity.generated";
-
-interface Props {
-  slug: string;
-}
-
 interface CommunityContentProps {
   community: Get<CommunityQuery, "community.edges[0].node">;
 }
@@ -59,7 +54,11 @@ const CommunityContent = (props: CommunityContentProps) => {
   );
 };
 
-export const Community = (props: Props) => {
+interface CommunityProps {
+  slug: string;
+}
+
+export const Community = (props: CommunityProps) => {
   const [result] = useCommunityQuery({ variables: { slug: props.slug } });
 
   const edges = result.data?.community?.edges || [];

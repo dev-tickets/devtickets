@@ -17,7 +17,7 @@ export default function CommunityCard(
     backgroundImage: string;
     name: string;
     description: string;
-    slug: string;
+    slug: string | undefined;
   },
 ) {
   const href = `/communities/${slug}`;
