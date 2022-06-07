@@ -1,0 +1,24 @@
+query Community($slug: String!){
+	community: communitiesCollection(filter: {slug: {eq: $slug}}) {
+		edges {
+			node {
+				id
+				name
+				slug
+				description
+				image
+				status
+				created_at
+				updated_at
+				eventsCollection {
+					edges {
+						node {
+							id
+							name
+						}
+					}
+				}
+			}
+		}
+	}
+}

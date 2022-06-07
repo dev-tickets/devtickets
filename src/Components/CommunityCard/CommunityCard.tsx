@@ -9,15 +9,19 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import Link from "next/link";
 
 export default function CommunityCard(
-  { logo, backgroundImage, name, description }: {
+  { logo, backgroundImage, name, description, slug }: {
     logo: string;
     backgroundImage: string;
     name: string;
     description: string;
+    slug: string;
   },
 ) {
+  const href = `/communities/${slug}`;
+
   return (
     <Center>
       <Flex
@@ -69,13 +73,16 @@ export default function CommunityCard(
             />
           </Flex>
           <Stack>
-            <Heading
-              color={useColorModeValue("gray.700", "white")}
-              fontSize={"2xl"}
-              fontFamily={"body"}
-            >
-              {name}
-            </Heading>
+            <Link href={href} passHref>
+              <Heading
+                as="a"
+                color={useColorModeValue("gray.700", "white")}
+                fontSize={"2xl"}
+                fontFamily={"body"}
+              >
+                {name}
+              </Heading>
+            </Link>
             <Text color={"gray.500"}>
               {description}
             </Text>

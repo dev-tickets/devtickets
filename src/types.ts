@@ -110,6 +110,16 @@ export type JsonFilter = {
   neq?: InputMaybe<Scalars["JSON"]>;
 };
 
+export enum MercadolibreAllowedCurrencies {
+  Ars = "ARS",
+  Brl = "BRL",
+  Clp = "CLP",
+  Cop = "COP",
+  Mxn = "MXN",
+  Pen = "PEN",
+  Uyu = "UYU",
+}
+
 /** The root type for creating and mutating data */
 export type Mutation = {
   __typename?: "Mutation";
@@ -439,6 +449,7 @@ export type Communities = {
   name: Scalars["String"];
   slug: Scalars["String"];
   status: Scalars["String"];
+  updated_at: Scalars["Datetime"];
 };
 
 export type CommunitiesCommunity_UserCollectionArgs = {
@@ -487,6 +498,7 @@ export type CommunitiesFilter = {
   name?: InputMaybe<StringFilter>;
   slug?: InputMaybe<StringFilter>;
   status?: InputMaybe<StringFilter>;
+  updated_at?: InputMaybe<DatetimeFilter>;
 };
 
 export type CommunitiesInsertInput = {
@@ -497,6 +509,7 @@ export type CommunitiesInsertInput = {
   name?: InputMaybe<Scalars["String"]>;
   slug?: InputMaybe<Scalars["String"]>;
   status?: InputMaybe<Scalars["String"]>;
+  updated_at?: InputMaybe<Scalars["Datetime"]>;
 };
 
 export type CommunitiesInsertResponse = {
@@ -515,6 +528,7 @@ export type CommunitiesOrderBy = {
   name?: InputMaybe<OrderByDirection>;
   slug?: InputMaybe<OrderByDirection>;
   status?: InputMaybe<OrderByDirection>;
+  updated_at?: InputMaybe<OrderByDirection>;
 };
 
 export type CommunitiesUpdateInput = {
@@ -525,6 +539,7 @@ export type CommunitiesUpdateInput = {
   name?: InputMaybe<Scalars["String"]>;
   slug?: InputMaybe<Scalars["String"]>;
   status?: InputMaybe<Scalars["String"]>;
+  updated_at?: InputMaybe<Scalars["Datetime"]>;
 };
 
 export type CommunitiesUpdateResponse = {
@@ -542,6 +557,7 @@ export type Community_User = {
   created_at?: Maybe<Scalars["Datetime"]>;
   id: Scalars["UUID"];
   role: Scalars["String"];
+  updated_at: Scalars["Datetime"];
   user_id: Scalars["UUID"];
 };
 
@@ -570,6 +586,7 @@ export type Community_UserFilter = {
   created_at?: InputMaybe<DatetimeFilter>;
   id?: InputMaybe<UuidFilter>;
   role?: InputMaybe<StringFilter>;
+  updated_at?: InputMaybe<DatetimeFilter>;
   user_id?: InputMaybe<UuidFilter>;
 };
 
@@ -578,6 +595,7 @@ export type Community_UserInsertInput = {
   created_at?: InputMaybe<Scalars["Datetime"]>;
   id?: InputMaybe<Scalars["UUID"]>;
   role?: InputMaybe<Scalars["String"]>;
+  updated_at?: InputMaybe<Scalars["Datetime"]>;
   user_id?: InputMaybe<Scalars["UUID"]>;
 };
 
@@ -594,6 +612,7 @@ export type Community_UserOrderBy = {
   created_at?: InputMaybe<OrderByDirection>;
   id?: InputMaybe<OrderByDirection>;
   role?: InputMaybe<OrderByDirection>;
+  updated_at?: InputMaybe<OrderByDirection>;
   user_id?: InputMaybe<OrderByDirection>;
 };
 
@@ -602,6 +621,7 @@ export type Community_UserUpdateInput = {
   created_at?: InputMaybe<Scalars["Datetime"]>;
   id?: InputMaybe<Scalars["UUID"]>;
   role?: InputMaybe<Scalars["String"]>;
+  updated_at?: InputMaybe<Scalars["Datetime"]>;
   user_id?: InputMaybe<Scalars["UUID"]>;
 };
 
@@ -707,14 +727,16 @@ export type Events = {
   countries?: Maybe<Countries>;
   country?: Maybe<Scalars["BigInt"]>;
   created_at?: Maybe<Scalars["Datetime"]>;
-  description?: Maybe<Scalars["String"]>;
-  end_date?: Maybe<Scalars["Datetime"]>;
+  description: Scalars["String"];
+  end_date: Scalars["Datetime"];
   id: Scalars["UUID"];
+  image_link: Scalars["String"];
   map_link?: Maybe<Scalars["String"]>;
   name: Scalars["String"];
-  start_date?: Maybe<Scalars["Datetime"]>;
+  start_date: Scalars["Datetime"];
   status?: Maybe<Scalars["String"]>;
   ticket_templateCollection?: Maybe<Ticket_TemplateConnection>;
+  updated_at: Scalars["Datetime"];
 };
 
 export type EventsTicket_TemplateCollectionArgs = {
@@ -755,10 +777,12 @@ export type EventsFilter = {
   description?: InputMaybe<StringFilter>;
   end_date?: InputMaybe<DatetimeFilter>;
   id?: InputMaybe<UuidFilter>;
+  image_link?: InputMaybe<StringFilter>;
   map_link?: InputMaybe<StringFilter>;
   name?: InputMaybe<StringFilter>;
   start_date?: InputMaybe<DatetimeFilter>;
   status?: InputMaybe<StringFilter>;
+  updated_at?: InputMaybe<DatetimeFilter>;
 };
 
 export type EventsInsertInput = {
@@ -770,10 +794,12 @@ export type EventsInsertInput = {
   description?: InputMaybe<Scalars["String"]>;
   end_date?: InputMaybe<Scalars["Datetime"]>;
   id?: InputMaybe<Scalars["UUID"]>;
+  image_link?: InputMaybe<Scalars["String"]>;
   map_link?: InputMaybe<Scalars["String"]>;
   name?: InputMaybe<Scalars["String"]>;
   start_date?: InputMaybe<Scalars["Datetime"]>;
   status?: InputMaybe<Scalars["String"]>;
+  updated_at?: InputMaybe<Scalars["Datetime"]>;
 };
 
 export type EventsInsertResponse = {
@@ -793,10 +819,12 @@ export type EventsOrderBy = {
   description?: InputMaybe<OrderByDirection>;
   end_date?: InputMaybe<OrderByDirection>;
   id?: InputMaybe<OrderByDirection>;
+  image_link?: InputMaybe<OrderByDirection>;
   map_link?: InputMaybe<OrderByDirection>;
   name?: InputMaybe<OrderByDirection>;
   start_date?: InputMaybe<OrderByDirection>;
   status?: InputMaybe<OrderByDirection>;
+  updated_at?: InputMaybe<OrderByDirection>;
 };
 
 export type EventsUpdateInput = {
@@ -808,10 +836,12 @@ export type EventsUpdateInput = {
   description?: InputMaybe<Scalars["String"]>;
   end_date?: InputMaybe<Scalars["Datetime"]>;
   id?: InputMaybe<Scalars["UUID"]>;
+  image_link?: InputMaybe<Scalars["String"]>;
   map_link?: InputMaybe<Scalars["String"]>;
   name?: InputMaybe<Scalars["String"]>;
   start_date?: InputMaybe<Scalars["Datetime"]>;
   status?: InputMaybe<Scalars["String"]>;
+  updated_at?: InputMaybe<Scalars["Datetime"]>;
 };
 
 export type EventsUpdateResponse = {
@@ -826,6 +856,7 @@ export type Super_Admins = {
   __typename?: "super_admins";
   created_at?: Maybe<Scalars["Datetime"]>;
   id: Scalars["UUID"];
+  updated_at: Scalars["Datetime"];
   user_id: Scalars["UUID"];
 };
 
@@ -852,12 +883,14 @@ export type Super_AdminsEdge = {
 export type Super_AdminsFilter = {
   created_at?: InputMaybe<DatetimeFilter>;
   id?: InputMaybe<UuidFilter>;
+  updated_at?: InputMaybe<DatetimeFilter>;
   user_id?: InputMaybe<UuidFilter>;
 };
 
 export type Super_AdminsInsertInput = {
   created_at?: InputMaybe<Scalars["Datetime"]>;
   id?: InputMaybe<Scalars["UUID"]>;
+  updated_at?: InputMaybe<Scalars["Datetime"]>;
   user_id?: InputMaybe<Scalars["UUID"]>;
 };
 
@@ -872,12 +905,14 @@ export type Super_AdminsInsertResponse = {
 export type Super_AdminsOrderBy = {
   created_at?: InputMaybe<OrderByDirection>;
   id?: InputMaybe<OrderByDirection>;
+  updated_at?: InputMaybe<OrderByDirection>;
   user_id?: InputMaybe<OrderByDirection>;
 };
 
 export type Super_AdminsUpdateInput = {
   created_at?: InputMaybe<Scalars["Datetime"]>;
   id?: InputMaybe<Scalars["UUID"]>;
+  updated_at?: InputMaybe<Scalars["Datetime"]>;
   user_id?: InputMaybe<Scalars["UUID"]>;
 };
 
@@ -901,6 +936,7 @@ export type Ticket_Template = {
   quantity: Scalars["String"];
   status: Scalars["String"];
   ticket_transactionsCollection?: Maybe<Ticket_TransactionsConnection>;
+  updated_at: Scalars["Datetime"];
 };
 
 export type Ticket_TemplateTicket_TransactionsCollectionArgs = {
@@ -941,6 +977,7 @@ export type Ticket_TemplateFilter = {
   price?: InputMaybe<StringFilter>;
   quantity?: InputMaybe<StringFilter>;
   status?: InputMaybe<StringFilter>;
+  updated_at?: InputMaybe<DatetimeFilter>;
 };
 
 export type Ticket_TemplateInsertInput = {
@@ -952,6 +989,7 @@ export type Ticket_TemplateInsertInput = {
   price?: InputMaybe<Scalars["String"]>;
   quantity?: InputMaybe<Scalars["String"]>;
   status?: InputMaybe<Scalars["String"]>;
+  updated_at?: InputMaybe<Scalars["Datetime"]>;
 };
 
 export type Ticket_TemplateInsertResponse = {
@@ -971,6 +1009,7 @@ export type Ticket_TemplateOrderBy = {
   price?: InputMaybe<OrderByDirection>;
   quantity?: InputMaybe<OrderByDirection>;
   status?: InputMaybe<OrderByDirection>;
+  updated_at?: InputMaybe<OrderByDirection>;
 };
 
 export type Ticket_TemplateUpdateInput = {
@@ -982,6 +1021,7 @@ export type Ticket_TemplateUpdateInput = {
   price?: InputMaybe<Scalars["String"]>;
   quantity?: InputMaybe<Scalars["String"]>;
   status?: InputMaybe<Scalars["String"]>;
+  updated_at?: InputMaybe<Scalars["Datetime"]>;
 };
 
 export type Ticket_TemplateUpdateResponse = {
@@ -999,6 +1039,7 @@ export type Ticket_Transactions = {
   status: Scalars["String"];
   ticket_template?: Maybe<Ticket_Template>;
   ticket_template_id: Scalars["UUID"];
+  updated_at: Scalars["Datetime"];
   user_id: Scalars["UUID"];
 };
 
@@ -1027,6 +1068,7 @@ export type Ticket_TransactionsFilter = {
   id?: InputMaybe<UuidFilter>;
   status?: InputMaybe<StringFilter>;
   ticket_template_id?: InputMaybe<UuidFilter>;
+  updated_at?: InputMaybe<DatetimeFilter>;
   user_id?: InputMaybe<UuidFilter>;
 };
 
@@ -1035,6 +1077,7 @@ export type Ticket_TransactionsInsertInput = {
   id?: InputMaybe<Scalars["UUID"]>;
   status?: InputMaybe<Scalars["String"]>;
   ticket_template_id?: InputMaybe<Scalars["UUID"]>;
+  updated_at?: InputMaybe<Scalars["Datetime"]>;
   user_id?: InputMaybe<Scalars["UUID"]>;
 };
 
@@ -1051,6 +1094,7 @@ export type Ticket_TransactionsOrderBy = {
   id?: InputMaybe<OrderByDirection>;
   status?: InputMaybe<OrderByDirection>;
   ticket_template_id?: InputMaybe<OrderByDirection>;
+  updated_at?: InputMaybe<OrderByDirection>;
   user_id?: InputMaybe<OrderByDirection>;
 };
 
@@ -1059,6 +1103,7 @@ export type Ticket_TransactionsUpdateInput = {
   id?: InputMaybe<Scalars["UUID"]>;
   status?: InputMaybe<Scalars["String"]>;
   ticket_template_id?: InputMaybe<Scalars["UUID"]>;
+  updated_at?: InputMaybe<Scalars["Datetime"]>;
   user_id?: InputMaybe<Scalars["UUID"]>;
 };
 

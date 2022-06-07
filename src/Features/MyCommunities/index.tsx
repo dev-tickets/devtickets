@@ -24,6 +24,7 @@ const CommunitiesSkeleton = () => {
               logo=""
               description=""
               name=""
+              slug=""
             />
           </Skeleton>
         );
@@ -46,6 +47,7 @@ const CommunitiesContent = (
               logo={"https://source.unsplash.com/random/150x150/?face"}
               description={community.node.description}
               name={community.node.name}
+              slug={community.node.slug}
             />
           );
         }
