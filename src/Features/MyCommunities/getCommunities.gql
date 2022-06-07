@@ -5,6 +5,7 @@ query getCommunities {
         id
         name
         description
+        slug
       }
     }
   }

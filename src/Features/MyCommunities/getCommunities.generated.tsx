@@ -19,6 +19,7 @@ export type GetCommunitiesQuery = {
           id: any;
           name: string;
           description: string;
+          slug: string;
         } | null;
       }
     >;
@@ -33,6 +34,7 @@ export const GetCommunitiesDocument = gql`
         id
         name
         description
+        slug
       }
     }
   }
