@@ -42,6 +42,7 @@ const EventContent = (
           return (
             <EventCard
               key={event.node?.id}
+              id={event.node?.id}
               backgroundImage={"https://source.unsplash.com/random/?conference"}
               logo={"https://source.unsplash.com/random/150x150/?face"}
               description={event.node.description}

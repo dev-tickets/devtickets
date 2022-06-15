@@ -137,6 +137,8 @@ export type Mutation = {
   deleteFromticket_templateCollection: Ticket_TemplateDeleteResponse;
   /** Deletes zero or more records from the collection */
   deleteFromticket_transactionsCollection: Ticket_TransactionsDeleteResponse;
+  /** Deletes zero or more records from the collection */
+  deleteFromtransactionsCollection: TransactionsDeleteResponse;
   /** Adds one or more `communitiesInsertResponse` records to the collection */
   insertIntocommunitiesCollection?: Maybe<CommunitiesInsertResponse>;
   /** Adds one or more `community_userInsertResponse` records to the collection */
@@ -153,6 +155,8 @@ export type Mutation = {
   insertIntoticket_transactionsCollection?: Maybe<
     Ticket_TransactionsInsertResponse
   >;
+  /** Adds one or more `transactionsInsertResponse` records to the collection */
+  insertIntotransactionsCollection?: Maybe<TransactionsInsertResponse>;
   /** Updates zero or more records in the collection */
   updatecommunitiesCollection: CommunitiesUpdateResponse;
   /** Updates zero or more records in the collection */
@@ -167,6 +171,8 @@ export type Mutation = {
   updateticket_templateCollection: Ticket_TemplateUpdateResponse;
   /** Updates zero or more records in the collection */
   updateticket_transactionsCollection: Ticket_TransactionsUpdateResponse;
+  /** Updates zero or more records in the collection */
+  updatetransactionsCollection: TransactionsUpdateResponse;
 };
 
 /** The root type for creating and mutating data */
@@ -212,6 +218,12 @@ export type MutationDeleteFromticket_TransactionsCollectionArgs = {
 };
 
 /** The root type for creating and mutating data */
+export type MutationDeleteFromtransactionsCollectionArgs = {
+  atMost?: Scalars["Int"];
+  filter?: InputMaybe<TransactionsFilter>;
+};
+
+/** The root type for creating and mutating data */
 export type MutationInsertIntocommunitiesCollectionArgs = {
   objects: Array<CommunitiesInsertInput>;
 };
@@ -244,6 +256,11 @@ export type MutationInsertIntoticket_TemplateCollectionArgs = {
 /** The root type for creating and mutating data */
 export type MutationInsertIntoticket_TransactionsCollectionArgs = {
   objects: Array<Ticket_TransactionsInsertInput>;
+};
+
+/** The root type for creating and mutating data */
+export type MutationInsertIntotransactionsCollectionArgs = {
+  objects: Array<TransactionsInsertInput>;
 };
 
 /** The root type for creating and mutating data */
@@ -295,6 +312,13 @@ export type MutationUpdateticket_TransactionsCollectionArgs = {
   set: Ticket_TransactionsUpdateInput;
 };
 
+/** The root type for creating and mutating data */
+export type MutationUpdatetransactionsCollectionArgs = {
+  atMost?: Scalars["Int"];
+  filter?: InputMaybe<TransactionsFilter>;
+  set: TransactionsUpdateInput;
+};
+
 /** Defines a per-field sorting order */
 export enum OrderByDirection {
   AscNullsFirst = "AscNullsFirst",
@@ -328,6 +352,8 @@ export type Query = {
   ticket_templateCollection?: Maybe<Ticket_TemplateConnection>;
   /** A pagable collection of type `ticket_transactions` */
   ticket_transactionsCollection?: Maybe<Ticket_TransactionsConnection>;
+  /** A pagable collection of type `transactions` */
+  transactionsCollection?: Maybe<TransactionsConnection>;
 };
 
 /** The root type for querying data */
@@ -398,6 +424,16 @@ export type QueryTicket_TransactionsCollectionArgs = {
   first?: InputMaybe<Scalars["Int"]>;
   last?: InputMaybe<Scalars["Int"]>;
   orderBy?: InputMaybe<Array<Ticket_TransactionsOrderBy>>;
+};
+
+/** The root type for querying data */
+export type QueryTransactionsCollectionArgs = {
+  after?: InputMaybe<Scalars["Cursor"]>;
+  before?: InputMaybe<Scalars["Cursor"]>;
+  filter?: InputMaybe<TransactionsFilter>;
+  first?: InputMaybe<Scalars["Int"]>;
+  last?: InputMaybe<Scalars["Int"]>;
+  orderBy?: InputMaybe<Array<TransactionsOrderBy>>;
 };
 
 /** Boolean expression comparing fields on type "String" */
@@ -736,6 +772,7 @@ export type Events = {
   start_date: Scalars["Datetime"];
   status?: Maybe<Scalars["String"]>;
   ticket_templateCollection?: Maybe<Ticket_TemplateConnection>;
+  transactionsCollection?: Maybe<TransactionsConnection>;
   updated_at: Scalars["Datetime"];
 };
 
@@ -746,6 +783,15 @@ export type EventsTicket_TemplateCollectionArgs = {
   first?: InputMaybe<Scalars["Int"]>;
   last?: InputMaybe<Scalars["Int"]>;
   orderBy?: InputMaybe<Array<Ticket_TemplateOrderBy>>;
+};
+
+export type EventsTransactionsCollectionArgs = {
+  after?: InputMaybe<Scalars["Cursor"]>;
+  before?: InputMaybe<Scalars["Cursor"]>;
+  filter?: InputMaybe<TransactionsFilter>;
+  first?: InputMaybe<Scalars["Int"]>;
+  last?: InputMaybe<Scalars["Int"]>;
+  orderBy?: InputMaybe<Array<TransactionsOrderBy>>;
 };
 
 export type EventsConnection = {
@@ -1113,4 +1159,87 @@ export type Ticket_TransactionsUpdateResponse = {
   affectedCount: Scalars["Int"];
   /** Array of records impacted by the mutation */
   records: Array<Ticket_Transactions>;
+};
+
+export type Transactions = {
+  __typename?: "transactions";
+  created_at: Scalars["Datetime"];
+  event_id: Scalars["UUID"];
+  events?: Maybe<Events>;
+  id: Scalars["UUID"];
+  preference_json?: Maybe<Scalars["String"]>;
+  ticket_json_stringified: Scalars["String"];
+  user_id: Scalars["UUID"];
+};
+
+export type TransactionsConnection = {
+  __typename?: "transactionsConnection";
+  edges: Array<TransactionsEdge>;
+  pageInfo: PageInfo;
+};
+
+export type TransactionsDeleteResponse = {
+  __typename?: "transactionsDeleteResponse";
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars["Int"];
+  /** Array of records impacted by the mutation */
+  records: Array<Transactions>;
+};
+
+export type TransactionsEdge = {
+  __typename?: "transactionsEdge";
+  cursor: Scalars["String"];
+  node?: Maybe<Transactions>;
+};
+
+export type TransactionsFilter = {
+  created_at?: InputMaybe<DatetimeFilter>;
+  event_id?: InputMaybe<UuidFilter>;
+  id?: InputMaybe<UuidFilter>;
+  preference_json?: InputMaybe<StringFilter>;
+  ticket_json_stringified?: InputMaybe<StringFilter>;
+  user_id?: InputMaybe<UuidFilter>;
+};
+
+export type TransactionsInsertInput = {
+  created_at?: InputMaybe<Scalars["Datetime"]>;
+  event_id?: InputMaybe<Scalars["UUID"]>;
+  id?: InputMaybe<Scalars["UUID"]>;
+  preference_json?: InputMaybe<Scalars["String"]>;
+  ticket_json_stringified?: InputMaybe<Scalars["String"]>;
+  user_id?: InputMaybe<Scalars["UUID"]>;
+};
+
+export type TransactionsInsertResponse = {
+  __typename?: "transactionsInsertResponse";
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars["Int"];
+  /** Array of records impacted by the mutation */
+  records: Array<Transactions>;
+};
+
+export type TransactionsOrderBy = {
+  created_at?: InputMaybe<OrderByDirection>;
+  event_id?: InputMaybe<OrderByDirection>;
+  id?: InputMaybe<OrderByDirection>;
+  preference_json?: InputMaybe<OrderByDirection>;
+  ticket_json_stringified?: InputMaybe<OrderByDirection>;
+  user_id?: InputMaybe<OrderByDirection>;
+};
+
+export type TransactionsUpdateInput = {
+  created_at?: InputMaybe<Scalars["Datetime"]>;
+  event_id?: InputMaybe<Scalars["UUID"]>;
+  id?: InputMaybe<Scalars["UUID"]>;
+  preference_json?: InputMaybe<Scalars["String"]>;
+  ticket_json_stringified?: InputMaybe<Scalars["String"]>;
+  user_id?: InputMaybe<Scalars["UUID"]>;
+};
+
+export type TransactionsUpdateResponse = {
+  __typename?: "transactionsUpdateResponse";
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars["Int"];
+  /** Array of records impacted by the mutation */
+  records: Array<Transactions>;
 };

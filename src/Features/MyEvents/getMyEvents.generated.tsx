@@ -16,9 +16,9 @@ export type GetMyEventsQuery = {
           __typename?: "events";
           id: any;
           name: string;
-          description?: string | null;
-          start_date?: any | null;
-          end_date?: any | null;
+          description: string;
+          start_date: any;
+          end_date: any;
           communities?: { __typename?: "communities"; name: string } | null;
         } | null;
       }
