@@ -17,6 +17,7 @@ const EventsSkeleton = () => {
             key={i}
           >
             <EventCard
+              id="blankEvent"
               backgroundImage="https://source.unsplash.com/random/?conference"
               logo=""
               description=""
