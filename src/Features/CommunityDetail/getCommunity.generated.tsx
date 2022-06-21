@@ -4,7 +4,7 @@ import gql from "graphql-tag";
 import * as Urql from "urql";
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type CommunityQueryVariables = Types.Exact<{
-  slug?: Types.InputMaybe<Types.Scalars["String"]>;
+  slug: Types.Scalars["String"];
 }>;
 
 export type CommunityQuery = {
@@ -40,7 +40,7 @@ export type CommunityQuery = {
 };
 
 export const CommunityDocument = gql`
-    query Community($slug: String) {
+    query Community($slug: String!) {
   community: communitiesCollection(filter: {slug: {eq: $slug}}) {
     edges {
       node {
@@ -67,7 +67,7 @@ export const CommunityDocument = gql`
     `;
 
 export function useCommunityQuery(
-  options?: Omit<Urql.UseQueryArgs<CommunityQueryVariables>, "query">,
+  options: Omit<Urql.UseQueryArgs<CommunityQueryVariables>, "query">,
 ) {
   return Urql.useQuery<CommunityQuery>({
     query: CommunityDocument,

@@ -1,15 +1,15 @@
 import { ConditionalAppLayout } from "@/components/ApplicationLayouts/ConditionalAppLayout";
-import Payment from "@/features/Payment";
+import { EventDetail } from "@/features/EventDetail";
 import { useRouter } from "next/router";
 import { ReactElement } from "react";
 
 export default function EventPage() {
   const router = useRouter();
   const { eventId } = router.query;
+
   return (
     <>
-      <div>Show the event: {eventId}</div>
-      <Payment />
+      <EventDetail id={eventId as string} />;
     </>
   );
 }

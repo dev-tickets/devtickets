@@ -1,0 +1,18 @@
+query Event($id: UUID){
+  event: eventsCollection(filter: {id: {eq: $id}}) {
+    edges {
+      node {
+        id
+        name
+        description
+        city
+        country
+        start_date
+        end_date
+        image_link
+        address
+        map_link
+      }
+    }
+  }
+}

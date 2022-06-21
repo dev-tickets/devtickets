@@ -16,7 +16,7 @@ export type GetEventsQuery = {
           __typename?: "events";
           id: any;
           name: string;
-          description?: string | null;
+          description: string;
         } | null;
       }
     >;

@@ -17,7 +17,7 @@ export type CreateEventMutation = {
         id: any;
         created_at?: any | null;
         name: string;
-        description?: string | null;
+        description: string;
         status?: string | null;
       }
     >;

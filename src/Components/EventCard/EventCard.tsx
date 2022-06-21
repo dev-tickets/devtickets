@@ -10,9 +10,11 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { format, parseISO } from "date-fns";
+import Link from "next/link";
 
 export default function EventCard(
   {
+    id,
     logo,
     backgroundImage,
     name,
@@ -21,6 +23,7 @@ export default function EventCard(
     start_date,
     end_date,
   }: {
+    id: string;
     logo: string;
     backgroundImage: string;
     name: string;
@@ -30,6 +33,8 @@ export default function EventCard(
     end_date?: Date;
   },
 ) {
+  const href = `/events/${id}`;
+
   return (
     <Center py={6}>
       <Flex
@@ -59,13 +64,16 @@ export default function EventCard(
             >
               Evento
             </Text>
-            <Heading
-              color={useColorModeValue("gray.700", "white")}
-              fontSize={"2xl"}
-              fontFamily={"body"}
-            >
-              {name}
-            </Heading>
+            <Link href={href} passHref>
+              <Heading
+                as="a"
+                color={useColorModeValue("gray.700", "white")}
+                fontSize={"2xl"}
+                fontFamily={"body"}
+              >
+                {name}
+              </Heading>
+            </Link>
             <Box>
               {description
                 ? (
