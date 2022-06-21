@@ -1,4 +1,5 @@
 import { Page } from "@/components/PageLayouts/Page";
+import Payment from "@/features/Payment";
 import {
   Box,
   Flex,
@@ -88,6 +89,9 @@ const EventContent = (props: EventContentProps) => {
           >
             Tickets
           </Heading>
+          <Box>
+            <Payment />
+          </Box>
         </Box>
       </Flex>
     </>
