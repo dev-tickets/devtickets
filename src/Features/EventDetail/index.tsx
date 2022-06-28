@@ -21,17 +21,27 @@ const EventContent = (props: EventContentProps) => {
 
   return (
     <>
-      <Flex>
+      <Flex
+        flexWrap={{
+          base: "wrap",
+          md: "initial",
+          xl: "initial",
+        }}
+      >
         <Box
           p="4"
           h={"210px"}
-          w={"50%"}
           bg={useColorModeValue("black", "gray.100")}
           pos={"relative"}
           overflow="hidden"
         >
           <Box
             opacity={0.7}
+            w={{
+              base: "100%", // 0-48em
+              md: "100%", // 48em-80em,
+              xl: "100%",
+            }}
           >
             <Image
               objectFit="fill"
@@ -40,7 +50,17 @@ const EventContent = (props: EventContentProps) => {
             />
           </Box>
         </Box>
-        <Box paddingLeft={10}>
+        <Box
+          paddingLeft={{
+            md: 10,
+            xl: 10,
+          }}
+          paddingTop={{
+            base: 10,
+            md: 0,
+            xl: 0,
+          }}
+        >
           <Heading
             as="h1"
             color={useColorModeValue("pink.400", "white")}
@@ -60,7 +80,13 @@ const EventContent = (props: EventContentProps) => {
           <Text fontSize={"md"}>{eventNode?.description}</Text>
         </Box>
       </Flex>
-      <Flex>
+      <Flex
+        flexWrap={{
+          base: "wrap",
+          md: "initial",
+          xl: "initial",
+        }}
+      >
         <Box p="4">
           <Heading
             as="h2"
