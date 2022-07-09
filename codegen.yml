@@ -20,7 +20,7 @@ generates:
       baseTypesPath: types.ts
     plugins:
       - typescript-operations
-      - typescript-urql
+      - typescript-react-apollo
     config:
       withHooks: true
   ./graphql.schema.json:

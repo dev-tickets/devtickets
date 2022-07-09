@@ -1,7 +1,7 @@
 import { Page } from "@/components/PageLayouts/Page";
+import { ApolloError } from "@apollo/client";
 import { Flex, Skeleton } from "@chakra-ui/react";
 import React from "react";
-import { CombinedError } from "urql";
 import EventCard from "../../Components/EventCard/EventCard";
 import { GetMyEventsQuery, useGetMyEventsQuery } from "./getMyEvents.generated";
 
@@ -34,7 +34,7 @@ const EventsSkeleton = () => {
 };
 
 const EventContent = (
-  { data, error }: { data?: GetMyEventsQuery; error?: CombinedError },
+  { data, error }: { data?: GetMyEventsQuery; error?: ApolloError },
 ) => {
   return (
     <>
@@ -60,11 +60,11 @@ const EventContent = (
 };
 
 export const MyEvents = (props: Props) => {
-  const [results] = useGetMyEventsQuery();
+  const results = useGetMyEventsQuery();
   return (
     <Page title="Mis eventos">
       <Flex gap={9} flexWrap="wrap">
-        {results.fetching
+        {results.loading
           ? <EventsSkeleton />
           : <EventContent data={results.data} error={results.error} />}
       </Flex>

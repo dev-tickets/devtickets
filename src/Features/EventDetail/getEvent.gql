@@ -1,5 +1,5 @@
 query Event($id: UUID){
-  event: eventsCollection(filter: {id: {eq: $id}}) {
+  events: eventsCollection(filter: {id: {eq: $id}}) {
     edges {
       node {
         id

@@ -1,8 +1,8 @@
 import * as Types from "../../types";
 
-import gql from "graphql-tag";
-import * as Urql from "urql";
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+import { gql } from "@apollo/client";
+import * as Apollo from "@apollo/client";
+const defaultOptions = {} as const;
 export type CreateCommunityMutationVariables = Types.Exact<{
   communitiesInsertInput: Types.CommunitiesInsertInput;
 }>;
@@ -39,10 +39,47 @@ export const CreateCommunityDocument = gql`
   }
 }
     `;
+export type CreateCommunityMutationFn = Apollo.MutationFunction<
+  CreateCommunityMutation,
+  CreateCommunityMutationVariables
+>;
 
-export function useCreateCommunityMutation() {
-  return Urql.useMutation<
+/**
+ * __useCreateCommunityMutation__
+ *
+ * To run a mutation, you first call `useCreateCommunityMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCommunityMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCommunityMutation, { data, loading, error }] = useCreateCommunityMutation({
+ *   variables: {
+ *      communitiesInsertInput: // value for 'communitiesInsertInput'
+ *   },
+ * });
+ */
+export function useCreateCommunityMutation(
+  baseOptions?: Apollo.MutationHookOptions<
     CreateCommunityMutation,
     CreateCommunityMutationVariables
-  >(CreateCommunityDocument);
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    CreateCommunityMutation,
+    CreateCommunityMutationVariables
+  >(CreateCommunityDocument, options);
 }
+export type CreateCommunityMutationHookResult = ReturnType<
+  typeof useCreateCommunityMutation
+>;
+export type CreateCommunityMutationResult = Apollo.MutationResult<
+  CreateCommunityMutation
+>;
+export type CreateCommunityMutationOptions = Apollo.BaseMutationOptions<
+  CreateCommunityMutation,
+  CreateCommunityMutationVariables
+>;

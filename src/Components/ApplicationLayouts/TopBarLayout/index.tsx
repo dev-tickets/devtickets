@@ -12,7 +12,7 @@ import { useViewportScroll } from "framer-motion";
 import { useRouter } from "next/router";
 import React, { ReactNode } from "react";
 import { DesktopNavContent } from "./DesktopNavigation";
-import { useGetUserInformationQuery } from "./getUserInformation.generated";
+import { useGeTopBarUserInformationQuery } from "./geTopBarUserInformation.generated";
 import { useGetUserProfile } from "./hooks";
 import { MobileNavContent } from "./MobileNav";
 import { settingsMenuLinks } from "./routes";
@@ -31,20 +31,11 @@ const ActualLayout = ({ children }: { children: ReactNode }) => {
     return scrollY.onChange(() => setY(scrollY.get()));
   }, [scrollY]);
   const mobileNavDisclosure = useDisclosure();
-  const executed = React.useRef<boolean>(false);
   const { avatarURL } = useGetUserProfile();
-  const [results, executeQuery] = useGetUserInformationQuery({
-    requestPolicy: "cache-and-network",
-    pause: true,
+  const results = useGeTopBarUserInformationQuery({
+    fetchPolicy: "network-only", // Used for first execution
+    nextFetchPolicy: "cache-first", // Used for subsequent executions
   });
-
-  React.useEffect(() => {
-    if (executed.current) {
-      return;
-    }
-    executeQuery();
-    executed.current = true;
-  }, [executeQuery]);
 
   const length = results.data?.super_adminsCollection?.edges.length;
   const canSeeSuperAdminSection = React.useMemo(() => {

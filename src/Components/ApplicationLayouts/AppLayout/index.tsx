@@ -207,20 +207,12 @@ const DesktopTitle = React.memo(
 const SidebarContent = React.memo(function SidebarContent(
   { onClose, display }: SidebarProps,
 ) {
-  const executed = React.useRef<boolean>(false);
   const { avatarURL } = useGetUserProfile();
-  const [results, executeQuery] = useGetUserInformationQuery({
-    requestPolicy: "cache-first",
-    pause: true,
+  const results = useGetUserInformationQuery({
+    fetchPolicy: "network-only", // Used for first execution
+    nextFetchPolicy: "cache-first", // Used for subsequent executions
   });
 
-  React.useEffect(() => {
-    if (executed.current) {
-      return;
-    }
-    executeQuery();
-    executed.current = true;
-  }, [executeQuery]);
   return (
     <Flex
       gap={2}

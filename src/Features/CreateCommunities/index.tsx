@@ -20,7 +20,7 @@ const handleCommunitySlug = (unParsed: string) => {
 };
 
 const CreateCommunity = () => {
-  const [, createCommunityMutation] = useCreateCommunityMutation();
+  const [createCommunityMutation] = useCreateCommunityMutation();
   const {
     handleSubmit,
     register,
@@ -40,30 +40,27 @@ const CreateCommunity = () => {
       <Flex
         onSubmit={handleSubmit(React.useCallback(async (data) => {
           const response = await createCommunityMutation({
-            communitiesInsertInput: {
-              description: data.description,
-              slug: handleCommunitySlug(data.slug),
-              name: data.name,
-              image: data.image_url,
+            variables: {
+              communitiesInsertInput: {
+                description: data.description,
+                slug: handleCommunitySlug(data.slug),
+                name: data.name,
+                image: data.image_url,
+              },
             },
           });
-          if (response.error) {
-            if (
-              response.error?.name === "CombinedError"
-              && response.error.graphQLErrors
-            ) {
-              response.error.graphQLErrors.forEach(graphqlError => {
-                if (
-                  graphqlError.message
-                    === "duplicate key value violates unique constraint \"unique_slug_names\""
-                ) {
-                  setError("slug", {
-                    type: "custom",
-                    message: "Slug is already used!",
-                  }, { shouldFocus: true });
-                }
-              });
-            }
+          if (response.errors) {
+            response.errors?.forEach(error => {
+              if (
+                error.message
+                  === "duplicate key value violates unique constraint \"unique_slug_names\""
+              ) {
+                setError("slug", {
+                  type: "custom",
+                  message: "Slug is already used!",
+                }, { shouldFocus: true });
+              }
+            });
           } else {
             reset();
           }

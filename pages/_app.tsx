@@ -5,14 +5,14 @@ import "@fontsource/work-sans/variable-italic.css"; // Italic variant.
 import "@fontsource/work-sans/variable.css"; // Contains ONLY variable weights and no other axes.
 
 import { AuthProvider } from "@/features/Auth/supabase";
+import { useApolloClient } from "@/features/Data";
 import "@/features/Sentry";
-import { useURQLClient } from "@/features/URQL";
+import { ApolloProvider } from "@apollo/client";
 import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
 import { ReactElement, ReactNode, useEffect, useState } from "react";
 import React from "react";
-import { Provider } from "urql";
 import { theme } from "../src/Styling/theme";
 
 type NextPageWithLayout = NextPage & {
@@ -27,7 +27,7 @@ const AfterAuthComponent = ({
   Component,
   pageProps,
 }: AppPropsWithLayout) => {
-  const { urlqlClient } = useURQLClient();
+  const { apolloClient } = useApolloClient();
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
     setIsMounted(true);
@@ -43,9 +43,9 @@ const AfterAuthComponent = ({
   }
 
   return (
-    <Provider value={urlqlClient}>
+    <ApolloProvider client={apolloClient}>
       {getLayout(<Component {...pageProps} />)}
-    </Provider>
+    </ApolloProvider>
   );
 };
 

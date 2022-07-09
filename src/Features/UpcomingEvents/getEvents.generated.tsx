@@ -1,8 +1,8 @@
 import * as Types from "../../types";
 
-import gql from "graphql-tag";
-import * as Urql from "urql";
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+import { gql } from "@apollo/client";
+import * as Apollo from "@apollo/client";
+const defaultOptions = {} as const;
 export type GetEventsQueryVariables = Types.Exact<{ [key: string]: never }>;
 
 export type GetEventsQuery = {
@@ -37,11 +37,50 @@ export const GetEventsDocument = gql`
 }
     `;
 
+/**
+ * __useGetEventsQuery__
+ *
+ * To run a query within a React component, call `useGetEventsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEventsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
 export function useGetEventsQuery(
-  options?: Omit<Urql.UseQueryArgs<GetEventsQueryVariables>, "query">,
+  baseOptions?: Apollo.QueryHookOptions<
+    GetEventsQuery,
+    GetEventsQueryVariables
+  >,
 ) {
-  return Urql.useQuery<GetEventsQuery>({
-    query: GetEventsDocument,
-    ...options,
-  });
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetEventsQuery, GetEventsQueryVariables>(
+    GetEventsDocument,
+    options,
+  );
 }
+export function useGetEventsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetEventsQuery,
+    GetEventsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetEventsQuery, GetEventsQueryVariables>(
+    GetEventsDocument,
+    options,
+  );
+}
+export type GetEventsQueryHookResult = ReturnType<typeof useGetEventsQuery>;
+export type GetEventsLazyQueryHookResult = ReturnType<
+  typeof useGetEventsLazyQuery
+>;
+export type GetEventsQueryResult = Apollo.QueryResult<
+  GetEventsQuery,
+  GetEventsQueryVariables
+>;

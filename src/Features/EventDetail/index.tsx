@@ -13,11 +13,12 @@ import { Get } from "type-fest";
 import { EventQuery, useEventQuery } from "./getEvent.generated";
 
 interface EventContentProps {
-  eventNode: Get<EventQuery, "event.edges[0].node">;
+  eventNode: Get<EventQuery, "events.edges[0].node">;
+  fetching: boolean;
 }
 
 const EventContent = (props: EventContentProps) => {
-  let { eventNode } = props;
+  let { eventNode, fetching } = props;
 
   return (
     <>
@@ -128,15 +129,14 @@ interface EventDetailProps {
   id: string;
 }
 
-export const EventDetail = (props: EventDetailProps) => {
-  const [result] = useEventQuery({ variables: { id: props.id } });
-  const edges = result.data?.event?.edges || [];
-  const event = edges?.at(0)?.node;
+export const EventDetail = ({ id }: EventDetailProps) => {
+  const { loading, data } = useEventQuery({ variables: { id } });
+  const event = data?.events?.edges?.[0]?.node || null;
 
   return (
     <Page title="Evento">
       <Flex gap={9} flexWrap="wrap">
-        {event && <EventContent eventNode={event} />}
+        {event && <EventContent eventNode={event} fetching={loading} />}
       </Flex>
     </Page>
   );

@@ -1,8 +1,8 @@
 import * as Types from "../../../types";
 
-import gql from "graphql-tag";
-import * as Urql from "urql";
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+import { gql } from "@apollo/client";
+import * as Apollo from "@apollo/client";
+const defaultOptions = {} as const;
 export type GetUserInformationQueryVariables = Types.Exact<
   { [key: string]: never }
 >;
@@ -32,11 +32,52 @@ export const GetUserInformationDocument = gql`
 }
     `;
 
+/**
+ * __useGetUserInformationQuery__
+ *
+ * To run a query within a React component, call `useGetUserInformationQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserInformationQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserInformationQuery({
+ *   variables: {
+ *   },
+ * });
+ */
 export function useGetUserInformationQuery(
-  options?: Omit<Urql.UseQueryArgs<GetUserInformationQueryVariables>, "query">,
+  baseOptions?: Apollo.QueryHookOptions<
+    GetUserInformationQuery,
+    GetUserInformationQueryVariables
+  >,
 ) {
-  return Urql.useQuery<GetUserInformationQuery>({
-    query: GetUserInformationDocument,
-    ...options,
-  });
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetUserInformationQuery,
+    GetUserInformationQueryVariables
+  >(GetUserInformationDocument, options);
 }
+export function useGetUserInformationLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetUserInformationQuery,
+    GetUserInformationQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetUserInformationQuery,
+    GetUserInformationQueryVariables
+  >(GetUserInformationDocument, options);
+}
+export type GetUserInformationQueryHookResult = ReturnType<
+  typeof useGetUserInformationQuery
+>;
+export type GetUserInformationLazyQueryHookResult = ReturnType<
+  typeof useGetUserInformationLazyQuery
+>;
+export type GetUserInformationQueryResult = Apollo.QueryResult<
+  GetUserInformationQuery,
+  GetUserInformationQueryVariables
+>;

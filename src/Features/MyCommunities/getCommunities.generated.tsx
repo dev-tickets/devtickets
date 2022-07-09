@@ -1,8 +1,8 @@
 import * as Types from "../../types";
 
-import gql from "graphql-tag";
-import * as Urql from "urql";
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+import { gql } from "@apollo/client";
+import * as Apollo from "@apollo/client";
+const defaultOptions = {} as const;
 export type GetCommunitiesQueryVariables = Types.Exact<
   { [key: string]: never }
 >;
@@ -41,11 +41,52 @@ export const GetCommunitiesDocument = gql`
 }
     `;
 
+/**
+ * __useGetCommunitiesQuery__
+ *
+ * To run a query within a React component, call `useGetCommunitiesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCommunitiesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCommunitiesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
 export function useGetCommunitiesQuery(
-  options?: Omit<Urql.UseQueryArgs<GetCommunitiesQueryVariables>, "query">,
+  baseOptions?: Apollo.QueryHookOptions<
+    GetCommunitiesQuery,
+    GetCommunitiesQueryVariables
+  >,
 ) {
-  return Urql.useQuery<GetCommunitiesQuery>({
-    query: GetCommunitiesDocument,
-    ...options,
-  });
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetCommunitiesQuery, GetCommunitiesQueryVariables>(
+    GetCommunitiesDocument,
+    options,
+  );
 }
+export function useGetCommunitiesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetCommunitiesQuery,
+    GetCommunitiesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetCommunitiesQuery, GetCommunitiesQueryVariables>(
+    GetCommunitiesDocument,
+    options,
+  );
+}
+export type GetCommunitiesQueryHookResult = ReturnType<
+  typeof useGetCommunitiesQuery
+>;
+export type GetCommunitiesLazyQueryHookResult = ReturnType<
+  typeof useGetCommunitiesLazyQuery
+>;
+export type GetCommunitiesQueryResult = Apollo.QueryResult<
+  GetCommunitiesQuery,
+  GetCommunitiesQueryVariables
+>;

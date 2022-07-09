@@ -1,8 +1,8 @@
 import * as Types from "../../types";
 
-import gql from "graphql-tag";
-import * as Urql from "urql";
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+import { gql } from "@apollo/client";
+import * as Apollo from "@apollo/client";
+const defaultOptions = {} as const;
 export type CommunityQueryVariables = Types.Exact<{
   slug: Types.Scalars["String"];
 }>;
@@ -66,11 +66,48 @@ export const CommunityDocument = gql`
 }
     `;
 
+/**
+ * __useCommunityQuery__
+ *
+ * To run a query within a React component, call `useCommunityQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCommunityQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCommunityQuery({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
 export function useCommunityQuery(
-  options: Omit<Urql.UseQueryArgs<CommunityQueryVariables>, "query">,
+  baseOptions: Apollo.QueryHookOptions<CommunityQuery, CommunityQueryVariables>,
 ) {
-  return Urql.useQuery<CommunityQuery>({
-    query: CommunityDocument,
-    ...options,
-  });
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<CommunityQuery, CommunityQueryVariables>(
+    CommunityDocument,
+    options,
+  );
 }
+export function useCommunityLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    CommunityQuery,
+    CommunityQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<CommunityQuery, CommunityQueryVariables>(
+    CommunityDocument,
+    options,
+  );
+}
+export type CommunityQueryHookResult = ReturnType<typeof useCommunityQuery>;
+export type CommunityLazyQueryHookResult = ReturnType<
+  typeof useCommunityLazyQuery
+>;
+export type CommunityQueryResult = Apollo.QueryResult<
+  CommunityQuery,
+  CommunityQueryVariables
+>;

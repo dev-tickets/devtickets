@@ -1,9 +1,10 @@
-import { Colors } from "@chakra-ui/react";
+// import { Colors } from "@chakra-ui/react";
 
-const colors: Colors = {
+const colors = {
   transparent: "transparent",
   current: "currentColor",
   black: "#000000",
+  jsconfBlack: "#1E2019",
   white: "#FFFFFF",
   whiteAlpha: {
     50: "rgba(255, 255, 255, 0.04)",

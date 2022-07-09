@@ -1,4 +1,4 @@
-query getUserInformation {
+query geTopBarUserInformation {
 	super_adminsCollection {
 		edges {
 			node {

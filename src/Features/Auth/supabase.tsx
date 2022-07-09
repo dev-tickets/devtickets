@@ -57,7 +57,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [accessToken, setAccessToken] = React.useState(
     supabase.auth.session()?.access_token,
   );
-
+  React.useEffect(() => {
+    if (process.env.NODE_ENV !== "production") {
+      console.log("ACCESSTOKEN", accessToken);
+    }
+  }, [accessToken]);
   React.useEffect(() => {
     const getUserProfile = async () => {
       try {

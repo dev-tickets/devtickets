@@ -10,7 +10,6 @@ import {
 import { format, parseISO } from "date-fns";
 import React from "react";
 import { Get } from "type-fest";
-import { CombinedError } from "urql";
 import { CommunityQuery, useCommunityQuery } from "./getCommunity.generated";
 interface CommunityContentProps {
   community: Get<CommunityQuery, "community.edges[0].node">;
@@ -59,7 +58,7 @@ interface CommunityProps {
 }
 
 export const Community = (props: CommunityProps) => {
-  const [result] = useCommunityQuery({ variables: { slug: props.slug } });
+  const result = useCommunityQuery({ variables: { slug: props.slug } });
 
   const edges = result.data?.community?.edges || [];
   const community = edges?.at(0)?.node;

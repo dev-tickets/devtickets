@@ -1,7 +1,7 @@
 import { Page } from "@/components/PageLayouts/Page";
+import { ApolloError } from "@apollo/client";
 import { Flex, Skeleton } from "@chakra-ui/react";
 import React from "react";
-import { CombinedError } from "urql";
 import CommunityCard from "../../Components/CommunityCard/CommunityCard";
 import {
   GetCommunitiesQuery,
@@ -34,7 +34,7 @@ const CommunitiesSkeleton = () => {
 };
 
 const CommunitiesContent = (
-  { data, error }: { data?: GetCommunitiesQuery; error?: CombinedError },
+  { data, error }: { data?: GetCommunitiesQuery; error?: ApolloError },
 ) => {
   return (
     <>
@@ -57,11 +57,11 @@ const CommunitiesContent = (
 };
 
 export const MyCommunities = (props: Props) => {
-  const [results] = useGetCommunitiesQuery();
+  const results = useGetCommunitiesQuery();
   return (
     <Page title="Mis Comunidades">
       <Flex gap={9} flexWrap="wrap">
-        {results.fetching
+        {results.loading
           ? <CommunitiesSkeleton />
           : <CommunitiesContent data={results.data} error={results.error} />}
       </Flex>
