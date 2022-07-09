@@ -6,10 +6,11 @@
     "dev": "next dev",
     "fmt:check": "dprint check",
     "fmt": "dprint fmt",
-    "prebuild": "yarn fmt && yarn lint",
+    "prebuild": "yarn fmt && yarn lint && yarn typecheck",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "typecheck": "tsc --noEmit",
     "generate": "graphql-codegen --config codegen.yml -r dotenv/config",
     "prepare": "husky install"
   },
