@@ -25,7 +25,9 @@ const useAuthLink = () => {
   });
 };
 
-const httpLink = new HttpLink({ uri: API_URL });
+const httpLink = new HttpLink({
+  uri: API_URL,
+});
 
 export const useApolloClient = () => {
   const authLink = useAuthLink();

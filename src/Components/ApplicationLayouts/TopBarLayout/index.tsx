@@ -1,4 +1,4 @@
-import { HamburgerMenuIcon } from "@/components/Icons";
+import { JSConfChileIcon } from "@/components/Icons";
 import { useIsAuthenticated } from "@/features/Auth/supabase";
 import {
   Avatar,
@@ -9,17 +9,23 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useViewportScroll } from "framer-motion";
+import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { ReactNode } from "react";
+import React, { ReactNode, Suspense } from "react";
+import { dashboardMainURL } from "src/config";
 import { DesktopNavContent } from "./DesktopNavigation";
 import { useGeTopBarUserInformationQuery } from "./geTopBarUserInformation.generated";
 import { useGetUserProfile } from "./hooks";
 import { MobileNavContent } from "./MobileNav";
-import { settingsMenuLinks } from "./routes";
+import { settingsMenuLinks, unauthenticatedSettingsMenuLinks } from "./routes";
 import { SubMenuTrigger } from "./subMenu";
 
-const ActualLayout = ({ children }: { children: ReactNode }) => {
-  const bg = useColorModeValue("white", "gray.800");
+const ActualLayout = (
+  { children, isAuthenticated }: {
+    children: ReactNode;
+    isAuthenticated: boolean;
+  },
+) => {
   const ref = React.useRef<HTMLElement>();
   const [y, setY] = React.useState(0);
   const { height = 0 } = ref.current
@@ -34,13 +40,8 @@ const ActualLayout = ({ children }: { children: ReactNode }) => {
   const { avatarURL } = useGetUserProfile();
   const results = useGeTopBarUserInformationQuery({
     fetchPolicy: "network-only", // Used for first execution
-    nextFetchPolicy: "cache-first", // Used for subsequent executions
+    nextFetchPolicy: "cache-only", // Used for subsequent executions
   });
-
-  const length = results.data?.super_adminsCollection?.edges.length;
-  const canSeeSuperAdminSection = React.useMemo(() => {
-    return length !== undefined && length > 0;
-  }, [length]);
 
   const canSeeAdminSection = React.useMemo(() => {
     return true;
@@ -49,17 +50,16 @@ const ActualLayout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <chakra.header
+        position="sticky"
+        top={0}
+        zIndex={100}
         shadow={y > height ? "sm" : undefined}
         transition="box-shadow 0.2s"
-        bg={bg}
-        borderTop="6px solid"
-        borderTopColor="transparent"
+        bg="jsconfBlack"
+        borderWidth={0}
         w="full"
-        overflowY="hidden"
-        borderBottomWidth={2}
-        borderBottomColor={useColorModeValue("gray.200", "gray.900")}
       >
-        <chakra.div h="4.5rem" mx="auto" maxW="1200px">
+        <chakra.div h="5rem" mx="auto" maxW="1200px">
           <Flex
             w="full"
             h="full"
@@ -67,30 +67,20 @@ const ActualLayout = ({ children }: { children: ReactNode }) => {
             alignItems="center"
             justifyContent="space-between"
           >
-            <Flex align="flex-start">
-              <Button
-                variant="ghost"
-                display={{ base: "initial", md: "none" }}
-                onClick={mobileNavDisclosure.onOpen}
-              >
-                <HamburgerMenuIcon />
-              </Button>
-            </Flex>
-            <Flex>
-              <MobileNavContent
-                canSeeSuperAdminSection={canSeeSuperAdminSection}
-                canSeeAdminSection={canSeeAdminSection}
-                mobileNavDisclosure={mobileNavDisclosure}
-              />
+            <Link
+              href={dashboardMainURL}
+              passHref
+            >
+              <Flex as="a" align="flex-start">
+                <JSConfChileIcon w={7} h={7} />
+              </Flex>
+            </Link>
 
-              <DesktopNavContent
-                canSeeSuperAdminSection={canSeeSuperAdminSection}
-                canSeeAdminSection={canSeeAdminSection}
-              />
-            </Flex>
             <SubMenuTrigger
               buttonContent={<Avatar size="xs" src={avatarURL} />}
-              subMenuItems={settingsMenuLinks}
+              subMenuItems={isAuthenticated
+                ? settingsMenuLinks
+                : unauthenticatedSettingsMenuLinks}
             />
           </Flex>
         </chakra.div>
@@ -105,11 +95,10 @@ export const TopBarLayout = React.memo(
     // This is an authenticated-only layout, so first we check if the user is
     // authenticated If they are not, we send them to login
     const isAuthenticated = useIsAuthenticated();
-    const router = useRouter();
-    if (!isAuthenticated) {
-      router.push("/login");
-      return <p></p>;
-    }
-    return <ActualLayout>{children}</ActualLayout>;
+    return (
+      // <Suspense fallback={null}>
+      <ActualLayout isAuthenticated={isAuthenticated}>{children}</ActualLayout>
+      // </Suspense>
+    );
   },
 );

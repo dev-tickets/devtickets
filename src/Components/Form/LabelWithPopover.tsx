@@ -37,16 +37,14 @@ const LabelPopover = ({
           <PopoverIcon />
         </Flex>
       </PopoverTrigger>
-      <Portal>
-        <PopoverContent>
-          <PopoverArrow />
-          <PopoverCloseButton />
-          {popoverHeader && <PopoverHeader>{popoverHeader}</PopoverHeader>}
-          <PopoverBody>
-            {popoverBody}
-          </PopoverBody>
-        </PopoverContent>
-      </Portal>
+      <PopoverContent>
+        <PopoverArrow />
+        <PopoverCloseButton />
+        {popoverHeader && <PopoverHeader>{popoverHeader}</PopoverHeader>}
+        <PopoverBody>
+          {popoverBody}
+        </PopoverBody>
+      </PopoverContent>
     </Popover>
   );
 };

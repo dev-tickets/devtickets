@@ -210,7 +210,7 @@ const SidebarContent = React.memo(function SidebarContent(
   const { avatarURL } = useGetUserProfile();
   const results = useGetUserInformationQuery({
     fetchPolicy: "network-only", // Used for first execution
-    nextFetchPolicy: "cache-first", // Used for subsequent executions
+    nextFetchPolicy: "cache-only", // Used for subsequent executions
   });
 
   return (
@@ -314,12 +314,13 @@ export const AppLayout = React.memo(
   function AppLayout({ children }: { children: ReactNode }) {
     // This is an authenticated-only layout, so first we check if the user is
     // authenticated If they are not, we send them to login
-    const isAuthenticated = useIsAuthenticated();
-    const router = useRouter();
-    if (!isAuthenticated) {
-      router.push("/login");
-      return <p></p>;
-    }
-    return <ActualLayout>{children}</ActualLayout>;
+    // const isAuthenticated = useIsAuthenticated();
+    // const router = useRouter();
+    // if (typeof window !== "undefined" && !isAuthenticated) {
+    //   router.push("/login");
+    //   return <p></p>;
+    // }
+    return <>{children}</>;
+    // return <ActualLayout>{children}</ActualLayout>;
   },
 );

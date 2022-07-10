@@ -2,9 +2,11 @@ import {
   AdminIcon,
   CalendarIcons,
   CommunityIcon,
+  LoginIcon,
   LogoutIcon,
   PlusIcon,
   SettingsIcon,
+  TicketIcon,
 } from "@/components/Icons";
 import { SubMenuItemType } from "./sharedTypes";
 
@@ -55,6 +57,11 @@ export const superAdminMenulinks: Array<
 
 export const settingsMenuLinks: Array<SubMenuItemType> = [
   {
+    title: "Mis Tickets",
+    icon: TicketIcon,
+    href: "/tickets",
+  },
+  {
     title: "Configuración",
     icon: SettingsIcon,
     href: "/settings",
@@ -64,5 +71,13 @@ export const settingsMenuLinks: Array<SubMenuItemType> = [
     title: "Cerrar sesión",
     icon: LogoutIcon,
     href: "/logout",
+  },
+];
+
+export const unauthenticatedSettingsMenuLinks: Array<SubMenuItemType> = [
+  {
+    title: "Login",
+    icon: LoginIcon,
+    href: "/login",
   },
 ];

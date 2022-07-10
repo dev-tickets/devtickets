@@ -4,8 +4,8 @@ import "@fontsource/work-sans/700.css"; // Weight 700.
 import "@fontsource/work-sans/variable-italic.css"; // Italic variant.
 import "@fontsource/work-sans/variable.css"; // Contains ONLY variable weights and no other axes.
 
+import { useApolloClient } from "@/features/Apollo";
 import { AuthProvider } from "@/features/Auth/supabase";
-import { useApolloClient } from "@/features/Data";
 import "@/features/Sentry";
 import { ApolloProvider } from "@apollo/client";
 import { ChakraProvider, CSSReset } from "@chakra-ui/react";
@@ -16,47 +16,61 @@ import React from "react";
 import { theme } from "../src/Styling/theme";
 
 type NextPageWithLayout = NextPage & {
-  getLayout?: (page: ReactElement) => ReactNode;
+  getLayout: (page: ReactElement) => ReactNode;
 };
 
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
+// eslint-disable-next-line react/display-name
 const AfterAuthComponent = ({
-  Component,
+  getLayout,
   pageProps,
-}: AppPropsWithLayout) => {
-  const { apolloClient } = useApolloClient();
+  Component,
+}: {
+  getLayout: (page: ReactElement) => ReactNode;
+  Component: NextPageWithLayout;
+  pageProps: any;
+}) => {
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
     setIsMounted(true);
   }, []);
-
-  const getLayout = React.useMemo(() => {
-    return Component.getLayout!;
-  }, [Component.getLayout]);
 
   if (!isMounted) {
     // TODO: Set "Loading" UI here
     return <></>;
   }
 
-  return (
-    <ApolloProvider client={apolloClient}>
-      {getLayout(<Component {...pageProps} />)}
-    </ApolloProvider>
-  );
+  return <>{getLayout(<Component {...pageProps} />)}</>;
 };
 
-function MyApp(props: AppProps) {
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  const { apolloClient } = useApolloClient();
   return (
-    <ChakraProvider theme={theme}>
+    <ChakraProvider
+      theme={theme}
+      colorModeManager={{
+        ssr: true,
+        type: "localStorage",
+        set: () => "dark",
+        get: () => "dark",
+      }}
+    >
       <CSSReset />
       <AuthProvider>
-        {typeof window === "undefined"
-          ? null
-          : <AfterAuthComponent {...props} />}
+        <ApolloProvider client={apolloClient}>
+          {typeof window === "undefined"
+            ? null
+            : (
+              <AfterAuthComponent
+                pageProps={pageProps}
+                getLayout={Component.getLayout}
+                Component={Component}
+              />
+            )}
+        </ApolloProvider>
       </AuthProvider>
     </ChakraProvider>
   );

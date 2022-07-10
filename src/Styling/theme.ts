@@ -1,10 +1,10 @@
-import { extendTheme } from "@chakra-ui/react";
+import { extendTheme, ThemeConfig } from "@chakra-ui/react";
 import { foundations } from "./foundations";
 
 const direction = "ltr";
 
-const config = {
-  useSystemColorMode: true,
+const config: ThemeConfig = {
+  useSystemColorMode: false,
   initialColorMode: "dark",
   cssVarPrefix: "chakra",
 };
@@ -17,10 +17,10 @@ export const theme = extendTheme({
     global: () => ({
       ".js-focus-visible :focus:not(.focus-visible), .js-focus-visible :focus:not(.focus-visible) + [data-focus]":
         { outline: "none", shadow: "none" },
-      // "html, body": {
-      //   backgroundColor: foundations.colors.jsconfBlack,
-      //   color: foundations.colors.white,
-      // },
+      "html, body": {
+        backgroundColor: foundations.colors.jsconfBlack,
+        color: foundations.colors.white,
+      },
     }),
   },
 });

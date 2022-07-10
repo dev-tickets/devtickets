@@ -1,4 +1,4 @@
-import { ConditionalAppLayout } from "@/components/ApplicationLayouts/ConditionalAppLayout";
+import { TopBarLayout } from "@/components/ApplicationLayouts/TopBarLayout";
 import { Community } from "@/features/CommunityDetail";
 import { useRouter } from "next/router";
 import { ReactElement } from "react";
@@ -11,5 +11,5 @@ export default function CommunityPage() {
 }
 
 CommunityPage.getLayout = function getLayout(page: ReactElement) {
-  return <ConditionalAppLayout>{page}</ConditionalAppLayout>;
+  return <TopBarLayout>{page}</TopBarLayout>;
 };

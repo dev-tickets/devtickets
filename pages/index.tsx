@@ -1,11 +1,17 @@
-import { TopBarLayout } from "@/components/ApplicationLayouts/TopBarLayout";
-import { Home } from "@/features/Home";
-import { ReactElement } from "react";
+import { useRouter } from "next/router";
+import { ReactElement, useEffect } from "react";
 
 export default function Index() {
-  return <Home />;
+  const router = useRouter();
+  useEffect(() => {
+    router.replace("/events/jsconfcl");
+  }, [router]);
+  return (
+    <>
+    </>
+  );
 }
 
 Index.getLayout = function getLayout(page: ReactElement) {
-  return <TopBarLayout>{page}</TopBarLayout>;
+  return page;
 };
