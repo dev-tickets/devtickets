@@ -1,6 +1,5 @@
 import { useAuthContext } from "@/features/Auth/supabase";
 import { ApolloClient, from, HttpLink, InMemoryCache } from "@apollo/client";
-import { setContext } from "@apollo/client/link/context";
 
 const API_URL = process.env.NEXT_PUBLIC_SUPABASE_API_URL + "/graphql/v1";
 
@@ -26,12 +25,9 @@ const useAuthLink = () => {
   });
 };
 
-const useHttpLink = () => {
-  return new HttpLink({ uri: API_URL });
-};
+const httpLink = new HttpLink({ uri: API_URL });
 
 export const useApolloClient = () => {
-  const httpLink = useHttpLink();
   const authLink = useAuthLink();
   const link = from([
     authLink,
@@ -40,6 +36,7 @@ export const useApolloClient = () => {
 
   const apolloClient = new ApolloClient({
     cache: new InMemoryCache(),
+    connectToDevTools: process.env.NODE_ENV !== "production",
     link,
   });
 

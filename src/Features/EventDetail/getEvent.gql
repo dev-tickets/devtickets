@@ -1,5 +1,5 @@
-query Event($id: UUID){
-  events: eventsCollection(filter: {id: {eq: $id}}) {
+query Event($slug: String){
+  events: eventsCollection(filter: {slug: {eq: $slug}}) {
     edges {
       node {
         id

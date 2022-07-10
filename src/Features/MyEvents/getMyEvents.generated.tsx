@@ -18,6 +18,7 @@ export type GetMyEventsQuery = {
           name: string;
           description: string;
           start_date: any;
+          slug: string;
           end_date: any;
           communities?: { __typename?: "communities"; name: string } | null;
         } | null;
@@ -35,6 +36,7 @@ export const GetMyEventsDocument = gql`
         name
         description
         start_date
+        slug
         end_date
         communities {
           name

@@ -126,11 +126,11 @@ const EventContent = (props: EventContentProps) => {
 };
 
 interface EventDetailProps {
-  id: string;
+  slug: string;
 }
 
-export const EventDetail = ({ id }: EventDetailProps) => {
-  const { loading, data } = useEventQuery({ variables: { id } });
+export const EventDetail = ({ slug }: EventDetailProps) => {
+  const { loading, data } = useEventQuery({ variables: { slug } });
   const event = data?.events?.edges?.[0]?.node || null;
 
   return (

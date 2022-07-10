@@ -5,11 +5,11 @@ import { ReactElement } from "react";
 
 export default function EventPage() {
   const router = useRouter();
-  const { eventId } = router.query;
+  const { eventSlug } = router.query;
 
   return (
     <>
-      <EventDetail id={eventId as string} />;
+      <EventDetail slug={eventSlug as string} />;
     </>
   );
 }

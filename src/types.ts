@@ -769,6 +769,7 @@ export type Events = {
   image_link: Scalars["String"];
   map_link?: Maybe<Scalars["String"]>;
   name: Scalars["String"];
+  slug: Scalars["String"];
   start_date: Scalars["Datetime"];
   status?: Maybe<Scalars["String"]>;
   ticket_templateCollection?: Maybe<Ticket_TemplateConnection>;
@@ -826,6 +827,7 @@ export type EventsFilter = {
   image_link?: InputMaybe<StringFilter>;
   map_link?: InputMaybe<StringFilter>;
   name?: InputMaybe<StringFilter>;
+  slug?: InputMaybe<StringFilter>;
   start_date?: InputMaybe<DatetimeFilter>;
   status?: InputMaybe<StringFilter>;
   updated_at?: InputMaybe<DatetimeFilter>;
@@ -843,6 +845,7 @@ export type EventsInsertInput = {
   image_link?: InputMaybe<Scalars["String"]>;
   map_link?: InputMaybe<Scalars["String"]>;
   name?: InputMaybe<Scalars["String"]>;
+  slug?: InputMaybe<Scalars["String"]>;
   start_date?: InputMaybe<Scalars["Datetime"]>;
   status?: InputMaybe<Scalars["String"]>;
   updated_at?: InputMaybe<Scalars["Datetime"]>;
@@ -868,6 +871,7 @@ export type EventsOrderBy = {
   image_link?: InputMaybe<OrderByDirection>;
   map_link?: InputMaybe<OrderByDirection>;
   name?: InputMaybe<OrderByDirection>;
+  slug?: InputMaybe<OrderByDirection>;
   start_date?: InputMaybe<OrderByDirection>;
   status?: InputMaybe<OrderByDirection>;
   updated_at?: InputMaybe<OrderByDirection>;
@@ -885,6 +889,7 @@ export type EventsUpdateInput = {
   image_link?: InputMaybe<Scalars["String"]>;
   map_link?: InputMaybe<Scalars["String"]>;
   name?: InputMaybe<Scalars["String"]>;
+  slug?: InputMaybe<Scalars["String"]>;
   start_date?: InputMaybe<Scalars["Datetime"]>;
   status?: InputMaybe<Scalars["String"]>;
   updated_at?: InputMaybe<Scalars["Datetime"]>;
