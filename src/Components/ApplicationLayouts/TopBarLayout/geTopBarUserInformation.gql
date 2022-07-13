@@ -1,9 +1,0 @@
-query geTopBarUserInformation {
-	super_adminsCollection {
-		edges {
-			node {
-				id
-			}
-		}
-	}
-}
