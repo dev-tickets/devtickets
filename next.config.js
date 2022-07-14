@@ -11,7 +11,7 @@ const nextConfig = {
     "NEXT_PUBLIC_UNSPLASH_ACCESS_KEY": process.env.UNSPLASH_ACCESS_KEY,
   },
   reactStrictMode: true,
-  experimental: {
+  compiler: {
     emotion: true,
   },
   images: {

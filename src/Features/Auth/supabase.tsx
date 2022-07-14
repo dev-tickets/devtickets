@@ -3,7 +3,9 @@ import { useRouter } from "next/router";
 import React from "react";
 import { dashboardMainURL } from "src/config";
 
-const loginCallbackURL = dashboardMainURL + "/login/finish";
+let url = new URL(dashboardMainURL);
+url.pathname = "/login/finish";
+const loginCallbackURL = url.toString();
 export const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_API_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_API_TOKEN!,
@@ -11,6 +13,7 @@ export const supabase = createClient(
 
 export const useLoginWithEmail = () => {
   return React.useCallback(({ email }: { email: string }) => {
+    console.log("redirecto", loginCallbackURL);
     return supabase.auth.signIn(
       {
         email: email.trim(),
@@ -24,6 +27,7 @@ export const useLoginWithEmail = () => {
 
 export const useLoginWithGithub = () => {
   return React.useCallback(async () => {
+    console.log("redirecto", loginCallbackURL);
     const { user, error, session } = await supabase.auth.signIn(
       {
         provider: "github",
