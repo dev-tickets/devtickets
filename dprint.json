@@ -2,10 +2,18 @@
   "lineWidth": 80,
   "typescript": {},
   "json": {},
-  "includes": ["**/*.{ts,tsx,js,jsx,cjs,mjs,json}"],
-  "excludes": ["**/.next", "**/node_modules", "**/*-lock.json"],
+  "includes": ["**/*.{ts,tsx,js,jsx,cjs,mjs,json,md}"],
+  "excludes": [
+    "**/.next",
+    "**/node_modules",
+    "**/*-lock.json",
+    "**/*.graphql",
+    "**/out"
+  ],
+  "incremental": false,
   "plugins": [
-    "https://plugins.dprint.dev/typescript-0.68.4.wasm",
-    "https://plugins.dprint.dev/json-0.15.3.wasm"
+    "https://plugins.dprint.dev/typescript-0.69.6.wasm",
+    "https://plugins.dprint.dev/json-0.15.3.wasm",
+    "https://plugins.dprint.dev/markdown-0.13.3.wasm"
   ]
 }

@@ -1,19 +1,19 @@
-import { ConditionalAppLayout } from "@/components/ApplicationLayouts/ConditionalAppLayout";
+import { TopBarLayout } from "@/components/ApplicationLayouts/TopBarLayout";
 import { EventDetail } from "@/features/EventDetail";
 import { useRouter } from "next/router";
 import { ReactElement } from "react";
 
 export default function EventPage() {
   const router = useRouter();
-  const { eventId } = router.query;
+  const { eventSlug } = router.query;
 
   return (
     <>
-      <EventDetail id={eventId as string} />;
+      <EventDetail slug={eventSlug as string} />
     </>
   );
 }
 
 EventPage.getLayout = function getLayout(page: ReactElement) {
-  return <ConditionalAppLayout>{page}</ConditionalAppLayout>;
+  return <TopBarLayout>{page}</TopBarLayout>;
 };

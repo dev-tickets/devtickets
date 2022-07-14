@@ -4,7 +4,7 @@ import { gql } from "@apollo/client";
 import * as Apollo from "@apollo/client";
 const defaultOptions = {} as const;
 export type EventQueryVariables = Types.Exact<{
-  id?: Types.InputMaybe<Types.Scalars["UUID"]>;
+  slug?: Types.InputMaybe<Types.Scalars["String"]>;
 }>;
 
 export type EventQuery = {
@@ -33,8 +33,8 @@ export type EventQuery = {
 };
 
 export const EventDocument = gql`
-    query Event($id: UUID) {
-  events: eventsCollection(filter: {id: {eq: $id}}) {
+    query Event($slug: String) {
+  events: eventsCollection(filter: {slug: {eq: $slug}}) {
     edges {
       node {
         id
@@ -65,7 +65,7 @@ export const EventDocument = gql`
  * @example
  * const { data, loading, error } = useEventQuery({
  *   variables: {
- *      id: // value for 'id'
+ *      slug: // value for 'slug'
  *   },
  * });
  */

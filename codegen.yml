@@ -26,3 +26,12 @@ generates:
   ./graphql.schema.json:
     plugins:
       - "introspection"
+  ./graphql.schema.graphql:
+    plugins:
+      - "schema-ast"
+    config:
+      includeDirectives: true
+      includeIntrospectionTypes: true
+      commentDescriptions: true
+      sort: true
+      federation: false

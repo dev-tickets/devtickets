@@ -11,11 +11,7 @@ import {
 import React from "react";
 import { useLockBodyScroll } from "src/Hooks/useLockBodyScroll";
 import { SubMenuButtonOrLink, TopLevelButtonOrLink } from "./Components";
-import {
-  adminMenulinks,
-  communitiesMenuLinks,
-  superAdminMenulinks,
-} from "./routes";
+import { adminMenulinks, communitiesMenuLinks } from "./routes";
 import { SubMenuItemType } from "./sharedTypes";
 
 const MobileLinkSection = (
@@ -72,8 +68,7 @@ const MobileLinkSection = (
 };
 
 const MobileNavBody = (
-  { mobileNavDisclosure, canSeeSuperAdminSection, canSeeAdminSection }: {
-    canSeeSuperAdminSection: boolean;
+  { mobileNavDisclosure, canSeeAdminSection }: {
     canSeeAdminSection: boolean;
     mobileNavDisclosure: ReturnType<typeof useDisclosure>;
   },
@@ -82,11 +77,12 @@ const MobileNavBody = (
   const bg = useColorModeValue("white", "gray.800");
   return (
     <Flex
-      pos="absolute"
+      pos="fixed"
       top={0}
       left={0}
       height="100vh"
       width="100vw"
+      zIndex={101}
       display={mobileNavDisclosure.isOpen ? "flex" : "none"}
     >
       <Flex
@@ -142,23 +138,14 @@ const MobileNavBody = (
             onNavigationLinksClicked={mobileNavDisclosure.onClose}
           />
         )}
-
-        {canSeeSuperAdminSection && (
-          <MobileLinkSection
-            text="Super Admin"
-            listOfLinks={superAdminMenulinks}
-            onNavigationLinksClicked={mobileNavDisclosure.onClose}
-          />
-        )}
       </Flex>
     </Flex>
   );
 };
 
 export const MobileNavContent = (
-  { mobileNavDisclosure, canSeeSuperAdminSection, canSeeAdminSection }: {
+  { mobileNavDisclosure, canSeeAdminSection }: {
     mobileNavDisclosure: ReturnType<typeof useDisclosure>;
-    canSeeSuperAdminSection: boolean;
     canSeeAdminSection: boolean;
   },
 ) => {
@@ -171,13 +158,10 @@ export const MobileNavContent = (
   return (
     <>
       {mobileNavDisclosure.isOpen && (
-        <Portal>
-          <MobileNavBody
-            canSeeSuperAdminSection={canSeeSuperAdminSection}
-            canSeeAdminSection={canSeeAdminSection}
-            mobileNavDisclosure={mobileNavDisclosure}
-          />
-        </Portal>
+        <MobileNavBody
+          canSeeAdminSection={canSeeAdminSection}
+          mobileNavDisclosure={mobileNavDisclosure}
+        />
       )}
     </>
   );

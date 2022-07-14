@@ -87,20 +87,18 @@ export const SubMenuTrigger = (
           />
         )}
       </PopoverTrigger>
-      <Portal>
-        <PopoverContent
-          tabIndex={-1}
-          _focus={{
-            outline: "none",
-          }}
-        >
-          <PopoverArrow />
-          <SubMenu
-            onSubMenuItemClicked={onClose}
-            subMenuItems={props.subMenuItems}
-          />
-        </PopoverContent>
-      </Portal>
+      <PopoverContent
+        tabIndex={-1}
+        _focus={{
+          outline: "none",
+        }}
+      >
+        <PopoverArrow />
+        <SubMenu
+          onSubMenuItemClicked={onClose}
+          subMenuItems={props.subMenuItems}
+        />
+      </PopoverContent>
     </Popover>
   );
 };

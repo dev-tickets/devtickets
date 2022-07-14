@@ -1,18 +1,12 @@
 import { HStack } from "@chakra-ui/react";
 import React from "react";
 import { TopLevelButtonOrLink } from "./Components";
-import {
-  adminMenulinks,
-  communitiesMenuLinks,
-  superAdminMenulinks,
-} from "./routes";
+import { adminMenulinks, communitiesMenuLinks } from "./routes";
 import { SubMenuTrigger } from "./subMenu";
 
 export const DesktopNavContent = ({
-  canSeeSuperAdminSection,
   canSeeAdminSection,
 }: {
-  canSeeSuperAdminSection: boolean;
   canSeeAdminSection: boolean;
 }) => {
   return (
@@ -35,12 +29,6 @@ export const DesktopNavContent = ({
         <SubMenuTrigger
           buttonContent={"Admin"}
           subMenuItems={adminMenulinks}
-        />
-      )}
-      {canSeeSuperAdminSection && (
-        <SubMenuTrigger
-          buttonContent={"Super Admin"}
-          subMenuItems={superAdminMenulinks}
         />
       )}
     </HStack>
