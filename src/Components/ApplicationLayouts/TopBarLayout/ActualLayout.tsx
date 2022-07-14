@@ -24,44 +24,42 @@ const ActualLayout = () => {
   const { avatarURL } = useGetUserProfile();
 
   return (
-    <>
-      <chakra.header
-        position="sticky"
-        top={0}
-        zIndex={100}
-        shadow={y > height ? "sm" : undefined}
-        transition="box-shadow 0.2s"
-        bg="jsconfBlack"
-        borderWidth={0}
-        w="full"
-      >
-        <chakra.div h="5rem" mx="auto" maxW="1200px">
-          <Flex
-            w="full"
-            h="full"
-            px="6"
-            alignItems="center"
-            justifyContent="space-between"
+    <chakra.header
+      position="sticky"
+      top={0}
+      zIndex={100}
+      shadow={y > height ? "sm" : undefined}
+      transition="box-shadow 0.2s"
+      bg="jsconfBlack"
+      borderWidth={0}
+      w="full"
+    >
+      <chakra.div h="5rem" mx="auto" maxW="1200px">
+        <Flex
+          w="full"
+          h="full"
+          px="6"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Link
+            href={dashboardMainURL}
+            passHref
           >
-            <Link
-              href={dashboardMainURL}
-              passHref
-            >
-              <Flex as="a" align="flex-start">
-                <JSConfChileIcon w={7} h={7} />
-              </Flex>
-            </Link>
+            <Flex as="a" align="flex-start">
+              <JSConfChileIcon w={7} h={7} />
+            </Flex>
+          </Link>
 
-            <SubMenuTrigger
-              buttonContent={<Avatar size="xs" src={avatarURL} />}
-              subMenuItems={isAuthenticated
-                ? settingsMenuLinks
-                : unauthenticatedSettingsMenuLinks}
-            />
-          </Flex>
-        </chakra.div>
-      </chakra.header>
-    </>
+          <SubMenuTrigger
+            buttonContent={<Avatar size="xs" src={avatarURL} />}
+            subMenuItems={isAuthenticated
+              ? settingsMenuLinks
+              : unauthenticatedSettingsMenuLinks}
+          />
+        </Flex>
+      </chakra.div>
+    </chakra.header>
   );
 };
 
