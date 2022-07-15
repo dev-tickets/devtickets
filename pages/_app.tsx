@@ -1,8 +1,9 @@
 import "@fontsource/work-sans/400.css"; // Weight 400.
 import "@fontsource/work-sans/700.css"; // Weight 700.
+import "@fontsource/koulen/latin-400.css"; // Weight 700.
 
-import "@fontsource/work-sans/variable-italic.css"; // Italic variant.
-import "@fontsource/work-sans/variable.css"; // Contains ONLY variable weights and no other axes.
+// import "@fontsource/work-sans/variable-italic.css"; // Italic variant.
+// import "@fontsource/work-sans/variable.css"; // Contains ONLY variable weights and no other axes.
 import { TopBarLayout } from "@/components/ApplicationLayouts/TopBarLayout";
 
 import { useApolloClient } from "@/features/Apollo";

@@ -27,7 +27,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }) as any;
   return {
     paths,
-    fallback: true, // false or "blocking" // See the "fallback" section below
+    fallback: true,
   };
 };
 

@@ -13,7 +13,6 @@ export const supabase = createClient(
 
 export const useLoginWithEmail = () => {
   return React.useCallback(({ email }: { email: string }) => {
-    console.log("redirecto", loginCallbackURL);
     return supabase.auth.signIn(
       {
         email: email.trim(),
@@ -27,7 +26,6 @@ export const useLoginWithEmail = () => {
 
 export const useLoginWithGithub = () => {
   return React.useCallback(async () => {
-    console.log("redirecto", loginCallbackURL);
     const { user, error, session } = await supabase.auth.signIn(
       {
         provider: "github",

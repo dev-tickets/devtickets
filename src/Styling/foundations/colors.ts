@@ -5,6 +5,7 @@ const colors = {
   current: "currentColor",
   black: "#000000",
   jsconfBlack: "#1E2019",
+  jsconfRed: "#F45B69",
   white: "#FFFFFF",
   whiteAlpha: {
     50: "rgba(255, 255, 255, 0.04)",
